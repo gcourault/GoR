@@ -1,0 +1,118 @@
+<Fieldset class="form">
+<LEGEND ALIGN="left" class="formlegend">Remarques de lista de precio y cambios de grilla para los artículos seleccionados</LEGEND>
+<table>
+  <tr>
+    <td>
+  <Fieldset class="form">
+ <LEGEND ALIGN="left" class="formlegend">Porcentaje de ajuste</LEGEND>
+<table>
+  <tr>
+    <td>
+       Precio de lista:
+    </td>
+    <td>
+       <%= text_field :preciolista,  params[:preciolista], :value => 0 , :size => 10 %> %
+    </td>
+  </tr>
+ </table>
+ </Fieldset>
+  <Fieldset class="form">
+  <LEGEND ALIGN="left" class="formlegend">Remarques</LEGEND>
+   <table>
+  <tr>
+    <td>
+      <input type="checkbox" name="re1" value="" />
+      Remarque 1:
+    </td>
+    <td>
+      <%= text_field :remarque,  params[:remarque], :value => 0 , :size => 10 %>
+    </td>
+    <td>
+      <input type="checkbox" name="re2" value="" />
+      Remarque 2:
+    </td>
+    <td>
+      <%= text_field :remarque2,  params[:remarque2], :value => 0, :size => 10 %>
+    </td>
+    <td>
+      <input type="checkbox" name="re3" value="" />
+      Remarque 3:
+    </td>
+    <td>
+      <%= text_field :remarque3,  params[:remarque3], :value => 0, :size => 10 %>
+    </td>
+  </tr>
+  </table>
+ </Fieldset>
+  <Fieldset class="form">
+  <LEGEND ALIGN="left" class="formlegend">Editar grilla</LEGEND>
+  <table>
+  <tr>
+    <td align="right">
+     Nro. de grilla:
+    </td>
+    <td>
+      <%= text_field :nrogrilla, params[:nrogrilla], :value => 0, :size => 10 %>
+    </td>
+    <td align="right">
+     Nro. de columna:
+    </td>
+    <td>
+      <%= text_field :nrocolumna, params[:nrocolumna], :value => 0, :size => 10 %>
+    </td>
+    <td align="right">
+      Porcentaje:
+    </td>
+    <td>
+      <%= text_field :porcentaje, params[:porcentaje], :value => 0,:size => 10 %>
+    </td>
+  </tr>
+  </table>
+ </Fieldset>
+  <Fieldset class="form">
+  <LEGEND ALIGN="left" class="formlegend"> Agregar grilla <input type="checkbox" name="agregagrilla" value="" /></LEGEND>
+  <table>
+  <tr>
+    <td align="right">
+     Nro. de grilla:
+    </td>
+    <td>
+      <%= text_field :nrogrillanue, params[:nrogrillanue], :value => 0, :size => 10 %>
+    </td>
+    <td align="right">
+    Nro. de columna:
+    </td>
+    <td>
+      <%= text_field :nrocolumnanue, params[:nrocolumnanue], :value => 0, :size => 10 %>
+    </td>
+    <td align="right">
+      Porcentaje:
+    </td>
+    <td>
+      <%= text_field :porcentajenue, params[:porcentajenue], :value => 0, :size => 10 %>
+    </td>
+  </tr>
+  <input type="hidden" name="marcacod" value="<%= params[:marcacod].to_i %>" >
+  <input type="hidden" name="rubrocod" value="<%= params[:rubrocod].to_i %>" >
+  <input type="hidden" name="maestrolistaid" value="<%= params[:maestrolistaid].to_i %>" >
+ </table>
+ </Fieldset>
+<br />
+<br />
+<table>
+ <tr>
+  <td align="left" height="70" width="250">
+   <%= image_tag "cancel.png" %> 
+  <span style="vertical-align: top">
+    <%= link_to 'Cancelar', :controller => 'listaprecios', :action => 'index', :maestrolistaid => params[:maestrol], :marcacod => params[:marcacod], :rubrocod => params[:rubrocod], :maestrolistaid => params[:maestrolistaid] %> 
+  </span>
+ </td>
+ <td align="center">
+  <%= submit_tag "Modificar", :class => "textosbox", :confirm => 'Esta seguro que desea realizar estas modificaciones?',  :onclick => remote_function(:url => {:action => 'remarquecheckgraba'}, :with => 'Form.Element.serialize(this)')  %> </td>
+ </tr>
+</table>
+
+</td>
+</tr>
+</table>
+</Fieldset>

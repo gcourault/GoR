@@ -1,0 +1,41 @@
+<h1> Vista del deposito de caución </h1>
+<br />
+<table>
+<tr>
+<td class="boton"  align="center">
+<%= link_to 'Editar', edit_depositocaucion_path(@depositocaucion) %> </td>
+<td class="boton"  align="center">
+<%= link_to 'Volver', depositocaucions_path %>
+</td>
+</tr>
+</table>
+<p>
+  <b>Sucursal:</b>
+  <%=h @depositocaucion.sucursal.sucu_nombre %>
+</p>
+<p>
+  <b>Nro. cheque: </b>
+  <%=h  @depositocaucion.chequetercero.cter_nrocheque %>
+</p>
+
+<p>
+  <b>Vencimiento del cheque: </b>
+  <%=h  @depositocaucion.chequetercero.cter_vencimiento %>
+</p>
+<p>
+  <b>Fecha de acreditacion: </b>
+  <%=h  @depositocaucion.dcau_fechadeposito%>
+</p>
+<p>
+  <b>Nro. boleta: </b>
+  <%=h  @depositocaucion.dcau_nroboletadeposito%>
+</p>
+<p>
+  <b>Importe: </b>
+  <%=h  @depositocaucion.chequetercero.cter_importe%>
+</p>
+<p>
+  <b>Concepto de la caucion: </b>
+  <%=h  @depositocaucion.conceptocaucion.ccau_detalle%>
+</p>
+

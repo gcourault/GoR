@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/gescom-onrails/!svn/ver/76/test/fixtures
+END
+listaprecios.yml
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/gescom-onrails/!svn/ver/28/test/fixtures/listaprecios.yml
+END
+alicuotaivas.yml
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/gescom-onrails/!svn/ver/10/test/fixtures/alicuotaivas.yml
+END
+sucursals.yml
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/gescom-onrails/!svn/ver/22/test/fixtures/sucursals.yml
+END
+articulos.yml
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/gescom-onrails/!svn/ver/28/test/fixtures/articulos.yml
+END
+marcas.yml
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/gescom-onrails/!svn/ver/28/test/fixtures/marcas.yml
+END
+cabcajas.yml
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/gescom-onrails/!svn/ver/22/test/fixtures/cabcajas.yml
+END
+proveedors.yml
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/gescom-onrails/!svn/ver/28/test/fixtures/proveedors.yml
+END
+maestrolistas.yml
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/gescom-onrails/!svn/ver/76/test/fixtures/maestrolistas.yml
+END
+rubros.yml
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/gescom-onrails/!svn/ver/28/test/fixtures/rubros.yml
+END

@@ -1,0 +1,12 @@
+<h1>Editing consignatario</h1>
+
+<% form_for(@consignatario) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @consignatario %> |
+<%= link_to 'Back', consignatarios_path %>

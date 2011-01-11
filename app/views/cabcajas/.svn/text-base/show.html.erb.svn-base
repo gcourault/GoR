@@ -1,0 +1,48 @@
+<p>
+  <b>Sucursal:</b>
+  <%=h @cabcaja.sucursal_id %>
+</p>
+
+<p>
+  <b>Cabcaja:</b>
+  <%=h @cabcaja.cabcaja_id %>
+</p>
+
+<p>
+  <b>Vendedor:</b>
+  <%=h @cabcaja.vendedor_id %>
+</p>
+
+<p>
+  <b>Ccaj nrocaja:</b>
+  <%=h @cabcaja.ccaj_nrocaja %>
+</p>
+
+<p>
+  <b>Ccaj fecha:</b>
+  <%=h @cabcaja.ccaj_fecha %>
+</p>
+
+<p>
+  <b>Ccaj cerrada:</b>
+  <%=h @cabcaja.ccaj_cerrada %>
+</p>
+
+<p>
+  <b>Ccaj importar:</b>
+  <%=h @cabcaja.ccaj_importar %>
+</p>
+
+<p>
+  <b>Ccaj usuario:</b>
+  <%=h @cabcaja.ccaj_usuario %>
+</p>
+
+<p>
+  <b>Ccaj ultmod:</b>
+  <%=h @cabcaja.ccaj_ultmod %>
+</p>
+
+
+<%= link_to 'Edit', edit_cabcaja_path(@cabcaja) %> |
+<%= link_to 'Back', cabcajas_path %>

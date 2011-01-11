@@ -1,0 +1,86 @@
+<h1>Vista del reclamo</h1>
+<br />
+<table  > <tr>
+<td class="boton" align="center">
+<%= link_to 'Editar', :controller => 'reclamos', :action => 'edit' , :id => @reclamo.id, :page => params[:page] %> </td>
+<td> | </td> 
+<td class="boton" align="center">
+<%= link_to 'Volver',  :controller => 'reclamos', :action => '',  :sucursal => @reclamo.sucursal_id, :anio => (@reclamo.recl_fecha).year,  :page => params[:page]  %>
+</td> </tr>
+</table>
+<br />
+
+<p>
+  <b>Cliente:</b>
+  <%=h @reclamo.recl_nombrecliente %>
+</p>
+<p>
+  <b>Documento:</b>
+  <%=h @reclamo.recl_documento %>
+</p>
+<p>
+  <b>Estado:</b>
+  <%=h @reclamo.recl_estado %>
+</p>
+<p>
+  <b>Nro PRT:</b>
+  <%=h @reclamo.recl_nroprt %>
+</p>
+<p>
+  <b>Fecha:</b>
+  <%=h @reclamo.recl_fecha %>
+</p>
+<p>
+  <b>Nro Interno:</b>
+  <%=h @reclamo.recl_nrointerno %>
+</p>
+<p>
+  <b>Cod IP:</b>
+  <%=h @reclamo.recl_codip %>
+</p>
+<p>
+  <b>Descripci&oacute;n producto:</b>
+  <%=h @reclamo.recl_descripcionprod %>
+</p>
+<p>
+  <b>Art&iacute;culo:</b>
+  <% if @reclamo.articulo_id?
+    @reclamo.articulo.arti_descripcion 
+    end %>
+</p>
+<p>
+  <b>Dic. por:</b>
+  <%=h @reclamo.recl_dicpor %>
+</p>
+<p>
+  <b>Dictamen:</b>
+  <%=h @reclamo.recl_dictamen %>
+</p>
+<p>
+  <b>Motivo:</b>
+  <%=h @reclamo.recl_motivo %>
+</p>
+<p>
+  <b>Bonificaci&oacute;n:</b>
+  <%=h @reclamo.recl_bonificacion %>
+</p>
+<p>
+  <b>Nota Cr&eacute;dito:</b>
+  <%=h @reclamo.recl_notacredito %>
+</p>
+  <p>
+    <b>Fecha Nota de Cr&eacute;dito:</b>
+    <%=h @reclamo.recl_fechanc %>
+  </p>
+
+
+<p>
+  <b>Nro Cr&eacute;dito cliente:</b>
+  <%=h @reclamo.recl_creditocliente %>
+</p>
+<p>
+  <b>Sucursal:</b>
+  <%=h @reclamo.sucursal.sucu_nombre %>
+</p>
+
+

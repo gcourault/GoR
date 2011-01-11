@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/gescom-onrails/!svn/ver/163/app/views/revendedors
+END
+edit.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/gescom-onrails/!svn/ver/163/app/views/revendedors/edit.html.erb
+END
+index.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/gescom-onrails/!svn/ver/163/app/views/revendedors/index.html.erb
+END
+new.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/gescom-onrails/!svn/ver/163/app/views/revendedors/new.html.erb
+END
+show.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/gescom-onrails/!svn/ver/163/app/views/revendedors/show.html.erb
+END

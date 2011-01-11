@@ -1,0 +1,30 @@
+<% @grillalista = Grillalista.find(params[:grillaid]) %>
+<% form_for(@grillalista) do |f| %>
+  <%= f.error_messages %>
+ <table>
+  <tr>
+  <td>
+    <%= f.label "Nro. de grilla:" %>
+    <%= f.text_field :glis_nrogrilla, :size => 10%>
+  </td>
+  <td>
+    <%= f.label "Nro. de columna:" %>
+    <%= f.text_field :glis_nrocolumna, :size => 10 %>
+  </td>
+  <td>
+    <%= f.label "Porcentaje" %>
+    <%= f.text_field :glis_porcentaje, :size => 10 %>
+  </td>
+
+  <td>
+    <%= f.submit 'Modificar' %>
+  </td>
+</tr>
+</table>
+<% end %>
+
+<br />
+<img  src="/images/cancel.png" width="20px" height="20px" border="0"> 
+<span style="vertical-align: top">
+<%= link_to 'Cancelar', :controller => 'listaprecios', :action => 'edit', :id => @grillalista.listaprecio_id %> 
+</span>

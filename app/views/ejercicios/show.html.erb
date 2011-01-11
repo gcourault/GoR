@@ -1,0 +1,23 @@
+<p>
+  <b>Ejer desde:</b>
+  <%=h @ejercicio.ejer_desde %>
+</p>
+
+<p>
+  <b>Ejer hasta:</b>
+  <%=h @ejercicio.ejer_hasta %>
+</p>
+
+<p>
+  <b>Ejer descripcion:</b>
+  <%=h @ejercicio.ejer_descripcion %>
+</p>
+
+<p>
+  <b>Ejer cerrado:</b>
+  <%=h @ejercicio.ejer_cerrado %>
+</p>
+
+
+<%= link_to 'Edit', edit_ejercicio_path(@ejercicio) %> |
+<%= link_to 'Back', ejercicios_path %>

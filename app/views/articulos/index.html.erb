@@ -1,0 +1,97 @@
+<h1>Listado de art&iacute;culos</h1>
+
+<br />
+ <% form_tag articulos_path, :method => 'get' do %>  
+   <Fieldset class="filtro">
+    <table>
+     <tr> 
+       <td>  
+         <%= hidden_field_tag :maestrolistaid, params[:maestrolistaid] %>
+         Ingrese marca:
+         <%= text_field_tag :marcaid, params[:marcaid], :class => "textosbox" %>
+       </td>
+       <td>
+        Ingrese rubro:
+        <%= text_field_tag :rubroid, params[:rubroid], :class => "textosbox" %>
+       </td> 
+       <td>
+         <%= submit_tag "Buscar", :name => nil, :class => "textosbox" %>
+       </td>
+      </tr>
+      <tr>
+      <td>
+      <input type="checkbox" name="modmed" value="" />      
+      Buscar por modelo:
+      <%= text_field_tag :modelo, params[:modelo], :class => "textosbox" %>
+      </td>
+      <td>
+      Medida:
+      <%= text_field_tag :medida, params[:medida], :class => "textosbox" %>
+      </td>
+    </tr>
+   </table>
+  </Fieldset> 
+<% end %>
+ 
+<br />
+<table>
+<tr>
+<td class="boton"  align="center">
+ <%= image_tag "add.png" %>
+
+ <span style="vertical-align: top">
+ <%= link_to 'Nuevo art&iacute;culo', new_articulo_path %>
+ </span>
+</td>
+</tr>
+</table>
+<br />
+
+<% if @articulos.empty? %> 
+   <h2> Su consulta no arrojo ningun resultado. Asegurese de haber cargado correctamente la marca y el rubro o el modelo y/o medida</h2>
+<% else %>
+  <% if params[:marcaid].blank? %>
+   <% else %>
+     <% @marcas = Marca.find_by_marc_codigo(params[:marcaid]) %>
+  <% end %>
+  <% if params[:rubroid].blank? %>
+   <% else %>
+     <% @rubros = Rubro.find_by_rubr_codigo(params[:rubroid]) %>
+  <% end %>
+  <div class="tablaContainer"  >
+  <table>
+               <% if (params[:modmed]==nil) %>
+                 <tr class="textgroup"> <td colspan = "2"> Marca:  <%=h @marcas.marc_descripcion %> </td> <td td colspan = "4"> Rubro:  <%=h @rubros.rubr_descripcion %> </td></tr>
+              <% end %>
+               <tr class="headerStyle">
+      	       <th width="100">C&oacute;digo</th>
+               <th width="100">C&oacute;digo marca</th>
+	       <th width="250">Descripci&oacute;n</th>
+ 	       <th width="150">Modelo</th>
+	       <th width="150">Medida</th>
+	       <th width="80">Camara</th>
+	       <th width="80">Telas</th>
+ 	       </tr>
+
+   <% @articulos.each do |articulo| %>
+   <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+    <td><%=h articulo.arti_codigo %></td>
+    <td><%=h articulo.arti_clavesecundaria %></td>
+    <td><%=h articulo.arti_descripcion %></td>
+    <td><%=h articulo.arti_modelo %></td>
+    <td><%=h articulo.arti_medida %></td>
+    <td><%=h articulo.arti_conosincamara %></td>
+    <td><%=h articulo.arti_telas %></td>
+    <td><%= link_to 'Mostrar', articulo %></td>
+   <% if articulo.id == params[:idmodificado].to_i %>
+    <td style="background-color: red;"><%= link_to 'Editar', edit_articulo_path(articulo) %></td>
+   <% else %>
+    <td><%= link_to 'Editar', edit_articulo_path(articulo) %></td>
+   <% end %>
+   
+ </tr>
+ <% end %>
+ </table>
+
+ </div>
+<% end %>

@@ -1,0 +1,3 @@
+
+<%= link_to 'Edit', edit_formapago_path(@formapago) %> |
+<%= link_to 'Back', formapagos_path %>

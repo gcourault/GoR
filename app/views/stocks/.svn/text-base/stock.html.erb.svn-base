@@ -1,0 +1,48 @@
+<h1>Stock</h1>
+<!-- restrigir la index por url -->
+<% restrict_to "(rol 4 | rol 6 | rol 7 ) & !blacklist" do %>
+   <% form_tag  :controller => 'stocks', :action => 'consultastock' do %>  
+     <Fieldset class="filtro">
+     <legend align="left" class="formlegend"> Consulta de stock </legend>
+      <table align="left" class="tablafiltro">
+      <tr>
+   <td colspan="2">
+       
+        Modelo y medida:
+        <%= text_field_tag :modelo, params[:modelo], :size => 15 %>
+        <%= text_field_tag :medida, params[:medida], :size => 10 %>
+      </td>
+       
+     </tr>
+     <tr>
+       <td>  
+         marca-rubro-codigo:
+         <%= text_field_tag :marcacod, params[:marcacod], :size => 3 %>
+         <%= text_field_tag :rubrocod, params[:rubrocod], :size => 3 %>
+         <%= text_field_tag :codigo, params[:codigo], :size => 3 %>
+       </td>
+      <td>
+      <%= submit_tag "Buscar", :name => nil %>
+      </td>
+   </tr>
+   <% end %>
+  </table>
+ </Fieldset>
+
+<% end %>
+<% if !@articulos.nil? && @articulos.size > 0 %>
+
+<table align="left">
+  <tr class="headerStyle">
+   <td> </td>
+   <td> Descripci&oacute;n</td>
+  </tr>
+
+<% @articulos.each do |articulo| %>
+  <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+   <td><%= link_to 'Ver stock', :action => 'mostrar', :id => articulo.id %></td>
+   <td><%=h  articulo.arti_descripcion %> </td>
+  </tr>
+<% end %>
+</table>
+<% end %>

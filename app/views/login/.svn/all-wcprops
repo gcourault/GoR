@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/gescom-onrails/!svn/ver/306/app/views/login
+END
+signup.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/gescom-onrails/!svn/ver/183/app/views/login/signup.html.erb
+END
+denied.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/gescom-onrails/!svn/ver/306/app/views/login/denied.html.erb
+END
+login.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/gescom-onrails/!svn/ver/223/app/views/login/login.html.erb
+END
+_error.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/gescom-onrails/!svn/ver/222/app/views/login/_error.html.erb
+END
+logout.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/gescom-onrails/!svn/ver/183/app/views/login/logout.html.erb
+END
+cerrarsession.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/gescom-onrails/!svn/ver/183/app/views/login/cerrarsession.html.erb
+END
+iniciarsession.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/gescom-onrails/!svn/ver/222/app/views/login/iniciarsession.html.erb
+END

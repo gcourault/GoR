@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/gescom-onrails/!svn/ver/482/app/views/consignatarios
+END
+edit.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/gescom-onrails/!svn/ver/482/app/views/consignatarios/edit.html.erb
+END
+index.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/gescom-onrails/!svn/ver/482/app/views/consignatarios/index.html.erb
+END
+new.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/gescom-onrails/!svn/ver/482/app/views/consignatarios/new.html.erb
+END
+show.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/gescom-onrails/!svn/ver/482/app/views/consignatarios/show.html.erb
+END

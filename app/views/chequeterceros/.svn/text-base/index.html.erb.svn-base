@@ -1,0 +1,105 @@
+<h1>Listado cheques en cartera</h1>
+<% form_tag chequeterceros_path, :method => 'get' do %>  
+ <Fieldset class="filtro">
+<!-- al 30 del mes anterior -->
+ <% mes = Time.now.month  %>
+ <% anio = Time.now.year %>
+ <% dia = Time.now.day  %>
+ <% params[:fechaven] = "#{anio}-#{mes}-#{dia}" %>
+ <% params[:fechavenpdf] = "#{dia}-#{mes}-#{anio}" %>
+
+<table class="tablafiltro">
+<tr>
+<td width ="500">
+ Fecha de vencimiento mayor igual a: <%= "#{dia}-#{mes}-#{anio}" %>
+</td>
+<td width ="400">
+ Monto mayor a: <%= text_field_tag :monto, params[:monto], :class => "textosbox" %>
+</td>
+<td width="100">   
+   <%= submit_tag "Buscar", :name => nil, :class => "textosbox" %>
+</td>
+</tr>
+ <tr>
+    <td>
+      <input type="checkbox" name="bcuit" value="" />      
+       Buscar por CUIT:
+       <%= text_field_tag :cuit, params[:cuit], :class => "textosbox" %>
+    </td>
+ </tr>
+</table>
+<% end %>
+</Fieldset>
+
+<table>
+<tr>
+<% restrict_to "(rol 3 |rol 4 | rol 5 | rol 6 | rol 7) & !blacklist" do %>
+<td  class="boton" width="200"  align="center">
+    <%= image_tag "add.png" %> 
+    <span style="vertical-align: top"> 
+    <%= link_to 'Ingresar CUIT', :controller => 'cuitcheques', :action => 'new', :page => (params[:page].to_i < 1  ? 1 : params[:page]), :monto => params[:monto], :class => "textosbox" %>
+    </span>
+</td>
+<td  class="boton" width="200"  align="center">
+   <%= image_tag "list.png" %> 
+   <span style="vertical-align: top"> 
+   <%= link_to 'Listado CUIT', :controller => 'cuitcheques', :action => 'index', :class => "textosbox" %>
+   </span>
+</td>
+<% end %>
+  </td>
+   <%  central_url = "http://200.70.35.102/cenries/cr010000.asp?error=0" %>
+   <td  width="250px"  align="center"> 
+   <%= image_tag "banco2.png" %><%= link_to 'Consultar por CUIT en el banco central', central_url, :class => "textosbox", :target => "_blank" %>
+   </td>
+     <%  riesgo_url = "http://www.riesgoonline.com/home/" %>
+   <td  width="200px"  align="center"> 
+   <%= image_tag "SearchUser.png" %><%= link_to 'Riesgo on line', riesgo_url, :class => "textosbox", :target => "_blank" %>
+   </td>
+
+<td  class="boton" width="200"  align="center">
+   <%= image_tag "pdf.png" %> 
+   <span style="vertical-align: top"> 
+   <%= link_to 'Generar PDF', :controller => 'chequeterceros/index', :action => 'index.pdf', :fechavenc => params[:fechavenpdf], :monto => params[:monto], :class => "textosbox" %>
+   </span>
+</td> 
+<!-- <td>
+<span  style="vertical-align: top"> <%= link_to_remote 'Exportar a Excel', {:url => {:controller => "chequeterceros", :action => "xls", :fechaven => params[:fechaven], :monto => params[:monto] }, :disable_with => "Por favor espere...", :before=>"this.style.display='none'", :complete =>  "Element.show ('addxls');"},  {:href => url_for(:controller => "chequeterceros", :action => "xls", :fechaven => params[:fechavenpdf], :monto => params[:monto])} %> </span>
+<div id="addxls" style="display:none">
+ <%= render :partial => 'chequeterceros/xls'  %>
+</div>
+</td> -->
+</tr>
+</table>
+<br />
+<% if @chequeterceros.empty? %> 
+<h2> No se encontraron registros para su busqueda </h2>
+<% else %>
+
+<div class="tablaContainer" >
+ <table class="tabladentrocont" border="0" cellpadding="0" cellspacing="0">
+  <tr class="headerStyle">
+   <th> </th>
+   <th width="100">Cuit</th>
+   <th width="80">Cantidad</th>
+   <th width="100">Monto</th>
+   <th>Raz&oacute;n Social</th>
+   <th>Localidad</th>
+   <th>Provincia</th>
+  </tr>
+
+<% @chequeterceros.each do |chequetercero| %>
+  <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+    <td><%= link_to 'Consulta de cheques', :controller => 'chequeterceros', :action => 'cheque' , :id => chequetercero.cter_cuitlibrador, :fecha => params[:fechaven], :rsocial => chequetercero.razonsocial, :monto => params[:monto], :page => params[:page], :cuit => chequetercero.cter_cuitlibrador, :bcuit => params[:bcuit] %> </td>
+    <td><%=h chequetercero.cter_cuitlibrador %></td>
+    <td align="center"><%=h chequetercero.cantidad %></td>
+    <td><%=h number_to_currency(chequetercero.importe, :precision => 2, :separator => ",", :delimiter => ".") %></td>
+    <td><%=h chequetercero.razonsocial %></td>
+    <td><%=h chequetercero.localidad %></td>
+    <td><%=h chequetercero.provincia %></td>
+ </tr>
+<% end %>
+</table>
+<%=will_paginate @chequeterceros, :prev_label => '&laquo; Anterior', :next_label => 'Siguiente &raquo;' %>
+</div>
+<% end %>

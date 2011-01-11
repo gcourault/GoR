@@ -1,0 +1,22 @@
+ <% if @renglones.blank? %> 
+    <h2> el comprobante no tiene renglones</h2>
+	<% else %> 
+	 <h2> Detalle del comprobante </h2>
+           <table align="left" >
+		<tr class="headerStyle">
+		<th width="80px">Alicuota IVA</th>
+		<th width="80px">Neto gravado</th>
+		<th width="80px">IVA</th>
+                <th width="80px">Total</th>
+		</tr>
+		<% @renglones.each do |renglon| %>
+		   <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+		   <td><%=h renglon.alicuotaiva.aiva_alicuota %></td>
+		   <td><%=h renglon.rcom_netorenglon %></td>
+                   <td><%=h renglon.rcom_ivarenglon %></td>
+		   <td><%=h renglon.rcom_totalrenglon %> </td> 
+		</tr>
+		<% end %>
+		
+	 </table>
+       <% end %>

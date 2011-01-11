@@ -1,0 +1,66 @@
+<h1>Retenci&oacute;n de ganancias</h1>
+<br />
+<table>
+ <tr>
+  <td class="boton" with="100" align="center">
+     <%= image_tag "volver.png" %> 
+    <span style="vertical-align: top"> 
+     
+     <%= link_to 'Volver', :controller => 'cabplaegresos', :action => 'edit', :id => params[:idpe][0].to_s+","+ params[:idpe][1].to_s %>
+    </span>
+  </td>
+ </tr>
+</table>
+
+<table>
+  <tr class="headerStyle">
+      <th>Planilla egreso</th>
+      <th>Comprobante </th>
+      <th>Proveedor</th>
+      <th>Concepto</th>
+      <th>Neto</th>
+  </tr>
+<% if @retencionganancias.nil? %>
+<% else %>
+
+<% i = 0 %>
+<% @retencionganancias.each do |retgan| %>
+<% if i == 0 %>
+ <% @comprobanteretgens = Cabplaegreso.comprobanteretgen(session[:sucursal], retgan.fecha, retgan.provid, retgan.conceptoegresoid) %>
+
+
+ <% @comprobanteretgens.each do |compretgan| %>
+  <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+    <td><%=h compretgan.nropleeg %></td>
+    <td><%=h compretgan.idcomp %> </td>
+    <td><%=h compretgan.prov_nombre %></td>
+    <td><%=h compretgan.cegr_detalle %></td>
+    <td><%=h number_to_currency(compretgan.neto, :precision => 2, :separator => ",", :delimiter => ".") %></td>
+  </tr>
+ <% end %>
+  <tr>
+    <td colspan="2"> Total: <%= number_to_currency(retgan.total, :precision => 2, :separator => ",", :delimiter => ".") %>  </td>
+    <td> <%= link_to_remote 'Ingresar retenci&oacute;n', {:url => {:controller => "retencionganancias", :action => "new", :idpe => params[:idpe][0], :fecha => retgan.fecha, :provid => retgan.provid , :conceptoegresoid => retgan.conceptoegresoid },  :complete =>  "Element.show   ('addretencion');"},  {:href => url_for(:controller => "retencionganancias", :action => "new", :idpe => params[:idpe], :fecha => retgan.fecha )} %> </td>
+ </tr>
+<tr>
+ <td>
+<div id="addretencion" style="display:none"> 
+  <%= render :partial => 'retencionganancias/new' %>
+</div>
+</td>
+<tr>
+ <% end %>
+</table>
+<% i += 1%>
+<% end %>
+<br />
+<% end %>
+<!--<% if @totalproveedors.nil? %>
+<% else %>
+<h1>Estos comprobantes superan los $1000 ingrese la forma de pago o separelos en otra planilla de egreso</h1>
+<div id="pagocompra">
+  <%= render :partial => '/cabplaegresos/pagocompra' %>
+</div>
+<% end %> -->
+
+

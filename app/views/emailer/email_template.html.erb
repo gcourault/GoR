@@ -1,0 +1,22 @@
+<h1> Detalle del pedido realizado por el cliente: <%= @cliente %><h1>
+   <h2>CUIT: <%= @cuit %> <h2></p>
+   <h2>C&oacute;digo cliente: <%= @clientecodigo %></h2> 
+	   <% @renpedidowebs = Renpedidoweb.find(:all, :conditions => ["cabpedidoweb_id = ?", @idcabpedidoweb ]) %>
+	   <% @cabpedidoweb = Cabpedidoweb.find(@idcabpedidoweb) %>
+	   <% totalvend = 0 %>
+	     <h2 align="center"> Pedido Nro.  <%= @idcabpedidoweb %> </h2>
+	           <table align="center"  border="1" >
+	                <tr class="headerStyle">
+                         <th width="80px">C&oacute;digo</th>
+	                 <th width="250px">Art&iacute;culo</th>
+	                 <th width="80px">Cantidad</th>
+	                </tr>
+                        <% @renpedidowebs.each do |renpedidoweb| %>
+	                   <tr>
+                            <td><%=h renpedidoweb.articulo.arti_codigo %> </td>
+	                    <td><%=h renpedidoweb.articulo.arti_descripcion %></td>
+                            <td><%=h renpedidoweb.rweb_cantidad %></td>
+	                   </tr>
+	                <% end %>
+	           </table>
+

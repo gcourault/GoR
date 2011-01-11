@@ -1,0 +1,70 @@
+<h1>Nuevo descuento revendedores</h1>
+<br />
+<table>
+<tr>
+<td class="boton"  align="center">
+ <img  src="/images/volver.png" width="20px" height="20px" border="0"> 
+ <span style="vertical-align: top">  
+ <%= link_to 'Volver', descrevendedors_path %>
+ </span>
+</td>
+</tr>
+</table>
+<br />
+<% form_for(@descrevendedor) do |f| %>
+  <%= f.error_messages %>
+<table>
+<tr height="40">
+ <td>
+    <%= f.label "Marca:" %>
+    </td>
+    <td>
+    <%= @marcas = Marca.find(:all, :order =>"marc_descripcion")
+      f.collection_select(:marca_id,
+     @marcas, :id, :marc_descripcion, :prompt=>"Seleccione una marca:", :class => "textosbox") %>
+  </td>
+ </tr>
+ <tr  height="40">
+  <td>
+    <%= f.label "Rubro:" %>
+    </td>
+     <td>
+     <%= @rubros = Rubro.find(:all, :order =>"rubr_descripcion")
+      f.collection_select(:rubro_id,
+     @rubros, :id, :rubr_descripcion, :prompt=>"Seleccione un rubro:",  :class => "textosbox") %>
+  </td>
+ </tr>
+ <tr  height="40">
+  <td>
+    <%= f.label "Descuento 1:" %>
+    </td>
+    <td>
+    <%= f.text_field :drev_descuento1, :size => 10, :class => "textosbox"  %>
+  </td>
+  </tr>
+ <tr  height="40">
+ <td>
+    <%= f.label "Descuento 2:" %>
+   </td>
+   <td>
+    <%= f.text_field :drev_descuento2, :size => 10, :class => "textosbox" %>
+  </td>
+ </tr>
+ <tr  height="40">
+ <td>
+    <%= f.label "Descuento 3:" %>
+   </td>
+   <td>
+    <%= f.text_field :drev_descuento3, :size => 10, :class => "textosbox" %>
+  </td>
+ </tr>
+ <tr  height="50">
+  <td colspan="2" align="center">
+    <%= f.submit 'Crear', :class => "textosbox" %>
+  </td>
+</tr>
+</table>
+<% end %>
+
+
+

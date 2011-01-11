@@ -1,0 +1,29 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  lpre_nrolista: 
+  lpre_codigolista: 
+  articulo_id: 
+  lpre_preciolista: 
+  lpre_preciocosto: 
+  lpre_precioventa: 
+  lpre_remarque: 
+  lpre_remarque2: 
+  lpre_remarque3: 
+  lpre_porcprovisorio: 
+  lpre_ultmod: 
+  lpre_usuario: 
+
+two:
+  lpre_nrolista: 
+  lpre_codigolista: 
+  articulo_id: 
+  lpre_preciolista: 
+  lpre_preciocosto: 
+  lpre_precioventa: 
+  lpre_remarque: 
+  lpre_remarque2: 
+  lpre_remarque3: 
+  lpre_porcprovisorio: 
+  lpre_ultmod: 
+  lpre_usuario: 

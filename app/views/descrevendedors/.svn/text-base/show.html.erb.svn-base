@@ -1,0 +1,44 @@
+<table>
+<tr>
+<td class="boton"  align="center">
+<%= link_to 'Editar',  :controller => 'descrevendedors', :action => 'edit' , :id => @descrevendedor.id, :page => params[:page] %> </td>
+<td> | </td> 
+<td class="boton"  align="center">
+<%= link_to 'Volver', :controller => 'descrevendedors', :action => '', :page => params[:page]  %>
+</td>
+</tr>
+</table>
+<br />
+<table>
+<tr height="30">
+ <td>
+  <b>Marca:</b>
+  <%=h @descrevendedor.marca.marc_descripcion %>
+</td>
+</tr>
+<tr height="30">
+<td>
+  <b>Rubro:</b>
+  <%=h @descrevendedor.rubro.rubr_descripcion %>
+</td>
+</tr>
+<tr height="30">
+
+<td>
+  <b>Descuento 1:</b>
+  <%=h @descrevendedor.drev_descuento1 %>
+</td>
+</tr>
+<tr height="30">
+<td>
+  <b>Descuento 2:</b>
+  <%=h @descrevendedor.drev_descuento2 %>
+</td>
+</tr>
+<tr height="30">
+<td>
+  <b>Descuento 3:</b>
+  <%=h @descrevendedor.drev_descuento3 %>
+</td>
+</tr>
+</table>

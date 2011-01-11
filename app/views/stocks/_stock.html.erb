@@ -1,0 +1,24 @@
+<% if !@stocks.nil? && @stocks.size > 0 %>
+<% total = 0 %>
+<Fieldset class="filtro">
+ <legend align="left" class="formlegendmovi"> Stock: <%= @articulo.arti_descripcion %> </legend>
+  <table align="left">
+   <tr class="headerStyle">
+     <td class="movil">Sucursal </td>
+     <td class="movil">Unidades </td>
+    <tr>
+
+
+  <% @stocks.each do |stock| %>
+  <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+   <td class="movil"><%=h stock.nombresucu %></td>
+   <td class="movil"><%=h stock.unidades %> </td> <% total = total + stock.unidades.to_i %>
+  </tr>
+
+<% end %>
+<tr><td class="movil"><b>TOTAL:</b></td><td class="movil"><b><%= total %></td> </tr>
+</table>
+</Fieldset>
+<% else %>
+<h5 align="left">  NO hay unidades en stock </h5>
+<% end %>

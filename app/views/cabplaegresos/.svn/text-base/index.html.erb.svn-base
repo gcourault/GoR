@@ -1,0 +1,85 @@
+<h1>Listado de planillas de egreso</h1>
+<br />
+<table>
+ <tr>
+  <td class="boton" with="100" align="center">
+    <%= image_tag "add.png" %>
+    <span style="vertical-align: top"> 
+     <%= link_to 'Crear nueva planilla de egreso', new_cabplaegreso_path %>
+    </span>
+  </td>
+ </tr>
+</table>
+<% form_tag cabplaegresos_path, :method => 'get' do %>  
+ <Fieldset class="filtro">
+      <input type="checkbox" name="numpe" value="" /> 
+      Buscar planilla de egreso n&uacute;mero:
+      <%= text_field_tag :nroplaeg, params[:nroplaeg], :class => "textosbox" %>
+      <%= submit_tag "Buscar", :class => "textosbox" %>
+</Fieldset>
+<% end %> 
+<br />
+
+<table>
+<tr>
+ <td>
+ <table class="tabladentrocont">
+   <tr class="headerStyle">
+    <th width="50"> Nro.</th>
+    <th width="90"> Fecha </th>
+    <th width="105"> Importe </th>
+    <th> A cargo de </th>
+    <th> Cerrada </th>
+   </tr>
+ <% caja = 0 %>
+ <% sucu = " "%>
+<% @cabplaegresos.each do |cabplaegreso| %>
+  <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+    <td><%=h cabplaegreso.cpeg_nroplanilla %> </td>
+    <td><%=h cabplaegreso.cpeg_fecha %> </td>
+    <td><%=h number_to_currency(cabplaegreso.cpeg_importe, :precision => 2, :separator => ",", :delimiter => ".") %> </td>
+    <td align="center"><%=h cabplaegreso.cpeg_acargode %> </td>
+    <td align="center"><%=h cabplaegreso.cpeg_cerrada %> </td>
+    <!-- <td ><%= link_to 'Mostrar', cabplaegreso %></td> -->
+   <!-- <% restrict_to "(rol 2 | rol 3 ) & !blacklist" do %>
+     <% if cabplaegreso.cpeg_cerrada.to_s == "N" %> 
+      <td> <%= link_to 'Editar', edit_cabplaegreso_path(cabplaegreso) %> </td>  <td> | </td>
+     <% end %>
+    <% end %> -->
+ 
+    <% @cajaingreso = Cabplaegreso.cajaingresocerrada(cabplaegreso.id[0], session[:sucursal]) %>
+    <% if @cajaingreso.size > 0 %>
+        <% restrict_to "(rol 5 | rol 6 | rol 7) & !blacklist" do %>
+           <td ><%= link_to 'Editar', edit_cabplaegreso_path(cabplaegreso), :page => params[:page] %></td> <td> | </td>
+        <% end %>
+      <% else %>
+      <td ><%= link_to 'Editar', edit_cabplaegreso_path(cabplaegreso), :page => params[:page] %></td> <td> | </td>
+    <% end %>
+
+      <td ><%= link_to 'Comprobantes', :controller => 'cabcompras', :action => 'index', :nrope => cabplaegreso.cpeg_nroplanilla, :idpe => cabplaegreso.id[0] %></td> 
+      
+
+   
+<!-- ver forma de pago -->
+    <% @totalproveedors = Cabplaegreso.totalproveedor(cabplaegreso.id[0], session[:sucursal])  %>
+    <% if @totalproveedors.size > 0 %>
+      <td> | </td><td> <%= link_to "Forma de pago", :controller => 'cabplaegresos', :action => 'verformapago', :id => 1, :idpe => cabplaegreso.id, :nroplanillaegreso => cabplaegreso.cpeg_nroplanilla.to_i %></td>
+    <% end %>
+    <% @retgans = Cabplaegreso.retgan(cabplaegreso.id[0], session[:sucursal])  %>
+    <% if @retgans.size > 0 %>
+      <td> | </td><td> <%= link_to "Retenciones ganancias", :controller => 'retencionganancias', :action => 'retgan', :id => 1, :idpe => cabplaegreso.id, :nroplanillaegreso => cabplaegreso.cpeg_nroplanilla.to_i %></td>
+    <% end %>
+        <% if cabplaegreso.cpeg_cerrada.to_s == "S" %> 
+         <% caja = cabplaegreso.cabcaja.ccaj_nrocaja if  cabplaegreso.cabcaja %>
+         <% sucu = cabplaegreso.sucursal.sucu_nombre  %>
+     <td>  | </td> <td><%= link_to 'Imprimir', :target => "_blank", :controller => 'cabplaegresos/index', :action => 'index.pdf',  :idpe => cabplaegreso.id[0], :nrope => cabplaegreso.cpeg_nroplanilla.to_i, :fecha => cabplaegreso.cpeg_fecha.to_date, :caja => caja, :sucu => sucu  %></td>
+   <% end %>
+ </tr>
+<% end %>
+</table>
+<div align="center">
+<%=will_paginate @cabplaegresos %>
+</div>
+</td>
+</tr>
+</table>

@@ -1,0 +1,12 @@
+<h1>Editing rg1361afip</h1>
+
+<% form_for(@rg1361afip) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @rg1361afip %> |
+<%= link_to 'Back', rg1361afips_path %>

@@ -1,0 +1,139 @@
+= BelongsToEnum
+
+== belongs_to_enum
+
+Given that Task has an attribute status_id, you can define its enum fields like this:
+
+    class Task < ActiveRecord::Base
+      belongs_to_enum :status, { 1 => :new, 2 => :in_progress, 3 => :completed, 4 => :cancelled}
+    end
+
+Task will now have an array of status enum fields.
+
+    >> Task.statuses
+    => [EnumField(id: 1, name: :new, title: "New", position: 1, :default? => false), ... ]
+
+Each EnumField object has the following attributes, of which only id and name are required:
+
+* id
+* name - symbol uniquely identifying the enum field
+* title - for displaying the field in the view. Default is <code>name.to_s.titleize</code>.
+* position - for sorting the enum fields. Task.statuses is sorted by position. Default is id.
+* default - is this the default status?
+
+You can now...
+
+* get the status by id or by name
+
+    >> Task.status(1)
+    => EnumField(id: 1, name: :new, title: "New", position: 1, :default? => false)
+
+    >> Task.status(:completed)
+    => EnumField(id: 3, name: :completed, title: "Completed", position: 3, :default? => false)
+
+* set the status of a task by enum_field or by name
+
+    >> task.status = Task.status(:new)
+    >> task.status = :completed
+
+* check the status of a task
+
+    >> task.completed?
+
+* set the title or position of the enum fields
+
+    >> belongs_to_enum :status, { 1 => :new, 2 => {:name => :in_progress, :title => 'Continuing', :position => 100}}
+
+* specify the default status
+
+    >> belongs_to_enum :status, { 1 => :new, 2 => {:name => :in_progress, :title => 'Continuing', :position => 100, :default => true}}
+    >> Task.status(:in_progress).default?
+    => true
+    >> Task.default_status
+    => EnumField(id: 2, name: :in_progress, title: "Continuing", position: 100, :default? => true)
+
+== validates_inclusion_of_enum
+
+To validate that the value of status is in the enum field list, you can use validates_inclusion_of_enum macro
+
+    class Task < ActiveRecord::Base
+      belongs_to_enum :status, { 1 => :new, 2 => :in_progress, 3 => :completed, 4 => :cancelled}
+      validates_inclusion_of_enum :status_id
+    end
+
+The default error message of validates_inclusion_of_enum is 'is not valid' but you can pass any validates_inclusion_of options:
+
+    validates_inclusion_of_enum :status_id,
+    { :in => [3, :cancelled], :message => "must be completed or ended", :allow_blank => true}
+
+Note that you can pass the id or the name of the enum field in the :in option.
+
+== Saving the enum fields in a table
+
+It's possible to save the enum fields in a database table. The table must have the following fields:
+
+    create_table :statuses do |t|
+      t.string :name
+      t.string :title
+      t.integer :position
+      t.boolean :default
+    end
+
+You must then call acts_as_enum_field in the class
+
+    class Status < ActiveRecord::Base
+      acts_as_enum_field
+    end
+
+    class Task < ActiveRecord::Base
+      belongs_to_enum :status
+    end
+
+Status will now have ActsAsEnumField extensions. For example, if the title of Status.first is nil,
+calling <code>Status.first.title</code> will still return the titleized name like the EnumField.
+
+== Sample usage
+
+Here's how I might use belongs_to_enum.
+
+In the model,
+
+    class Task < ActiveRecord::Base
+      belongs_to_enum :status,
+      { 1 => {:name => :new, :default => true}
+        2 => {:name => :in_progress, :title => 'Continuing'},
+        3 => :completed,
+        4 => {:name => :cancelled, :title => 'Ended', :position => 5}
+      }
+      validates_inclusion_of_enum :status_id, :allow_blank => true
+
+      # Set the status to the default status
+      def after_initialize
+        self.status ||= Task.default_status if self.new_record?
+      end
+    end
+
+Writing a dropdown for the statuses is pretty straightforward
+
+    form_for @task do |f|
+      f.select(:status_id, Task.statuses.collect {|p| [ p.title, p.id ] }, { :include_blank => true })
+    end
+
+== Similar plugins
+
+* http://www.railslodge.com/plugins/8-acts-as-enumerated
+* http://github.com/pluginaweek/acts_as_enumeration
+* http://giraffesoft.ca/blog/2009/02/17/floss-week-day-2-the-enum-field-rails-plugin.html
+* https://rubyforge.org/projects/enum-column
+* http://github.com/zachinglis/magic_enums
+
+== Tested in
+
+* Rails 2.2
+* Ruby 1.8.6
+
+== Thanks
+
+Thanks to Kevin Rood of Acceletron Corporation for allowing me to release this plugin.
+
+Copyright (c) 2009 George Mendoza, released under the MIT license. Email: <code>["67736d656e646f7a6140676d61696c2e636f6d"].pack("H*")</code>

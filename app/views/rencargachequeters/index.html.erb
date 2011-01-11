@@ -1,0 +1,68 @@
+<h1>Listado de Cheques del Comprobante Nro. <%= @cabcargachequeter.id %> </h1>
+
+<br />
+<table>
+  <tr>
+    <td class="boton" width="120" align="center">
+      <%= image_tag "volver.png" %> 
+      <span style="vertical-align: top">  
+      <%= link_to 'Volver', :controller => 'cabcargachequeters', :action=> 'index', :id => 1, :page => params[:page] %>
+      </span>
+    </td>
+    <td class="boton" with="100" align="center">
+      <img  src="/images/add.png" width="20px" height="20px" border="0"> 
+      <span style="vertical-align: top"> 
+        <%= link_to 'Agregar un cheque', :controller => "chequeterceros" , :action => "new" , :idcomp => @cabcargachequeter.id %>
+      </span>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" align="left" >
+    Total del Comprobante:
+    </td>
+    <td colspan="2" align="left">
+      <%= text_field_tag :total , params[:total] , :size => 12 , :value => number_to_currency( @total , :precision => 2 , :separator => "," , :delimiter => "." ) , :readonly => true %>
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td>
+      <table class="tabladentrocont">
+        <tr class="headerStyle">
+          <th> C&oacute;digo banco </th>
+          <th> Suc. del banco</th>
+          <th> C&oacute;digo postal </th>
+          <th> Nro. cheque </th>
+          <th> CUIT </th>
+          <th> Fecha vencimiento </th>
+          <th> Fecha emisi&oacute;n </th>
+          <th width="70"> Importe </th>
+        </tr>
+ 
+      <% @rencargachequeter.each do |rencargachequeter|%>
+        <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+          <td align="center"><%=h rencargachequeter.chequetercero.banco.banc_codigo %> </td> 
+          <td align="center"><%=h rencargachequeter.chequetercero.cter_sucursalbanco %> </td>
+          <td align="center"><%=h rencargachequeter.chequetercero.cter_codigopostal %> </td>
+          <td align="center"><%=h rencargachequeter.chequetercero.cter_nrocheque %> </td>
+          <td align="center"><%=h rencargachequeter.chequetercero.cter_cuitlibrador %> </td>
+          <td align="center"><%=h rencargachequeter.chequetercero.cter_vencimiento %> </td>
+          <td align="center"><%=h rencargachequeter.chequetercero.cter_emision %> </td>
+          <td align="right"><%=h number_to_currency(rencargachequeter.chequetercero.cter_importe, :precision => 2, :separator => ",", :delimiter => ".")%> </td>
+          <td ><%= link_to 'Editar', :controller => "chequeterceros" , :action => "edit" , :id => rencargachequeter.chequetercero.id.to_s %></td>
+
+       <% if @cabcargachequeter.ccht_cerrado.to_s == "No" %> 
+          <td> | </td>
+          <td><%= link_to 'Borrar', rencargachequeter , :confirm => 'Est&aacute; seguro que borra este cheque?', :method => :delete %></td>
+        <% end %>
+      <% end %>
+   
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+

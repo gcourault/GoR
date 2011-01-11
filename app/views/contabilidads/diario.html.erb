@@ -1,0 +1,89 @@
+<h1>Libro diario</h1>
+<% if params[:fechadesde].blank? %>
+<% from_time =  Date.today - 1.months %>
+<% else %>
+<% from_time = params[:fechadesde] %>
+<% end %>
+<% if params[:fechahasta].blank? %>
+<% to_time =  Date.today   %>
+<% else %>
+<% to_time = params[:fechahasta] %>
+<% end %>
+<% params[:ejercicio] = 1 if params[:ejercicio].blank? %>
+<Fieldset class="filtro">
+<legend ALIGN="left" class="formlegend">Fecha del período </legend>
+<table align="left" class="tablafiltro">
+
+<% form_tag  :controller => 'contabilidads', :action => 'diario' do %> 
+ <tr>
+   <td class="textosbox">
+      Ejercicio:
+   </td>
+   <td>
+     <%= select_tag(:ejercicio, options_for_select(@ejercicios.collect {|u| [u.ejer_descripcion,u.id]}, params[:ejercicio].to_i), {:class => "textosbox"}) %> 
+   </td>
+   <td class="textosbox">
+      Fecha desde:
+    </td>
+    <td >
+      <%=  select_date from_time , {:prefix => "fechadesde"}, {:class => "textosbox"} %> 
+    </td>
+    <td class="textosbox">
+      Fecha hasta: 
+    </td>
+    <td>
+      <%= select_date to_time, {:prefix=>"fechahasta"}, {:class => "textosbox"} %>
+    </td>
+    <td colspan="2" class="textosbox">
+      <%= submit_tag "Consultar", :class => "textosbox", :onclick=>"javascript:mostrar_div('output')" %>
+    </td>
+ </tr>
+<% end %>
+
+</table>
+</Fieldset>
+<br />
+<% if !@asientos.nil? && @asientos.size > 0 %>
+<% @ejerc = Ejercicio.find(params[:ejercicio].to_i) %>
+<% if (from_time >= @ejerc.ejer_desde) && (to_time <= @ejerc.ejer_hasta) %>
+<table >
+<tr>
+<td  class="boton" width="150px"  align="center">
+<%= image_tag "pdf.png" %> 
+<span  style="vertical-align: top"> <%= link_to 'Generar PDF', :controller => 'contabilidads/diario/', :action => 'diario.pdf', :from_time => from_time, :to_time => to_time  %> </span>
+</td>
+</tr>
+</table>
+<hr>
+<table class="tabladentrocont">
+   <tr class="cablibro"> 
+     <td> Nro. </td>
+     <td> Cuenta </td>
+     <td align="center"> Debe </td>
+     <td align="center"> Haber </td>
+   </tr>
+<tr> <td colspan="4"> <hr> </td> </tr>
+<% @asientos.each do |asiento| %>
+  <% @renglon = Contabilidad.renasiento(asiento.id) %>
+      <tr><td class="cabasiento" colspan="4"> Asiento: <%=h asiento.id %>  <%=h asiento.casi_fecha %>   <%=h asiento.casi_descripcion %></td>  </tr>
+    <% totaldebe = 0 %>
+    <% totalhaber = 0 %>
+     <% @renglon.each do |reng| %>
+        <tr>
+         <td> <%=h reng.cabasiento.id %></td>
+	 <td> <%=h reng.plandecuenta.codigo_nombre if reng.plandecuenta %></td>
+ 	 <td align="right"> <%=h number_to_currency(reng.rasi_importe, :precision => 2, :separator => ",", :delimiter => ".") if reng.rasi_importe.to_s.to_d > 0 %> <% totaldebe = reng.rasi_importe.to_s.to_d > 0 ? totaldebe + reng.rasi_importe.to_s.to_d : totaldebe %></td>
+         <td align="right"> <%=h number_to_currency(reng.rasi_importe, :precision => 2, :separator => ",", :delimiter => ".")  if reng.rasi_importe.to_s.to_d < 0 %> <% totalhaber = reng.rasi_importe.to_s.to_d < 0 ? totalhaber + reng.rasi_importe.to_s.to_d : totalhaber %> </td>
+        </tr>
+     <% end %>
+    <tr> <td colspan="4"> <hr> </td> </tr>
+    <tr> <td colspan="2"> </td> <td align="right"> <%=h number_to_currency(totaldebe, :precision => 2, :separator => ",", :delimiter => ".") %> </td><td align="right"> <%=h number_to_currency(totaldebe, :precision => 2, :separator => ",", :delimiter => ".") %>  </td> </tr>
+    <tr> <td colspan="4"> <hr> </td> </tr>
+<% end %>
+</table>
+<% else %>
+<h7> El periodo seleccionado no pertenece al ejercicio </h7>
+<% end %>
+<% else %>
+ <h4> No realizo una busqueda o la misma es nula </h4>
+<% end %>

@@ -1,0 +1,157 @@
+<h1>Remarques de lista de precio y cambios de grilla por marca y rubro</h1>
+<br />
+<table  > <tr>
+<td class="boton" width="100" align="center">
+  <%= image_tag "volver.png" %>
+ <span style="vertical-align: top">  
+ <%= link_to 'Volver', :controller => 'listaprecios', :action => 'index', :maestrolistaid => @listaprecio.maestrolista_id %>
+ </span>
+</td> </tr>
+</table>
+<Fieldset class="form">
+<LEGEND ALIGN="left" class="formlegend">Elija marca y rubros</LEGEND>
+<table>
+
+<% form_for :listaprecio, @listaprecio,
+                           :url => { :action => 'remarque', :id => @listaprecio},
+                           :update => 'remarcar_listaprecio_form',
+                           :method => :put,
+                           :html => { :multipart => true } do |f|   %>
+
+<%= f.error_messages %>
+  <tr height="50">
+     <td>
+       <%=params[:marcadesde] %>
+       Marca: 
+     </td>
+     <td>
+       <%= @marcas = Marca.find(:all, :order =>"marc_codigo") 
+       collection_select(:marcadesde, {}, @marcas, :marc_codigo, :marc_codigo) %>
+     </td>
+ </tr>
+ <tr>
+     <td>
+       <%=params[:rubrodesde] %>
+       Rubro desde:
+     </td>
+     <td>
+       <%= @rubros = Rubro.find(:all, :order =>"rubr_codigo")
+       collection_select(:rubrodesde, {}, @rubros, :rubr_codigo, :rubr_codigo) %>
+     </td>
+     <td>
+       <%=params[:rubrohasta] %>
+       Rubro hasta:
+     </td>
+     <td>
+       <%= @rubros = Rubro.find(:all, :order =>"rubr_codigo")
+       collection_select(:rubrohasta, {}, @rubros, :rubr_codigo, :rubr_codigo) %>
+     </td>
+  </tr>
+  </table>
+ </Fieldset>
+  <Fieldset class="form">
+ <LEGEND ALIGN="left" class="formlegend">Porcentaje de ajuste</LEGEND>
+<table>
+  <tr>
+    <td>
+       Precio de lista:
+    </td>
+    <td>
+       <%= text_field :preciolista,  params[:preciolista], :value => 0 , :size => 10 %> %
+    </td>
+  </tr>
+ </table>
+ </Fieldset>
+  <Fieldset class="form">
+  <LEGEND ALIGN="left" class="formlegend">Remarques</LEGEND>
+   <table>
+  <tr>
+    <td>
+      <input type="checkbox" name="re1" value="" />
+      Remarque 1:
+    </td>
+    <td>
+      <%= text_field :remarque,  params[:remarque], :value => 0 , :size => 10 %>
+    </td>
+    <td>
+      <input type="checkbox" name="re2" value="" />
+      Remarque 2:
+    </td>
+    <td>
+      <%= text_field :remarque2,  params[:remarque2], :value => 0, :size => 10 %>
+    </td>
+    <td>
+      <input type="checkbox" name="re3" value="" />
+      Remarque 3:
+    </td>
+    <td>
+      <%= text_field :remarque3,  params[:remarque3], :value => 0, :size => 10 %>
+    </td>
+  </tr>
+  </table>
+ </Fieldset>
+  <Fieldset class="form">
+  <LEGEND ALIGN="left" class="formlegend">Editar grilla</LEGEND>
+  <table>
+  <tr>
+ 
+    <td align="right">
+      <%= f.label "Nro. de grilla:" %>
+    </td>
+    <td>
+      <%= text_field :nrogrilla, params[:nrogrilla], :value => 0, :size => 10 %>
+    </td>
+    <td align="right">
+      <%= f.label "Nro. de columna:" %>
+    </td>
+    <td>
+      <%= text_field :nrocolumna, params[:nrocolumna], :value => 0, :size => 10 %>
+    </td>
+    <td align="right">
+      <%= f.label "Porcentaje:" %>
+    </td>
+    <td>
+      <%= text_field :porcentaje, params[:porcentaje], :value => 0,:size => 10 %>
+    </td>
+  </tr>
+  </table>
+ </Fieldset>
+  <Fieldset class="form">
+  <LEGEND ALIGN="left" class="formlegend"> Agregar grilla <input type="checkbox" name="agregagrilla" value="" /></LEGEND>
+  <table>
+  <tr>
+  
+    <td align="right">
+      <%= f.label "Nro. de grilla:" %>
+    </td>
+    <td>
+      <%= text_field :nrogrillanue, params[:nrogrillanue], :value => 0, :size => 10 %>
+    </td>
+    <td align="right">
+      <%= f.label "Nro. de columna:" %>
+    </td>
+    <td>
+      <%= text_field :nrocolumnanue, params[:nrocolumnanue], :value => 0, :size => 10 %>
+    </td>
+    <td align="right">
+      <%= f.label "Porcentaje:" %>
+    </td>
+    <td>
+      <%= text_field :porcentajenue, params[:porcentajenue], :value => 0, :size => 10 %>
+    </td>
+  </tr>
+ </table>
+ </Fieldset>
+ 
+  <table>
+  <tr>
+    <td colspan="7" align="center" height="70">
+<!--<input type="submit" value ="Remarcar" /> -->
+      <%= f.submit 'Modificar', :disable_with => "Grabando remarques...", :confirm => 'Esta seguro que desea realizar estas modificaciones?'%>
+    </td>
+  </tr>
+<% end %> 
+
+</table>
+
+

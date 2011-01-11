@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/gescom-onrails/!svn/ver/76/test/functional
+END
+rubros_controller_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/gescom-onrails/!svn/ver/28/test/functional/rubros_controller_test.rb
+END
+listaprecios_controller_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/gescom-onrails/!svn/ver/28/test/functional/listaprecios_controller_test.rb
+END
+alicuotaivas_controller_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/gescom-onrails/!svn/ver/10/test/functional/alicuotaivas_controller_test.rb
+END
+intranet_controller_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/gescom-onrails/!svn/ver/11/test/functional/intranet_controller_test.rb
+END
+sucursals_controller_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/gescom-onrails/!svn/ver/22/test/functional/sucursals_controller_test.rb
+END
+articulos_controller_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/gescom-onrails/!svn/ver/28/test/functional/articulos_controller_test.rb
+END
+bancos_controller_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/gescom-onrails/!svn/ver/22/test/functional/bancos_controller_test.rb
+END
+marcas_controller_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/gescom-onrails/!svn/ver/28/test/functional/marcas_controller_test.rb
+END
+cabcajas_controller_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/gescom-onrails/!svn/ver/22/test/functional/cabcajas_controller_test.rb
+END
+proveedors_controller_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/gescom-onrails/!svn/ver/28/test/functional/proveedors_controller_test.rb
+END
+listapublico_controller_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/gescom-onrails/!svn/ver/33/test/functional/listapublico_controller_test.rb
+END
+maestrolistas_controller_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/gescom-onrails/!svn/ver/76/test/functional/maestrolistas_controller_test.rb
+END

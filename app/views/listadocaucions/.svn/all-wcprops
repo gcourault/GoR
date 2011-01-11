@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/gescom-onrails/!svn/ver/309/app/views/listadocaucions
+END
+edit.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/gescom-onrails/!svn/ver/260/app/views/listadocaucions/edit.html.erb
+END
+estadocaucion.pdf.prawn
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/gescom-onrails/!svn/ver/231/app/views/listadocaucions/estadocaucion.pdf.prawn
+END
+index.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/gescom-onrails/!svn/ver/293/app/views/listadocaucions/index.html.erb
+END
+new.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/gescom-onrails/!svn/ver/140/app/views/listadocaucions/new.html.erb
+END
+show.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/gescom-onrails/!svn/ver/140/app/views/listadocaucions/show.html.erb
+END
+estadocaucion.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/gescom-onrails/!svn/ver/309/app/views/listadocaucions/estadocaucion.html.erb
+END

@@ -1,0 +1,71 @@
+<h1>Modificaci&oacute;n de Comprobante</h1>
+
+<br/>
+<table>
+  <tr>
+   <td class="boton" width="120" align="center">
+     <%= image_tag "volver.png" %> 
+     <span style="vertical-align: top">  
+       <%= link_to 'Volver', cabcargachequeters_path %>
+     </span>
+   </td>
+  </tr>
+</table>
+<br />
+
+<% form_for(@cabcargachequeter) do |f| %>
+  <%= f.error_messages %>
+  <table>
+    <tr>
+      <td>
+      <Fieldset class="form">
+      <LEGEND ALIGN="left" class="formlegend">Ingrese los datos</LEGEND>
+      <table>
+        <tr>
+          <td>
+          Fecha de Carga:     
+          </td>
+          <td>
+          <%= f.date_select(:ccht_fecha, {}, {:class => "textosbox"}) %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+          Origen de los cheques:     
+          </td>
+          <td>
+          <%= f.collection_select :sucursal_id, @sucursal, :id, :sucu_nombre, {:prompt=>"Seleccione una sucursal:"},{:onChange=>remote_function( :url => {:action => 'asignasucursal'} , :with => "'sucursal_id' + this.value" ) } %>   
+          </td>
+        </tr>
+  <!--  <tr>
+          <td>
+          Importe:     
+          </td>
+          <td>
+            <%= f.text_field :ccht_total, :size => 10 %>
+          </td>
+        </tr> -->
+        <tr>
+          <td>
+          Planilla cerrada:     
+          </td>
+          <td>
+          <%= f.select(:ccht_cerrado , options_for_select([['No', 'No'],['Si', 'Si']], @cabcargachequeter.ccht_cerrado.to_s), {}, :class => "textosbox") %>   
+          </td>
+        </tr>
+      </table>
+      </Fieldset>
+      </td>
+    </tr>
+  </table>
+
+  <table>
+    <tr height="70">
+      <td colspan="2" ALIGN="center">
+        <%= f.submit 'Modificar' %>
+      </td>
+    </tr>
+  </table>
+<% end %>
+
+

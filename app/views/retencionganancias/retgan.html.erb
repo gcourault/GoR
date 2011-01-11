@@ -1,0 +1,61 @@
+<h1>Retenci&oacute;n de ganancias</h1>
+<br />
+<div id="editar">
+</div>
+<table>
+ <tr>
+  <td class="boton"  align="center">
+     <%= image_tag "volver.png" %> 
+    <span style="vertical-align: top"> 
+     <%= link_to 'Volver', :controller => 'cabplaegresos', :action => 'index' %>
+    </span>
+  </td>
+ </tr>
+</table>
+
+<table>
+  <tr class="headerStyle">
+      <th>Pla egreso</th>
+      <th>Comprob </th>
+      <th>Fecha</th>
+      <th>Tipo</th>
+      <th>Proveedor</th>
+      <th>Concepto</th>
+      <th>Neto</th>
+      <th>Total</th>
+ </tr>
+<% for retgan in @retgans %>
+ <% @comprobanterts = Cabcompra.find(:all, :conditions =>['retencionganancia_id = ? and sucursal_id = ?', retgan.id[0] , session[:sucursal]]) %>
+
+<tr><td colspan="7" align="center"> Comprobantes</td> </tr>
+<% @comprobanterts.each do |comprobantert| %>
+ <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+    <td><%=h comprobantert.cabplaegreso_id %></td>
+    <td><%=h comprobantert.id[0] %> </td>
+    <td><%=h comprobantert.ccom_fecha %></td>
+    <td><%=h comprobantert.tipocomprobante.tcom_nombre %></td>
+    <% proveedor = Proveedor.find_by_id(comprobantert.proveedor_id, comprobantert.sucursal_id) %>
+    <td><%=h proveedor.prov_nombre %></td>
+    <td><%=h comprobantert.conceptoegreso.cegr_detalle %></td> 
+    <td><%=h number_to_currency(comprobantert.ccom_netogravado, :precision => 2, :separator => ",", :delimiter => ".") %></td>
+    <td><%=h number_to_currency(comprobantert.ccom_total, :precision => 2, :separator => ",", :delimiter => ".") %></td>
+ </tr>
+ <% end %>
+<tr>
+<td> Retecion de ganacia </td> <td> Nro de orden: </td> <td> <%= retgan.rtga_nroorden %> </td>
+<td> Total: </td> <td> <%=  number_to_currency(retgan.rtga_importe, :precision => 2, :separator => ",", :delimiter => ".") %> </td>
+<% if @planillaegreso.cpeg_cerrada.to_s == "N" %>
+ <!-- <td> <%= link_to "Editar", :controller => 'retencionganancias', :action => 'edit', :id => [retgan.id[0].to_s+","+retgan.id[1].to_s], :idpe => params[:idpe] %> </td> -->
+<td><%= link_to_remote 'Editar', :update => 'editar', :url => {:controller => 'retencionganancias', :action =>'editar', :id => [retgan.id[0].to_s+","+retgan.id[1].to_s], :idpe => params[:idpe]} %> </td>
+  <td> <%= link_to "Borrar", retgan, :confirm => 'Esta seguro de borrar esta retención de ganancia?', :method => :delete  %> </td>
+
+<% end %>
+</tr>
+<% end %>
+</table>
+<br />
+
+
+
+
+

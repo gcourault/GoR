@@ -1,0 +1,112 @@
+<h1>Compras de art&iacute;culos Pirelli por sucursal y rubro</h1>
+
+<% if params[:fechadesde].blank? %>
+<% from_time =  Date.today - 31.days   %>
+<% else %>
+<% from_time = params[:fechadesde] %>
+<% end %>
+<% if params[:fechahasta].blank? %>
+<% to_time =  Date.today   %>
+<% else %>
+<% to_time = params[:fechahasta] %>
+<% end %>
+<Fieldset class="filtro">
+<legend ALIGN="left" class="formlegend">Seleccione entre que fechas</legend>
+<table align="left" class="tablafiltro">
+<% form_tag :controller => 'estadisticas', :action => 'comprasucu' do %> 
+<tr>
+<td>  <%= hidden_field_tag :tipo, params[:tipo] %>
+ </td>
+    <td >
+      Fecha desde:
+    </td>
+    <td>
+      <%= select_date (from_time , {:prefix => "fechadesde"}, {:class => "textosbox"}) %> 
+    </td>
+    <td>
+      Fecha hasta: 
+    </td>
+     <td>
+      <%= select_date (to_time, {:prefix=>"fechahasta"}, {:class => "textosbox"})  %>
+    </td>
+    <td colspan="2">
+     <%= submit_tag "Consultar", :class => "textosbox",  :onclick=>"javascript:mostrar_div('output')" %>
+    </td>
+<% end %>
+</tr>
+</table>
+</Fieldset>
+<br />
+<% if @comprasucus.size > 0 %>
+<% @sucursals = Sucursal.find(:all) %>
+
+<div class="tablaContainer">
+ <table class="tabladentrocont">
+  <tr class="headerStyle">
+    <th>Sucursal</th>
+    <th>Rubro</th>
+    <th>Cantidad</th>
+  </tr>
+<% totaltodas = 0 %>
+<% for sucu in @sucursals %>
+<% total = 0 %>
+
+<% @comprasucus.each do |comprasucu| %>
+ <% if comprasucu.sucursal == sucu.sucu_abreviatura %>
+  <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+    <td><%=h comprasucu.sucursal %></td>
+    <td><%=h comprasucu.rubro %></td>
+    <td><%=h comprasucu.cantidad %></td>
+    <% total = total + comprasucu.cantidad.to_i %>
+   </tr>
+<% end %>
+<% end %> <!--end if -->
+
+<% if (total > 0) %>
+ <tr> 
+    <td> Total por sucursal: </td>
+    <td colspan= "3" align="right"> <%=h total %> </td>
+ </tr>
+<% end %>
+<% totaltodas = totaltodas + total %>
+<% end %>
+ <tr> 
+    <td> Total todas sucursales: </td>
+    <td colspan= "3" align="right"> <%=h totaltodas %> </td>
+ </tr>
+</table>
+
+</div>
+<br>
+<% totalrub = 0 %>
+<table>
+ <tr>
+    <th>Rubro</th>
+    <th>Cantidad</th>
+ </tr>
+
+<% totalrub = 0 %>
+<% @comprasucuagrups.each do |comprasucuagrup| %>
+  <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+    <td><%=h comprasucuagrup.rubro %></td>
+    <td><%=h comprasucuagrup.cantidad %></td>
+   <% totalrub = totalrub + comprasucuagrup.cantidad.to_i %>
+  </tr>
+<% end %>
+
+<tr><td> TOTAL </td>  <td colspan= "2" align="right"> <%=h totalrub %> </td></tr>
+
+</table>
+<br />
+
+<div><%= image_tag "comprasucuagrup.png"%> </div>
+<br />
+<table>
+<tr>
+<td class="boton"  align="center"> 
+<%= image_tag "pdf.png"%>
+<span style="vertical-align: top"> <%= link_to 'Generar PDF', :controller => 'estadisticas/comprasuc', :action => 'comprasuc.pdf', :from_time => from_time, :to_time => to_time, :totalrub => totalrub %> </span>
+</td>
+</tr>
+</table>
+<% end %>

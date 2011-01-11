@@ -1,0 +1,35 @@
+<h1>Listado de puntos de ventas</h1>
+<br />
+<table>
+ <tr>
+  <td class="boton" with="100" align="center">
+    <%= image_tag "add.png" %>
+    <span style="vertical-align: top"> 
+     <%= link_to 'Crear nuevo punto de venta', new_puntosventa_path %>
+    </span>
+  </td>
+ </tr>
+</table>
+<br />
+<div class="tablaContainer">
+ <table class="tabladentrocont">
+  <tr class="headerStyle">
+    <th>Punto de venta</th>
+    <th>Sucursal</th>
+    <th>Modo de impresi&oacute;n</th>
+  </tr>
+
+<% @puntosventas.each do |puntosventa| %>
+  <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+    <td><%=h puntosventa.pven_punto %></td>
+    <td><%=h puntosventa.sucursal.sucu_nombre %></td>
+    <td><%=h puntosventa.pven_modoimpresion %></td>
+    <td><%= link_to 'Editar', edit_puntosventa_path(puntosventa , :page => params[:page]) %></td>
+    <td><%= link_to 'Borrar', puntosventa, :confirm => 'Esta seguro se borrar el punto de venta?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<%=will_paginate @puntosventas, :prev_label => '&laquo; Anterior', :next_label => 'Siguiente &raquo;' %>
+</div>
+

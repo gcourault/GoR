@@ -1,0 +1,129 @@
+<h1>Modificar comprobantes</h1>
+
+<h1 align="left">Carga del comprobante </h1>
+<% form_for(@cabcompra) do |f| %>
+  <%= f.error_messages %>
+  <Fieldset class="form">
+  <LEGEND ALIGN="left" class="formlegend">Ingrese los datos del comprobante</LEGEND>
+   <table class="tabladentrocont" align="left">
+    <tr>
+     <td colspan="2">
+      <div id="cabecera">
+       <%= render :partial => '/cabcompras/cabecera', :locals => { :f => f } %>
+      </div>
+    </td>
+   </tr>
+   <tr>
+    <td colspan="2">
+    <% if(@iva.tcom_discriminaiva.to_s == 'Si') %>
+     <div id="ivasi">
+        <%= render :partial => '/cabcompras/ivasi', :locals => { :f => f } %>
+     </div>
+     <% elsif ((@iva.tcom_discriminaiva.to_s == 'No') && (@iva.tcom_cabecera.to_s == 'S')) %>
+           <div id="ivasi">
+        <%= render :partial => '/cabcompras/ivasi', :locals => { :f => f } %>
+     </div>
+     <% elsif (@iva.tcom_discriminaiva.to_s == 'No') %>
+     <div id="ivano">
+         <%= render :partial => '/cabcompras/ivano', :locals => { :f => f } %>
+     </div>
+    <% end %> 
+   </td>
+  </tr>
+</table>
+</Fieldset>
+<br />
+<br />
+
+<% if(@iva.tcom_discriminaiva.to_s == 'Si' ) %>
+<table align="left">
+ <tr>
+  <td colspan="2">
+ <Fieldset class="form">
+ <legend ALIGN="left" class="formlegend" >Detalle del comprobante</legend>
+
+<table>
+<!--  <tr>
+   <td colspan="8" align="center" height="80">
+     <h4> Ingrense el/los renglon/es </h4>
+   </td>
+  </tr> -->
+  <tr>
+   <td colspan="2">
+  <div id="rencompra"  height="70">
+   <% if @rencompras.empty? %> 
+<% else %>
+<table border="1">
+  <tr>
+    <th>Alicuota IVA</th>
+    <th>Neto gravado</th>
+    <th>IVA</th>
+    <th>total</th>
+  </tr>
+<% @rencompras.each do |rencompra| %>
+  <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+    <td> <%=h rencompra.alicuotaiva.aiva_alicuota %> </td>
+    <td> <%=h rencompra.rcom_netorenglon %> </td>
+    <td> <%=h rencompra.rcom_ivarenglon %> </td>
+    <td> <%=h rencompra.rcom_totalrenglon %> </td>
+   
+   <!-- <td><%= link_to_remote 'Modificar',{:url => {:controller => "rencompras", :action => "edit", :id => rencompra.id, :rencompraid => rencompra.id },  :complete =>  "Element.show   ('modrencompra');"},  {:href => url_for(:controller => "rencompras", :action => "edit", :id => rencompra.id, :rencompraid => rencompra.id )}  %>   </td>  -->
+  </tr>
+<% end %>
+</table>
+<% end %>
+  </div>
+  </td>
+  </tr>
+</table>
+</Fieldset>
+</td>
+</tr>
+<tr>
+   <td align="right" >
+      Total factura:
+    </td>
+    <td align ="left">
+      <!-- <input type="numeric" readonly="readonly" name="ccom_total" size="10" > -->
+      <%= f.text_field :ccom_total, :size => 10, :readonly => true, :class => "textosbox" %> 
+    </td> 
+</tr>
+<% end %>
+
+<tr>
+<td>
+<table>
+  <tr height="80" >
+   <td align="left" width="250" >
+      <%= image_tag "cancel.png" %> 
+      <span style="vertical-align: top">  
+       <% if params[:idpe].to_i > 0 %>
+          <%= link_to 'Cancelar', :controller => 'cabcompras', :action => 'index', :nrope => params[:nrope].to_i, :idpe => params[:idpe] %>
+       <% else %>
+          <%= link_to 'Cancelar', :controller => 'cabcompras', :action => 'comprobantes', :id => 0 %>
+       <% end %>
+      </span>
+   </td>
+   <td align="left" width="250">
+   <!-- <input type="image" src="/images/form_add.png" name="SubmitType" value="new"> -->
+     <%= f.submit 'Guardar',  :confirm => 'Termino de cargar el comprobante? Lo quiere guardar?', :class => "textosbox" %>
+   </td>
+  </tr>
+</table>
+</td>
+</tr>
+</table>
+<% end %>
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/gescom-onrails/!svn/ver/379/app/views/usuarios
+END
+edit.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/gescom-onrails/!svn/ver/379/app/views/usuarios/edit.html.erb
+END
+index.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/gescom-onrails/!svn/ver/379/app/views/usuarios/index.html.erb
+END
+new.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/gescom-onrails/!svn/ver/379/app/views/usuarios/new.html.erb
+END
+_buscacliente.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/gescom-onrails/!svn/ver/192/app/views/usuarios/_buscacliente.html.erb
+END
+show.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/gescom-onrails/!svn/ver/309/app/views/usuarios/show.html.erb
+END
+_traeclientes.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/gescom-onrails/!svn/ver/274/app/views/usuarios/_traeclientes.html.erb
+END

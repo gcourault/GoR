@@ -1,0 +1,89 @@
+<h1>Agregando usuario</h1>
+<br/>
+ <%= image_tag "volver.png" %>
+ <span style="vertical-align: top"> 
+ <%= link_to "Volver", usuarios_path %>
+ </span>
+<br/>
+<br/>
+<% form_for(@usuario) do |f| %>
+ <%= f.error_messages %>
+ <table>
+  <tr>
+  <td>Usuario:</td>
+  <td><%=f.text_field :usur_usuario %></td>
+  </tr>
+  <tr>
+  <td>Nombre:</td> 
+  <td><%=f.text_field :usur_nombre %></td>
+  </tr> 
+  <tr>
+  <td>Nivel menues:</td> 
+  <td><%=f.text_field :usur_nivelmenu %></td>
+  </tr>
+  <tr> 
+   <td>Nivel:</td> 
+  <td><%=f.text_field :usur_nivel %></td>
+  </tr> 
+  <tr> 
+   <td>e-mail</td> 
+  <td><%=f.text_field :usur_email %></td>
+  </tr> 
+  <tr> 
+   <td>Contrase&ntilde;a</td> 
+  <td><%=f.password_field :usur_contrasena %></td>
+  </tr>
+  <tr> 
+   <td>Sucursal:</td> 
+<!--<td><%= f.collection_select :sucursal_id, @sucursal, :id, :sucu_nombre, {}, {:onChange => remote_function(:url => {:action => 'buscatextocliente'}, :with => "'sucursal_id=' + this.value" )} %></td> -->
+   <td><%= f.collection_select :sucursal_id, @sucursal, :id, :sucu_nombre, {:prompt=>"Seleccione una sucursal:"}, {:onChange => remote_function( :url => {:action => 'asignasucursal'} , :with => "'sucursal_id=' + this.value" ) } %></td>
+ </tr>
+  <tr>
+    <td colspan="2" align="center">
+    <div id="datos_clientes">
+       <% if @cliente.blank? %>
+        <% else %>
+     <Fieldset class="filtro">
+     <table>
+         <tr>
+          <td>Cliente:</td>
+          <td>
+            <!--  <%= text_field_with_auto_complete :cliente, :clie_razonsocial, :after_update_element => "function(element,value){" + remote_function(:url => { :action => 'traecliente'}, :with => "'search='+this.value") + "}" %> -->
+            <%= text_field_with_auto_complete :cliente, :clie_razonsocial, {:onBlur => remote_function(:url => {:action => 'traecliente'},:with => "'search='+this.value" ) } %> 
+          </td>
+         </tr>
+         <tr>
+          <td> Direcci&oacute;n: </td>
+          <td> <%= @cliente.clie_domicilio %> </td>
+         </tr>
+         <tr>
+          <td>  <input type="hidden", name="cliente[id]", value="<%= @cliente.id  %>"> </td>
+         </tr>
+         <tr>
+          <td> CUIT: </td>
+          <td> <%= @cliente.clie_cuit  %> </td>
+         </tr>
+         <tr>
+          <td> C&oacute;digo: </td>
+          <td> <%= @cliente.clie_codigo  %> </td>
+         </tr>
+     </table>
+     </Fieldset>
+        <% end %>
+ </div>
+    </td>
+   </tr>
+   <tr>
+    <td > Roles:  </td>
+    <td >
+     <select id="roles" name="roles[]" multiple="multiple" size="7">
+       <%= options_from_collection_for_select(@roles, :id , :titulo , @selected ) %>
+     </select>
+    </td>
+   </tr>
+   <tr height="80px"><td colspan="2" align="center" > <%= f.submit "Crear" %></td></tr> 
+ </table>
+<% end %>
+
+
+

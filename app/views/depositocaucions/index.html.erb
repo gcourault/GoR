@@ -1,0 +1,204 @@
+
+<div id="nuevo"> 
+
+<!--funcion para sumar los importes a medida que checkeas los checkbox -->
+
+
+<h1>Valores pendientes</h1>
+<!-- si no hay fecha seleccionado la fija y si no la mantiene -->
+<% if params[:fechadesde].blank? %>
+<% from_time =  Date.today - 2.days   %>
+<% else %>
+<% from_time = params[:fechadesde] %>
+<% end %>
+<% if params[:fechahasta].blank? %>
+<% to_time =  Date.today   %>
+<% else %>
+<% to_time = params[:fechahasta] %>
+<% end %>
+<% if params[:fechaacred].blank? %>
+<%  acred_time  =  Date.today   %>
+<% else %>
+<% acred_time  = params[:fechaacred] %>
+<% end %>
+<% importe = 0 %>
+<Fieldset class="filtro">
+<table align="left" class="tablafiltro">
+ <tr >
+ <% form_tag depositocaucions_path, :method => 'get' do %>  
+   <tr >
+     <td width="250">
+        Fecha de vencimiento mayor igual a:
+     </td>
+     <td width="250">
+       <%=  select_date(from_time , {:prefix => "fechadesde"}, {:class => "textosbox"}) %> 
+     </td>
+     <td width="250">
+       Fecha de vencimiento menor igual a: 
+     </td>
+     <td width="250">
+       <%= select_date(to_time, {:prefix=>"fechahasta"}, {:class => "textosbox"}) %>
+     </td>
+    </tr>
+    <tr >
+     <td  colspan="2">
+       Buscar por N&uacute;mero de cheque:
+       <%= text_field_tag :nrocheq, params[:nrocheq], :class => "textosbox" %>
+     </td>
+     <td width="150">
+     <%= submit_tag "Consultar", :class => "textosbox" %>
+    </td>
+  </tr>
+ <% end %>
+ </tr>
+</table>
+</Fieldset>
+<% form_tag :action => 'nuevo', :method => 'put' do %>  
+<form name="myform">
+<% if @depositocaucionpendis.empty? %> 
+<h2> No presiono consultar o no se encontraron cheques con vencimiento entre esas fechas </h2>
+<% else %>
+<% total = 0 %>
+<div class="tablaContainer">
+   <%= select_date from_time , :prefix => "fechadesde", :discard_day => true,  :discard_month => true, :discard_year => true %> 
+   <%= select_date to_time, :prefix=>"fechahasta", :discard_day => true,  :discard_month => true, :discard_year => true  %>
+ <table class="tabladentrocont">
+  <tr class="headerStyle">
+   <th> </th>
+   <th> Nro. cheque </th>
+   <th> Importe</th>
+   <th> Fecha vencimiento </th>
+   <th> Nro. listado </th>
+  </tr>
+
+<% @depositocaucionpendis.each do |depositocaucionp| %>
+    <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+    <td style="text-align: center" class="box1">
+     <!--    <%= check_box_tag "depositocaucion_ids[]", depositocaucionp.id, false, :id => "depositocaucion_#{depositocaucionp.id}", :name => 'num', :onclick => 'calculate(this.form)' %> -->
+        <!--  <input type="checkbox", name = "num", value = "<%= depositocaucionp.id %>", false,  onchange = "calculate(this.form)" > -->
+     <input type="hidden", name="numtext", value="<%= depositocaucionp.importe %>", false, onchange="sumacauc(this.form)"> 
+     <input type="checkbox", name = "chequetercero_ids[]", value="<%= depositocaucionp.idcheter %>", checked="true", onchange = "sumacauc(this.form)" >
+    </td>
+    <td><%=h depositocaucionp.nro %></td>
+    <td><%=h number_to_currency(depositocaucionp.importe, :precision => 2, :separator => ",", :delimiter => ".") %> </td> <% total = total +  depositocaucionp.importe.to_d %>
+    <td><%=h depositocaucionp.fechavenc %></td>
+    <td><%=h depositocaucionp.listado %></td> 
+ </tr>
+<% end %>
+</table>
+</div>
+
+<Fieldset class="filtro">
+<table>
+ <tr >
+  <td colspan="3" width ="150"> Total de los cheques: <input type="text" class="textosbox" size="12" value="<%=h  number_to_currency(total, :precision => 2, :separator => ",", :delimiter => ".") %>"readonly="readonly"  <td>
+  <td colspan="4" align="center"> 
+  <div class="box1"> Los cheques seleccionados suman: $<input type="text" class="textosbox" name="answer" size="12" readonly="readonly" ></div>
+  <!-- <%= link_to_remote "Sumar", :update => 'importe', :url => {:controller => 'depositocaucions', :action => 'suma', :depositocaucion_ids =>['4553',    '5077']} %> -->
+  </td>
+  <td> </td>
+ </tr>
+ <tr>
+  <td > Boleta de deposito:</td>
+  <td >
+    <%= text_field_tag :dcau_nroboletadeposito, params[:dcau_nroboletadeposito], :value => 0,  :size => 5, :class => "textosbox" %>
+  </td>
+  <td >
+    Concepto de caución:
+  </td>
+  <td>
+    <%= @conceptocaucions = Conceptocaucion.find(:all) 
+    select_tag(:conceptocaucion, options_for_select(@conceptocaucions.collect {|u| [u.ccau_detalle,u.id]}, params[:conceptocaucion].to_i), :class => "textosbox") %>
+  </td>
+  <td>
+      Fecha de acreditación:
+  </td>
+  <td>
+     <%=  select_date(acred_time, {:prefix => "fechaacred"}, {:class => "textosbox"}) %> 
+  </td>
+ </tr>
+ <tr height="50">
+  <td colspan="6" align="center">
+   <%= submit_tag "Actualizar", :class => "textosbox", :confirm => 'Esta seguro que desea ingresar estos cheques a caución?', :disable_with => "Pasando a deposito...",  :onclick => remote_function(:url => {:action => 'nuevo'}, :with => 'Form.Element.serialize(this)')  %>
+  </td>
+</tr>
+<% end %>
+</table>
+</Fieldset>
+
+</form> 
+<% end %>
+<!-- desde aca en caucion -->
+<h1>Depositos en caución</h1>
+<div class="tablaContainer">
+ <table class="tabladentrocont">
+   <tr class="headerStyle">
+    	<th> Nro. listado </th>
+   	<th> Nro. cheque </th>
+   	<th> Concepto de cauci&oacute;n </th>
+   	<th> Boleta de dep&oacute;sito </th>
+   	<th> Fecha vencimiento </th>
+   	<th> Fecha de acreditaci&oacute;n </th>
+   	<th> Importe</th>
+   </tr>
+<% @agrups.each do |agrup| %>
+ <% subtotal = 0 %>
+  <% @depositocaucions.each do |depositocaucion| %>
+   <% if (agrup == depositocaucion.dcau_nroboletadeposito.to_i) %>
+    <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+        <td><%=h depositocaucion.listado %></td> 
+    	<td><%=h depositocaucion.nro %></td>
+    	<td><%=h depositocaucion.concepto %></td>
+    	<td><%=h depositocaucion.dcau_nroboletadeposito %></td>
+    	<td><%=h depositocaucion.venc %></td>
+    	<td><%=h depositocaucion.dcau_fechadeposito %></td>
+    	<td><%=h  number_to_currency(depositocaucion.importe, :precision => 2, :separator => ",", :delimiter => ".")%> <% subtotal = subtotal + depositocaucion.importe.to_d %></td>
+        <td><%= link_to 'Sacar de deposito', depositocaucion, :confirm => 'Esta seguro de sacar el cheque de deposito de caución?', :method => :delete %>
+  </td>
+     </tr>
+   <% end %>
+ <% end %>
+  <% if (subtotal > 0) %> 
+  <tr> <td colspan="6"> Subtotal: </td> <td> <b><%= number_to_currency(subtotal, :precision => 2, :separator => ",", :delimiter => ".")  %> </td> </tr>
+  <% end %>
+<% end %>
+</table>
+</div>
+
+<table>
+<% totalv = 0 %>
+<% totala = 0 %>
+ <tr>
+  <td> <b>Total de cheques a acreditar:</td>
+  <td>
+   <% @totalvens.each do |totalven| %>
+	<td><b> <%=h   number_to_currency(totalven.totalvenc, :precision => 2, :separator => ",", :delimiter => ".") %></td> <% totalv = totalv +  totalven.totalvenc.to_d %>
+   <% end %>
+  </td>
+ </tr>
+ <tr>
+  <td><b> Total de cheques acreditados:</td>
+  <td>
+    <% @acreditados.each do |acreditado| %>
+	<td><b><%=h  number_to_currency(acreditado.totalacred, :precision => 2, :separator => ",", :delimiter => ".") %></td> <% totala = totala +  acreditado.totalacred.to_d %>
+    <% end %>
+  </td>
+ </tr>
+ <tr>
+   <td><b>Diferencia : <%= number_to_currency((totalv - totala), :precision => 2, :separator => ",", :delimiter => ".") %> </td>
+ </tr>
+</table>
+<br />
+<br />
+<table align="center">
+ <tr>
+  <td  class="boton" width="200"  align="center">
+   <img  src="/images/list.png" width="20px" height="20px" border="0"> 
+   <span style="vertical-align: top"> 
+   <%= link_to 'Pendientes por listados', :controller => 'depositocaucions', :action => 'pendientelistado', :id => '1' %>
+   </span>
+  </td>
+ </tr>
+</table>
+</div>
+

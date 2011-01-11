@@ -1,0 +1,108 @@
+<h1>Listado de reclamos</h1>
+
+<% form_tag reclamos_path, :method => 'get' do %>  
+ <Fieldset class="filtro">
+  <table class="tablafiltro">
+   <tr>
+    <td>
+      Buscar por N&uacute;mero Interno:
+    </td>
+    <td>
+      <%= text_field_tag :nroint, params[:nroint], :class => "textosbox" %>
+    </td>
+    <td>  
+      Cliente:
+    </td>
+    <td>
+      <%= text_field_tag :cliente, params[:cliente], :class => "textosbox" %>
+    </td>
+  
+       <td>
+   <input type="checkbox" name="prt" value="" />      
+      PRT:
+      <%= text_field_tag :nroprt, params[:nroprt], :class => "textosbox" %>
+     </td>
+    </tr>
+   <tr>
+    <td>
+     Sucursal:
+    </td>
+    <td>
+     <%= @sucursales = Sucursal.find(:all) 
+     select_tag(:sucursal, "<option>Seleccione una sucursal</option>" + options_for_select(@sucursales.collect {|u| [u.sucu_nombre,u.id]}, params[:sucursal].to_i), :class => "textosbox") %>
+    </td>
+    <td>
+     A&ntilde;o:
+    </td>
+    <td>
+     <%= select_tag('anio', "<option>Seleccione un a&ntilde;o</option>" + options_for_select([Date.today.year, (Date.today - 1.year).year , (Date.today - 2.year).year], params[:anio].to_s), :class => "textosbox") %>
+    </td>
+    <td>
+  <%= submit_tag "Buscar", :name => nil, :class => "textosbox" %>
+    </td>
+   </tr>
+ </table>
+ </Fieldset>
+<% end %>
+
+<br />
+
+<% restrict_to "(rol 3 | rol 4 | rol 5 | rol 6 | rol 7) & !blacklist" do %>
+<table> 
+ <tr>
+  <td class="boton" width="200" align="center">
+    <%= image_tag "add.png" %> 
+    <span style="vertical-align: top"> 
+    <%= link_to 'Nuevo reclamo', new_reclamo_path %>
+   </span>
+  </td>
+  
+  <td  class="boton" width="200"  align="center">
+   <%= image_tag "pdf.png" %> 
+   <span style="vertical-align: top"> 
+   <%= link_to 'Generar PDF', :controller => 'reclamos/index', :action => 'index.pdf', :sucursal => params[:sucursal], :anio => params[:anio] %>
+   </span>
+  </td>
+ </tr>
+</table>
+<% end %>
+
+<% if @reclamos.nil? %> 
+<h2> No se encontraron registros para su busqueda </h2>
+<% else %>
+<div class="tablaContainer" >
+ <table class="tabladentrocont" border="0" cellpadding="0" cellspacing="0">
+  <tr class="headerStyle">
+    <th width="200px">Cliente</th>
+    <th>Nota de credito</th>
+    <th whidth="200px">Art&iacute;culo</th>
+    <th width="100px">Estado</th>
+    <th>Bonificaci&oacute;n</th>
+    <th width="100px">Nro PRT</th>
+    <th width="100px">Fecha</th>
+    <th>Nro Interno</th>
+  </tr>
+
+ <% @reclamos.each do |reclamo| %>
+  <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+    <td><%=h reclamo.recl_nombrecliente %></td>
+    <td><%=h reclamo.recl_creditocliente %></td>
+    <td> <% if reclamo.articulo_id? %> <%=h reclamo.articulo.arti_descripcion %> <% end %> </td>
+    <td><%=h reclamo.recl_estado %></td>
+    <td><%=h reclamo.recl_bonificacion %></td>
+    <td><%=h reclamo.recl_nroprt %></td>
+    <td><%=h reclamo.recl_fecha %></td>
+    <td><%=h reclamo.recl_nrointerno %></td>
+    <% restrict_to "(rol 3 | rol 4 | rol 5 | rol 6 | rol 7) & !blacklist" do %>
+    <td><%= link_to 'Mostrar', :controller => 'reclamos', :action => 'show' , :id => reclamo.id, :page => params[:page]  %></td>
+    <td><%= link_to 'Editar', :controller => 'reclamos', :action => 'edit' , :id => reclamo.id, :page => params[:page] %></td>
+  <!--  <td><%= link_to 'Borrar', reclamo, :confirm => 'Esta seguro de borrarlo?', :method => :delete %></td> -->
+    <% end %>
+  </tr>
+ <% end %>
+ </table>
+
+<%=will_paginate @reclamos, :prev_label => '&laquo; Anterior', :next_label => 'Siguiente &raquo;' %>
+
+</div>
+<% end %>

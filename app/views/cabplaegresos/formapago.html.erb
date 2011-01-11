@@ -1,0 +1,75 @@
+<h1>Estos comprobantes superan los $1000 ingrese la forma de pago o separelos en otra planilla de egreso</h1>
+<br />
+<table>
+ <tr>
+  <td class="boton" with="100" align="center">
+     <%= image_tag "volver.png" %> 
+    <span style="vertical-align: top"> 
+     
+     <%= link_to 'Volver', :controller => 'cabplaegresos', :action => 'edit', :id => params[:idpe][0].to_s+","+ params[:idpe][1].to_s %>
+    </span>
+  </td>
+ </tr>
+</table>
+<% if @totalproveedors.size > 0 %>
+<table>
+<tr>
+<td>
+<table>
+  <tr class="headerStyle">
+      <th>Fecha</th>
+      <th>Pto venta</th>
+      <th>Tipo</th>
+      <th>Proveedor</th>
+      <th>Forma pago</th>
+      <th>Concepto</th>
+      <th>Total</th>
+ </tr>
+<% for totalproveedor in @totalproveedors %>
+ <!--<% @comprobantepagos = Cabcompra.find(:all, :conditions =>['ccom_nroplaegreso = ? and proveedor_id = ? and conceptoegreso_id = ? and sucursal_id = ?', totalproveedor.ccom_nroplaegreso, totalproveedor.proveedor_id, totalproveedor.conceptoegreso_id, session[:sucursal]]) %> -->
+
+<%  @comprobantepagonulos = Cabplaegreso.comprobantepagonulo(totalproveedor.cabplaegreso_id, totalproveedor.proveedor_id, totalproveedor.conceptoegreso_id, session[:sucursal]) %>
+
+<% @comprobantepagonulos.each do |comprobantepago| %>
+ <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+    <td><%=h comprobantepago.ccom_fecha %></td>
+    <td><%=h comprobantepago.ccom_puntosventa %></td>
+    <td><%=h comprobantepago.tipocomprobante.tcom_nombre %></td>
+    <% proveedor = Proveedor.find_by_id(comprobantepago.proveedor_id, comprobantepago.sucursal_id) %>
+    <td><%=h proveedor.prov_nombre %></td>
+    <td><%=h comprobantepago.ccom_ctcc %></td>
+    <td><%=h comprobantepago.conceptoegreso.cegr_detalle %></td> 
+    <td><%=h comprobantepago.ccom_total %></td>
+
+  </tr>
+ <% end %>
+<tr>
+<% if @comprobantepagonulos.size > 0 %>
+<td colspan="4">
+  
+      <%= link_to "ingresar pago", :controller=> 'pagocompras', :action => 'new', :total => totalproveedor.total, :idpe => params[:idpe], :nrope => totalproveedor.ccom_nroplaegreso, :proveedor => totalproveedor.proveedor_id, :concepto => totalproveedor.conceptoegreso_id %> </td>
+
+      
+
+  </td>
+
+<td colspan="2">
+Total de los comprobantes:
+</td>
+<td>
+<%= number_to_currency(totalproveedor.total, :precision => 2, :separator => ",", :delimiter => ".")  %>
+</td>
+</tr>
+<% end %>
+ <% end %>
+</table>
+</td>
+<td>
+<div id="verpago">
+<%= render :partial => "cabplaegresos/verfp" %>
+</div>
+</td>
+</tr>
+</table>
+ <% end %>
+

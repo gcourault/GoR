@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/gescom-onrails/!svn/ver/566/app/views/plandecuentas
+END
+edit.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/gescom-onrails/!svn/ver/488/app/views/plandecuentas/edit.html.erb
+END
+index.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/gescom-onrails/!svn/ver/550/app/views/plandecuentas/index.html.erb
+END
+_editar.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/gescom-onrails/!svn/ver/566/app/views/plandecuentas/_editar.html.erb
+END
+_new.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/gescom-onrails/!svn/ver/566/app/views/plandecuentas/_new.html.erb
+END
+new.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/gescom-onrails/!svn/ver/498/app/views/plandecuentas/new.html.erb
+END
+show.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/gescom-onrails/!svn/ver/456/app/views/plandecuentas/show.html.erb
+END

@@ -1,0 +1,44 @@
+<h1>Listado de las cuentas bancarias</h1>
+<% form_tag cuentabancarias_path, :method => 'get' do %>  
+ <Fieldset class="filtro">
+      Buscar cuenta:
+      <%= text_field_tag :cuenta, params[:cuenta], :class => "textosbox", :size => 30 %>
+     
+      <%= submit_tag "Buscar", :class => "textosbox" %>
+</Fieldset>
+<% end %> 
+<br />
+<table>
+<tr>
+<td class="boton"  align="center">
+  <%= image_tag "add.png" %>
+ <span style="vertical-align: top"> 
+ <%= link_to 'Crear nueva cuenta', new_cuentabancaria_path  %>
+ </span>
+</td>
+</tr>
+</table>
+
+
+<div class="tablaContainer">
+ <table class="tabladentrocont">
+  <tr class="headerStyle">
+    <th>Cuenta bancaria</th>
+    <th>Banco</th>
+    <th>Aplica a</th>
+
+  </tr>
+
+
+<% @cuentabancarias.each do |cuentabancaria| %>
+   <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+    <td><%=h cuentabancaria.cban_descripcion %></td>
+    <td><%=h cuentabancaria.banco.banc_nombre %></td>
+    <td><%=h cuentabancaria.plandecuenta.pcue_cuenta %></td>
+    <td><%= link_to 'Editar', edit_cuentabancaria_path(cuentabancaria, :page => params[:page]) %></td>
+    <td><%= link_to 'Borrar', cuentabancaria, :confirm => 'Esta seguro que quiere eliminar la cuenta?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+<%=will_paginate @cuentabancarias, :prev_label => '&laquo; Anterior', :next_label => 'Siguiente &raquo;' %>
+</div>

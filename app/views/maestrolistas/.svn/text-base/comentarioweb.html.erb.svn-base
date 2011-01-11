@@ -1,0 +1,19 @@
+<h1>Comentario para mostrar lista de precios en la web</h1>
+<br />
+<table>
+<tr>
+<td class="boton"  align="center"> 
+  <%= image_tag "volver.png" %> 
+ <span style="vertical-align: top">  
+ <%= link_to 'Volver', maestrolistas_path %> 
+ </span>
+</td>
+</tr>
+</table>
+<br />
+<% form_tag :action => 'grabacomentarioweb', :method => :put do %> 
+Comentario para lista precio:
+<%= text_field_tag :mlis_comentarioweb, @maestrolista.mlis_comentarioweb, :size => 50 %>
+<%= hidden_field_tag :id, @maestrolista.id %>
+<%= submit_tag 'Grabar' %>
+<% end %>

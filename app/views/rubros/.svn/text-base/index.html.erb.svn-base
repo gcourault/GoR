@@ -1,0 +1,49 @@
+<h1>Listado de Rubros</h1>
+<br />
+<table>
+  <tr>
+    <td class="boton" width="120" align="center">
+      <%= image_tag "volver.png" %> 
+      <span style="vertical-align: top">  
+      <%= link_to 'Volver', :controller => 'login', :action => 'iniciarsession' %>
+      </span>
+    </td>
+    <td class="boton" with="100" align="center">
+      <img  src="/images/add.png" width="20px" height="20px" border="0"> 
+      <span style="vertical-align: top"> 
+        <%= link_to 'Crear nuevo rubro', new_rubro_path %>
+      </span>
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td>
+      <table class="tabladentrocont">
+        <tr class="headerStyle">
+          <th width="50"> Nro.</th>
+          <th width="300"> Detalle </th>
+          <th width="50"> Servicio </th>
+        </tr>
+ 
+        <% @rubros.each do |rubro| %>
+        <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+          <td align="center"><%=h rubro.rubr_codigo %> </td>
+          <td><%=h rubro.rubr_descripcion %> </td>
+          <td align="center"><%=h rubro.rubr_servicio %> </td>
+
+          <td><%= link_to 'Editar', edit_rubro_path(rubro), :page => params[:page] %></td> <td> | </td>
+          <td><%= link_to 'Borrar', rubro, :confirm => 'Are you sure?', :method => :delete %></td> 
+        </tr>
+        <% end %>
+      </table>
+
+      <div align="center">
+      <%=will_paginate @rubros %>
+      </div>
+    </td>
+  </tr>
+</table>
+
+

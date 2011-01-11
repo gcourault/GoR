@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/gescom-onrails/!svn/ver/97/vendor/plugins/belongs_to_enum/test
+END
+belongs_to_enum_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/gescom-onrails/!svn/ver/97/vendor/plugins/belongs_to_enum/test/belongs_to_enum_test.rb
+END
+test_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/gescom-onrails/!svn/ver/97/vendor/plugins/belongs_to_enum/test/test_helper.rb
+END
+schema.rb
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/gescom-onrails/!svn/ver/97/vendor/plugins/belongs_to_enum/test/schema.rb
+END
+database.yml
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/gescom-onrails/!svn/ver/97/vendor/plugins/belongs_to_enum/test/database.yml
+END
+acts_as_enum_field_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/gescom-onrails/!svn/ver/97/vendor/plugins/belongs_to_enum/test/acts_as_enum_field_test.rb
+END

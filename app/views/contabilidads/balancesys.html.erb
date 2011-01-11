@@ -1,0 +1,93 @@
+<h1>Balance de Suma y Saldos</h1>
+
+<% if params[:fechahasta].blank? %>
+<% to_time =  Date.today   %>
+<% else %>
+<% to_time = params[:fechahasta] %>
+<% end %>
+<% params[:ejercicio] = 1 if params[:ejercicio].blank? %>
+
+<Fieldset class="filtro">
+<legend ALIGN="left" class="formlegend">Fecha del período </legend>
+<table align="left" class="tablafiltro">
+
+<% form_tag  :controller => 'contabilidads', :action => 'balancesys' do %> 
+ <tr>
+   <td class="textosbox">
+      Ejercicio:
+   </td>
+   <td>
+     <%= select_tag(:ejercicio, options_for_select(@ejercicios.collect {|u| [u.ejer_descripcion,u.id]}, params[:ejercicio].to_i), {:class => "textosbox"}) %> 
+   </td>
+   <td class="textosbox">
+      Fecha hasta: 
+    </td>
+    <td>
+      <%= select_date to_time, {:prefix=>"fechahasta"}, {:class => "textosbox"} %>
+    </td>
+    <td colspan="2" class="textosbox">
+      <%= submit_tag "Consultar", :class => "textosbox", :onclick=>"javascript:mostrar_div('output')" %>
+    </td>
+ </tr>
+<% end %>
+
+</table>
+</Fieldset>
+<br />
+<% @ejerc = Ejercicio.find(params[:ejercicio].to_i) %>
+<table >
+ <tr>
+  <td  class="boton" width="150px"  align="center">
+<%= image_tag "pdf.png" %> 
+<span  style="vertical-align: top"> <%= link_to 'Generar PDF', :controller => 'contabilidads/balancesys/', :action => 'balancesys.pdf', :ejerciciodesc => @ejerc.ejer_descripcion,  :to_time => to_time, :ejercicio => params[:ejercicio] %> </span>
+  </td>
+ </tr>
+</table
+<hr>
+
+<% if (to_time >= @ejerc.ejer_desde) && (to_time <= @ejerc.ejer_hasta) %>
+<% acumdebito = 0
+   acumcredito = 0
+   acumsaldodeu = 0
+   acumsaldoacre = 0 %>
+
+<table border="1" class="tabladentrocont">
+   <tr class="cablibro"> 
+     <td> Cuenta </td>
+     <td colspan="2" align="center"> Acumulados </td>
+     <td colspan="2" align="center"> Saldos </td>
+   </tr>
+   <tr class="cablibro">
+    <td> </td>
+    <td align="center"> Debitos </td>
+    <td align="center"> Creditos </td>
+    <td align="center"> Deudor </td>
+    <td align="center"> Acreedor</td>
+   </tr>
+<% @plandecuentas.each do |pcuen| %>
+  <tr>
+   <td> <%=h pcuen.codigo_nombre %></td>
+    
+   <% @debito = Contabilidad.sumadebito(pcuen.id, @ejerc.ejer_desde, to_time) %>
+   <% @credito = Contabilidad.sumacredito(pcuen.id, @ejerc.ejer_desde, to_time) %>
+   <% acumdebito = acumdebito +  @debito.to_f %>
+   <% acumcredito = acumcredito +  @credito.to_f %>
+   <td align="right"> <%=h number_to_currency(@debito, :precision => 2, :unit => " ", :separator => ",", :delimiter => ".") %> </td>
+   <td align="right"> <%=h number_to_currency(@credito.abs, :precision => 2, :unit => " ", :separator => ",", :delimiter => ".") %> </td>
+   <% saldo = (@debito.to_f - @credito.to_f.abs) %>
+   <td align="right"> <%= number_to_currency(saldo, :precision => 2, :separator => ",", :unit => " ", :delimiter => ".") if saldo > 0 %></td>
+   <td align="right"> <%= number_to_currency(saldo.abs, :precision => 2, :unit => " ", :separator => ",", :delimiter => ".") if saldo < 0 %> </td>
+   <% acumsaldodeu = (acumsaldodeu + saldo.to_f) if saldo > 0 %>
+   <% acumsaldoacre = (acumsaldoacre + saldo.to_f) if saldo < 0 %>
+  </tr>
+<% end %>
+ <tr> <td align="center"><b> TOTALES </td> 
+ <td align="right"><b><%=h number_to_currency(acumdebito, :precision => 2, :separator => ",", :unit => " ", :delimiter => ".")%> </td>
+ <td align="right"><b> <%=h number_to_currency(acumcredito.abs, :precision => 2, :separator => ",", :unit => " ", :delimiter => ".")%> </td>
+ <td align="right"><b> <%=h number_to_currency(acumsaldodeu, :precision => 2, :separator => ",", :unit => " ", :delimiter => ".")%> </td>
+ <td align="right"><b> <%=h number_to_currency(acumsaldoacre.abs, :precision => 2, :separator => ",", :unit => " ", :delimiter => ".")%> </td>
+</tr>
+</table>
+<% else %>
+<h7>La fecha seleccionada no coincide con el ejercicio seleccionado </h7>
+<% end %>

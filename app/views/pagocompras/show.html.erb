@@ -1,0 +1,61 @@
+<h1>Forma de pago de los comprobantes</h1>
+
+<table>
+<tr>
+ <td class="boton" width="120" align="center">
+   <!-- <img  src="/images/volver.png" width="20px" height="20px" border="0">  -->
+   <%= image_tag "volver.png" %> 
+   <span style="vertical-align: top">  
+   <%= link_to 'Volver', :controller => 'cabplaegresos', :action => 'formapago', :id => 1, :idpe => params[:idpe], :nroplanillaegreso => params[:nrope].to_i %>
+   </span>
+ </td>
+</tr>
+</table>
+<br />
+
+<table align="center">
+  <tr>
+    <td>
+      Efectivo:
+    </td>
+    <td colspan="3">
+     <b>
+     <%=h @pagocompra.pcpr_efectivo %>
+    </td>
+ </tr>
+ <tr>
+    <td>
+      Cheque:
+    </td>
+    <td colspan="3">
+      <b>
+      <%=h @pagocompra.pcpr_cheque %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Deposito o transferencia:
+    </td>
+    <td colspan="3">
+     <b>
+     <%=h @pagocompra.pcpr_depotransf %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Otro:
+    </td>
+    <td colspan="3">
+      <b>
+      <%=h @pagocompra.pcpr_otro %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Observaci&oacute;n
+    </td>
+     <td>
+       <%=h @pagocompra.pcpr_observacion %>
+    </td>
+  </tr>
+

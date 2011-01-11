@@ -1,0 +1,54 @@
+<h1> Porcentajes de las formas de pago de las ventas</h1>
+
+<% if params[:fechadesde].blank? %>
+<% from_time =  Date.today - 1.months   %>
+<% else %>
+<% from_time = params[:fechadesde] %>
+<% end %>
+<% if params[:fechahasta].blank? %>
+<% to_time =  Date.today   %>
+<% else %>
+<% to_time = params[:fechahasta] %>
+<% end %>
+<Fieldset class="filtro">
+<legend ALIGN="left" class="formlegend">El rango entre las fechas no debe ser mayor a 12 meses</legend>
+<table align="left" class="tablafiltro">
+ <tr height="70">
+<% form_tag :controller => 'estadisticas', :action => 'ventastipo' do %> 
+<td>  <%= hidden_field_tag :tipo, params[:tipo] %>
+ </td>
+   <td >
+      Fecha desde:
+    </td>
+    <td>
+      <%=  select_date from_time , {:prefix => "fechadesde"}, {:class => "textosbox"} %> 
+    </td>
+    <td>
+      Fecha hasta: 
+    </td>
+     <td>
+      <%= select_date to_time, {:prefix=>"fechahasta"}, {:class => "textosbox"} %>
+    </td>
+      
+    <td colspan="2">
+
+     <%= submit_tag "Consultar", :class => "textosbox", :onclick=>"javascript:mostrar_div('output')" %>
+  
+    </td>
+<% end %>
+</tr>
+</table>
+</Fieldset>
+<br />
+<br />
+
+<% if @ventatipos.size > 0 %>
+<table>
+<tr>
+   <td><%= image_tag "ventatipo.png"%> </td> 
+</tr>
+</table>
+<% end %>
+
+
+

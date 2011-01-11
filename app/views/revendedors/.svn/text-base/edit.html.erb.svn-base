@@ -1,0 +1,12 @@
+<h1>Editing revendedor</h1>
+
+<% form_for(@revendedor) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @revendedor %> |
+<%= link_to 'Back', revendedors_path %>

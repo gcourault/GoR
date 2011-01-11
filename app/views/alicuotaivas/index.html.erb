@@ -1,0 +1,33 @@
+<h1>Listado de alicuotas iva</h1>
+
+<div id="tablaContainer"  class="tabla">
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr class="headerStyle">
+    <th>Id</th>
+    <th>alicuota iva</th>
+    <th>inicio</th>
+    <th>final</th>
+    <th>usuario</th>
+    <th>ultmod</th>
+  </tr>
+
+<% @alicuotaivas.each do |alicuotaiva| %>
+  <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+    <td><%=h alicuotaiva.id %></td>
+    <td><%=h alicuotaiva.aiva_alicuota %></td>
+    <td><%=h alicuotaiva.aiva_inicio %></td>
+    <td><%=h alicuotaiva.aiva_final %></td>
+    <td><%=h alicuotaiva.aiva_usuario %></td>
+    <td><%=h alicuotaiva.aiva_ultmod %></td>
+    <td class="separador"></td>
+    <td class="button"><%= link_to 'Mostrar', alicuotaiva %></td>
+    <td class="button"><%= link_to 'Editar', edit_alicuotaiva_path(alicuotaiva) %></td>
+  </tr>
+<% end %>
+</table>
+</div>
+<br />
+<div  class="botonnuevo" style="align:center;">
+<%= link_to 'Nueva alicuota iva', new_alicuotaiva_path %>
+</div>
+

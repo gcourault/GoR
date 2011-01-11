@@ -1,0 +1,40 @@
+10
+
+dir
+585
+http://192.168.0.99/svn/gescom-onrails/app
+http://192.168.0.99/svn/gescom-onrails
+
+
+
+2011-01-05T14:55:20.463087Z
+584
+fleming
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+9f99eafb-7e78-4550-a96d-02d4aec74fc1
+
+helpers
+dir
+
+models
+dir
+
+controllers
+dir
+
+views
+dir
+

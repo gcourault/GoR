@@ -1,0 +1,82 @@
+<h1>Ventas mensuales de art&iacute;culos Pirelli por sucursal y rubros  </h1>
+<% if params[:sucursal].blank? %>
+<% sucursal = 1  %>
+<% else %>
+<% sucursal = params[:sucursal] %>
+<% end %>
+<% if params[:fechadesde].blank? %>
+<% from_time =  Date.today - 31.days   %>
+<% else %>
+<% from_time = params[:fechadesde] %>
+<% end %>
+<% if params[:fechahasta].blank? %>
+<% to_time =  Date.today   %>
+<% else %>
+<% to_time = params[:fechahasta] %>
+<% end %>
+<table align="left" class="tablafiltro">
+ <tr height="70">
+<% form_tag :controller => 'estadisticas', :action => 'rubrosucu' do %> 
+<td>  <%= hidden_field_tag :tipo, params[:tipo] %>
+ </td>
+<td>
+  Sucursal:
+   <%= @sucursales = Sucursal.find(:all) 
+   select_tag :sucursal, options_for_select(@sucursales.collect {|u| [u.sucu_nombre,u.id]}, sucursal.to_i), :class => "textosbox" %>
+</td>
+   <td >
+      Fecha desde:
+    </td>
+    <td>
+      <%=  select_date from_time , {:prefix => "fechadesde"}, {:class => "textosbox"} %> 
+    </td>
+    <td>
+      Fecha hasta: 
+    </td>
+     <td>
+      <%= select_date to_time, {:prefix=>"fechahasta"}, {:class => "textosbox"}  %>
+    </td>
+
+    <td colspan="2">
+     <%= submit_tag "Consultar", :class => "textosbox", :onclick=>"javascript:mostrar_div('output')" %>
+    </td>
+<% end %>
+</tr>
+</table>
+<br />
+<br />
+<% if @ventasrubrosucus.size > 0 %>
+<table>
+<% @mesess.each do |elemento| %>
+<tr>
+<td>
+<table>
+<tr>
+    <% e = "/images/rubrosucumes" + elemento.to_s + ".png" %> 
+    <td> <img src="<%= e %>" border="1" /> </td> 
+</tr>
+</table>
+</td>
+<td>
+ <%=  "Ventas por rubro del mes " + elemento.to_s %>  
+
+<table>
+<tr>
+
+<td><b>Rubro </b></td>
+<td><b>Cantidad </b></td>
+</tr>
+    <% @ventasrubrosucus.each do |v| %>
+         <%  if elemento == v.mes.to_i %>
+       <tr>
+          <td><%=h v.rubro %></td>
+           <td><%=h v.cantidad %></td>
+         <% end %>
+       </tr>
+        <% end %>
+</table>
+</td>
+</tr>
+<% end %>
+</table>
+<% end %>

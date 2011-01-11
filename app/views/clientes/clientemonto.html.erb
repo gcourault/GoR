@@ -1,0 +1,126 @@
+<h1>Cartera de clientes que compran más de un monto</h1>
+<br />
+<% if params[:fechadesde].blank? %>
+<% from_time =  Date.today - 3.months %>
+<% else %>
+<% from_time = params[:fechadesde] %>
+<% end %>
+<% if params[:fechahasta].blank? %>
+<% to_time =  Date.today   %>
+<% else %>
+<% to_time = params[:fechahasta] %>
+<% end %>
+<% if params[:monto].to_s.to_i > 0
+     else
+      params[:monto] = 50000
+    end %>
+
+<% params[:sucursal] = session[:sucursalseleccionada] %>
+
+
+<Fieldset class="filtro">
+<legend ALIGN="left" class="formlegend"> Busqueda de cliente </legend>
+<table align="left" class="tablafiltro">
+
+<% form_tag  :controller => 'clientes', :action => 'clientemonto' do %> 
+ <tr>
+      <td width="100">
+      Sucursal: 
+    </td>
+    <% if session[:sucursal].to_i == 1 %>
+        <% @sucursals = Sucursal.find(:all) %>
+    <% else %>
+        <% @sucursals = Sucursal.find(:all, :conditions => ['id = ?', session[:sucursal]]) 
+           params[:sucursal] = session[:sucursal] %>
+    <% end %> 
+   <td>
+    <%= select_tag(:sucursal, options_for_select(@sucursals.collect {|u| [u.sucu_nombre,u.id]}, params[:sucursal].to_i), {:class => "textosbox", :onChange => remote_function( :url => {:action => 'asignasucursal'} , :with => "'sucursal_id=' + this.value" )}) %>
+     </td>
+ 
+   <td>
+    Monto mayor a:
+   </td>
+   <td>
+     <%= text_field_tag :monto, params[:monto], :class => "textosbox" %>
+   </td>
+ </tr>
+  <tr>
+    <td>
+      Fecha desde:
+    </td>
+    <td >
+      <%=  select_date from_time , {:prefix => "fechadesde"}, {:class => "textosbox"} %> 
+    </td>
+    <td>
+      Fecha hasta: 
+    </td>
+    <td>
+      <%= select_date to_time, {:prefix=>"fechahasta"}, {:class => "textosbox"} %>
+    </td>
+   
+  
+   <td>
+      <%= submit_tag "Consultar", :class => "textosbox", :onclick=>"javascript:mostrar_div('output')" %>
+    </td>
+ </tr>
+<% end %>
+
+</table>
+</Fieldset>
+<br />
+<table>
+ <tr>
+   <%  central_url = "http://200.70.35.102/cenries/cr010000.asp?error=0" %>
+   <td  width="300px"  align="center"> 
+   <%= image_tag "banco2.png" %><%= link_to 'Consultar por CUIT en el banco central', central_url, :class => "textosbox", :target => "_blank" %>
+   </td>
+    <%  riesgo_url = "http://www.riesgoonline.com/home/" %>
+   <td  width="200px"  align="center"> 
+   <%= image_tag "SearchUser.png" %><%= link_to 'Riesgo on line', riesgo_url, :class => "textosbox", :target => "_blank" %>
+   </td>
+
+
+ <td  class="boton" width="200"  align="center">
+   <%= image_tag "pdf.png" %> 
+   <span style="vertical-align: top"> 
+   <%= link_to 'Generar PDF', :controller => 'clientes/clientemonto', :action => 'clientemonto.pdf', :from_time => from_time, :to_time => to_time, :monto => params[:monto], :sucursal => params[:sucursal]%>
+   </span>
+ </td>
+ </tr>
+</table>
+<br />
+  	<% if !@clientemontos.nil? && @clientemontos.size > 0 %>
+      
+    	        <table class="tabladentrocont" border="0" cellpadding="0" cellspacing="0">
+    		  <tr class="headerStyle">
+      			<th>Raz&oacute;n social</th>
+      			<th>CUIT</th>
+     			<!--<th>Domicilio</th>
+      			<th>Localidad</th>
+                        <th>Telefono</th>
+      			<th>Email</th> -->
+                        <th>Unidades</th>
+			<th>Total comprado</th>
+       		 </tr>
+   		 <% @clientemontos.each do |cliem| %>
+    		 <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+			<td><%=h cliem.clie_razonsocial %></td>
+     			<td align="center" width="110"><%=h cliem.clie_cuit %> </td>
+                      <!--  <td><%=h cliem.clie_domicilio %>-<%=h cliem.clie_puerta %></td>
+                        <td><%=h cliem.localidad.loca_nombre if cliem.localidad %></td>
+			<td><%=h cliem.clie_telefono %></td>
+ 			<td><%=h cliem.clie_email %></td> -->
+                        <td><%=h cliem.cantidad %></td>
+ 			<td><%=h number_to_currency(cliem.monto, :precision => 2, :separator => ",", :delimiter => ".") %></td>
+		
+     			     <td><%= link_to 'Detalle', :controller =>'clientes', :action => 'detalleclientes', :id => 1, :idcliente =>  cliem.id_cliente, :nombre => cliem.clie_razonsocial, :fechadesde => from_time, :fechahasta => to_time, :monto => params[:monto], :sucursal => params[:sucursal].to_i %> </td>
+     			
+                </tr>
+            <% end %>
+  </table>
+
+
+ <% end %>
+
+
+

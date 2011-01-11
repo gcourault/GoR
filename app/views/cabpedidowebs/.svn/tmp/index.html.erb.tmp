@@ -1,0 +1,95 @@
+<h1>Pedidos web <%= session[:user].usur_nombre if session[:user].usur_nombre %></h1>
+<br />
+<% if session[:user].cliente_id %>
+<table>
+ <tr>
+  <td class="boton" with="100" align="center">
+    <img  src="/images/add.png" width="20px" height="20px" border="0"> 
+    <span style="vertical-align: top"> 
+    <%= link_to "Nuevo pedido", new_cabpedidoweb_path  if session[:user].cliente_id %> 
+    </span>
+  </td>
+ </tr>
+</table>
+
+<br />
+<div class="tablaContainer">
+<table>
+<tr>
+<td>
+<table align="left" >
+ <% if @cabpedidowebs.size > 0 %>
+    <tr class="headerStyle">
+      <th width="30px">Nro.</th>
+      <th width="70px">Fecha</th>
+      <th width="100px">Estado</th>
+      <th width="200px">Observaciones</th>
+    </tr>
+   <% @cabpedidowebs.each do |cabpedidoweb| %>
+   <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+    <td><%=h cabpedidoweb.id %> <% nropedido = cabpedidoweb.id%> </td>
+    <td><%=h cabpedidoweb.pweb_fecha %></td>
+    <td><%=h cabpedidoweb.pweb_estado %></td>
+    <td><%=h cabpedidoweb.pweb_observaciones %></td>
+  <td><%= link_to_remote 'Ver pedido', :update => 'pedidos', :url => {:controller => 'cabpedidowebs', :action => 'pedidos', :idcabpedidoweb => cabpedidoweb.id, :nropedido => cabpedidoweb.id } %></td> 
+    <% if cabpedidoweb.pweb_estado.to_s == "Abierto" %> 
+      <!-- <td><%= link_to 'Editar', :controller => 'renpedidowebs', :idcabpedido => cabpedidoweb.id %></td> -->
+    <% end %>
+  </tr>
+<% end %>
+<% else %> 
+<h2>Usted no ha realizado ning&uacute;n pedido </h2>
+<% end %>
+</table>
+</td>
+<td>
+  <div id="pedidos">
+	<% if @renpedidowebs.blank? %> 
+	<% else %> 
+	  <h2 align="center"> Detalle del pedido <%= params[:idcabpedidoweb] %> </h2>
+           <table align="left"  border="1" >
+		<tr class="headerStyle">
+		 <th width="250px">Art&iacute;culo</th>
+		 <th width="80px">Cantidad</th>
+		</tr>
+		<% @renpedidowebs.each do |renpedidoweb| %>
+		   <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+		    <td><%=h renpedidoweb.articulo.arti_descripcion %></td>
+		    <td><%=h renpedidoweb.rweb_cantidad %></td>
+		   </tr>
+		<% end %>
+          </table>
+           <br />
+          <table align="right">
+		<tr>
+                <% if @cabpedidoweb.pweb_estado.to_s == 'Abierto' %> 
+                  <!-- Buscar la sucursal y el cliente del pedido -->
+                  <% sucuemail = "" %>     
+                  <% clieemail = "" %>            
+   		  <% if @cabpedidoweb.sucursal_id != 0 %>
+                    <% @sucursal = Sucursal.find(@cabpedidoweb.sucursal_id) %>
+              	    <% sucuemail = @sucursal.sucu_email if  @sucursal.sucu_email%>
+                  <% end %>
+                  <% if @cabpedidoweb.cliente_id != 0 %>
+                    <% @cliente = Cliente.find(@cabpedidoweb.cliente_id) %>
+                    <% clieemail = @cliente.clie_email if @cliente.clie_email %>
+                  <% end %>
+                  <td align="left"><%= link_to 'Editar Pedido', :controller => 'renpedidowebs', :idcabpedido => @cabpedidoweb.id %></td> 
+                  <td> | </td>
+		  <td align="right">    <!-- TODO:pasarle a :sucursalemail=>'sucuemail' y a :clienteemail => 'clieemail' aca y en _pedido.html.erb -->
+		    <%= link_to 'Enviar Pedido', :controller => 'cabpedidowebs', :action => 'send_email', :id => '1', :idcabpedidoweb => params[:idcabpedidoweb], :nropedido => params[:nropedido], :sucursalemail => "verofacello@hotmail.com", :clienteemail => "verofacello@gmail.com", :cliente => @cliente.clie_razonsocial, :cuit => @cliente.clie_cuit, :disabled => true %> 
+		  </td>
+                 <% else %>
+                    Su pedido ha sido: <%= @cabpedidoweb.pweb_estado.to_s %>
+                 <% end %>
+	        </tr> 
+	 </table>
+        <% end %>
+  </div>
+</td>
+</tr>
+</table>
+</div>
+<% else %>
+<h2>Usted no es cliente para realizar pedidos </h2>
+<% end %>

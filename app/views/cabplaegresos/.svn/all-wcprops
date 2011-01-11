@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/gescom-onrails/!svn/ver/568/app/views/cabplaegresos
+END
+edit.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/gescom-onrails/!svn/ver/411/app/views/cabplaegresos/edit.html.erb
+END
+index.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/gescom-onrails/!svn/ver/568/app/views/cabplaegresos/index.html.erb
+END
+_pagocompra.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/gescom-onrails/!svn/ver/442/app/views/cabplaegresos/_pagocompra.html.erb
+END
+verformapago.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/gescom-onrails/!svn/ver/328/app/views/cabplaegresos/verformapago.html.erb
+END
+consulta.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/gescom-onrails/!svn/ver/404/app/views/cabplaegresos/consulta.html.erb
+END
+new.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/gescom-onrails/!svn/ver/411/app/views/cabplaegresos/new.html.erb
+END
+formapago.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/gescom-onrails/!svn/ver/445/app/views/cabplaegresos/formapago.html.erb
+END
+index.pdf.prawn
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/gescom-onrails/!svn/ver/564/app/views/cabplaegresos/index.pdf.prawn
+END
+retganancia.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/gescom-onrails/!svn/ver/407/app/views/cabplaegresos/retganancia.html.erb
+END
+consulta.pdf.prawn
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/gescom-onrails/!svn/ver/404/app/views/cabplaegresos/consulta.pdf.prawn
+END
+show.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/gescom-onrails/!svn/ver/312/app/views/cabplaegresos/show.html.erb
+END
+_verfp.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/gescom-onrails/!svn/ver/328/app/views/cabplaegresos/_verfp.html.erb
+END

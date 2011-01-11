@@ -1,0 +1,257 @@
+<h1>Estado Cauci&oacute;n</h1>
+<!-- si no hay fecha seleccionado la fija y si no la mantiene-->
+<% if params[:fechadesde].blank? %>
+<% from_time =  Date.today - 31.days   %>
+<% else %>
+<% from_time = params[:fechadesde] %>
+<% end %>
+<% if params[:fechahasta].blank? %>
+<% to_time =  Date.today   %>
+<% else %>
+<% to_time = params[:fechahasta] %>
+<% end %>
+<table align="left">
+ <tr height="70">
+<% form_tag :controller => 'listadocaucions', :action => 'estadocaucion' do %> 
+    <td >
+      Saldo Contable acumulado a la fecha:
+    </td>
+    <td>
+      <%=  select_date from_time , :prefix => "fechadesde" %> 
+    </td>
+    <td>
+     Estado de caución a la fecha: 
+    </td>
+    <td>
+      <%= select_date to_time, :prefix=>"fechahasta"  %>
+    </td>
+    <td colspan="2">
+    <%= submit_tag "Consultar" %>
+    </td>
+<% end %>
+</tr>
+</table>
+<!--<div class="tablaContainer"  >-->
+<!-- calculo del saldo inicial -->
+<table class="tabladentrocont">
+ <tr class="rowStylecaucion">
+ <th colspan="2" align="left"> 
+  
+  <% saldocont1 = 0 %>
+  <% totallistado = 0 %>
+  <% totalacreditado = 0 %>
+  <% totalreingreso = 0 %>
+  <% totalajuste = 0 %>
+  <% if @saldobancocaucions.empty? %>
+  <% else %>
+    <% @saldobancocaucions.each do |saldobancocaucion| %> 
+     <tr><td colspan="2">Suma de todos los listados anteriores a la fecha de inicio</td><td> <%=h number_to_currency(saldobancocaucion.saldo.to_d, :precision => 2, :separator => ",", :delimiter => ".") %> </td> </tr>
+     <% saldocont1 = (saldobancocaucion.saldo.to_d) %> <% totallistado = (saldobancocaucion.saldo.to_d) %>
+   <% end %>
+  <% end %>
+    <% if @saldocaucions.empty? %>
+    <% else %>
+     <% @saldocaucions.each do |saldocaucion| %>
+       <tr><td colspan="2"> Suma de todos los valores con fecha de vencimiento anterior a la fecha de inicio</td><td>-<%=h number_to_currency(saldocaucion.importecauc.to_d, :precision => 2, :separator => ",", :delimiter => ".") %> </td> </tr>
+         <% saldocont1 = (saldocont1 - saldocaucion.importecauc.to_d) %> <% totalacreditado = (saldocaucion.importecauc.to_d) %>
+     <% end %>
+   <% end %>
+      <% if @reingresos.empty? %>
+      <% else %>
+              <% @reingresos.each do |reingreso| %>
+                <tr>
+                  <td colspan="2"> Suma de todos los reigresos anteriores a la fecha de inicio </td><td> -<%=h  number_to_currency(reingreso.importereingresos.to_d, :precision => 2, :separator => ",", :delimiter => ".") %> </td>
+                </tr>
+                <% saldocont1 = (saldocont1 - reingreso.importereingresos.to_d) %> <% totalreingreso = (reingreso.importereingresos.to_d) %>
+             <% end %>
+     <% end %>
+
+    <% if @ajustemanualinis.empty? %>
+    <% else %>
+     <% saldoajuste = 0 %>
+     <% @ajustemanualinis.each do |ajustemanualini| %>
+       <tr>
+          <td colspan="2"> Suma de todos los valores con fecha de vencimiento anterior a la fecha de inicio</td>
+          <td><%=h number_to_currency(ajustemanualini.devc_importe, :precision => 2, :separator => ",", :delimiter => ".") %>   <% saldoajuste = (saldoajuste + ajustemanualini.devc_importe) %> </td> 
+       </tr>
+     <% end %>
+       <% saldocont1 = (saldocont1 + saldoajuste) %> <% totalajuste = saldoajuste %>
+   <% end %>
+<tr> 
+
+<td> SALDO CONTABLE  al <%=h from_time %> </td>  <td colspan="3" align="right">  <% saldocont1 = (totallistado - totalacreditado - totalreingreso + totalajuste) %><%=h number_to_currency(saldocont1, :precision => 2, :separator => ",", :delimiter => ".") %></td> 
+</tr>
+   
+</tr>
+
+<tr> <th> Valores Presentados </th> </tr> 
+<tr>
+   <th colspan="2" align="right">Nro. listado</th>
+   <th align= "center"> fecha </th>
+   <th align= "center" width="300"> importe </th>
+</tr>
+  <% totalpres = 0 %>
+  <% if @saldobancocaucions.empty? %>
+  <% else %> 
+    <% @listadoscaucions.each do |listadoscaucion| %>
+<tr>
+    <td colspan="2" align="right"><%=h listadoscaucion.id %></td>
+    <td align= "center"><%=h listadoscaucion.lcau_fecha %></td>
+    <td align= "center"><%=h  number_to_currency(listadoscaucion.lcau_importetotal, :precision => 2, :separator => ",", :delimiter => ".") %> <% totalpres = (totalpres + listadoscaucion.lcau_importetotal) %> </td>
+</tr>
+<% end %>
+<tr> <td colspan="4" align="right"> <%=h number_to_currency(totalpres, :precision => 2, :separator => ",", :delimiter => ".") %>  </td>
+<% end %>
+</tr>
+
+<tr> <th> Valores Depositados </th> </tr> 
+<tr>
+<th align="right">Nombre</th>
+<th align= "center"> Fecha vencimiento </th>
+<th align= "center"> Importe </th>
+</tr>
+<% saldoajusteanttot = 0 %>
+ <% if @ajustemanualinis.empty? %>
+    <% else %>
+     <% saldoajusteant = 0 %>
+     <% @ajustemanualinis.each do |ajustemanualini| %>
+       <tr><td  align="right"> <%=h ajustemanualini.devc_detalle %></td>
+          <td align= "center"> <%=h ajustemanualini.devc_fecha %></td>
+          <td align= "center"><%=h  number_to_currency(ajustemanualini.devc_importe, :precision => 2, :separator => ",", :delimiter => ".") %>   <% saldoajusteant = (saldoajusteant + ajustemanualini.devc_importe) %> </td> </tr>
+     <% end %>
+       <% saldoajusteanttot = (saldoajusteanttot + saldoajusteant) %> 
+   <% end %>
+<% totalcauc = 0 %>
+<% if @valorcaucions.empty? %>
+<% else %> 
+   <% @valorcaucions.each do |valorcaucion| %>
+ <tr>
+    <td align="right"> Gesval</td>
+    <td align= "center"><%=h valorcaucion.fechavenc %></td>
+    <td align= "center"><%=h number_to_currency(valorcaucion.importe, :precision => 2, :separator => ",", :delimiter => ".") %> <% totalcauc = (totalcauc + valorcaucion.importe.to_f) %> </td>
+</tr>
+<% end %>
+<tr> <td colspan = "4" align="right"> -<%=h number_to_currency((totalcauc + saldoajusteanttot), :precision => 2, :separator => ",", :delimiter => ".") %> <% totalpendientetodo = totalcauc + saldoajusteanttot %>  </td> </tr>
+<% end %>
+
+<tr> <th> Valores Reingresados </th> </tr> 
+<tr>
+  <th colspan="2" align="right">Detalle</th>
+  <th align= "center"> Fecha </th>
+  <th align= "center"> Importe </th>
+</tr>
+<% totalreing = 0 %>
+<% if @valorreingresados.empty? %>
+<% else %> 
+    <% @valorreingresados.each do |valorreingresado| %>
+<tr>
+    <td colspan="2" align="right"><%=h valorreingresado.devc_detalle %></td>
+    <td align= "center"><%=h valorreingresado.devc_fecha %></td>
+    <td align= "center"><%=h number_to_currency(valorreingresado.devc_importe, :precision => 2, :separator => ",", :delimiter => ".") %> <% totalreing = (totalreing + valorreingresado.devc_importe.to_f) %> </td>
+</tr>
+<% end %>
+<tr> <td colspan = "4" align="right"> -<%=h number_to_currency(totalreing, :precision => 2, :separator => ",", :delimiter => ".") %>  </td> </tr>
+<% end %>
+<% totalajusdg = 0 %>
+<% if @ajustemanualdgs.empty? %>
+<% else %> 
+<tr> <th> Ajustes deposito Gesti&oacute;n </th> </tr> 
+<tr>
+  <th colspan="2" align="right">Detalle</th>
+  <th align= "center"> Fecha </th>
+  <th align= "center"> Importe </th>
+</tr>
+  <% @ajustemanualdgs.each do |ajustemanualdg| %>
+<tr>
+    <td colspan="2" align="right"><%=h ajustemanualdg.devc_detalle %></td>
+    <td align= "center"><%=h ajustemanualdg.devc_fecha %></td>
+    <td align= "center"><%=h  number_to_currency(ajustemanualdg.devc_importe, :precision => 2, :separator => ",", :delimiter => ".") %> <% totalajusdg = (totalajusdg + ajustemanualdg.devc_importe.to_f) %> </td>
+</tr>
+<% end %>
+<tr> <td colspan = "4" align="right"> <%=h number_to_currency(totalajusdg, :precision => 2, :separator => ",", :delimiter => ".") %>  </td> </tr>
+<% end %>
+
+<tr class="rowStylecaucion">
+  <th colspan="2" align="left"> SALDO CONTABLE  </th>
+  <td> <%=h to_time %> </td>
+  <% saldocont2 = (saldocont1 + totalpres - totalcauc - saldoajusteanttot - totalreing + totalajusdg) %>
+  <td align="right"> <%=h  number_to_currency(saldocont2, :precision => 2, :separator => ",", :delimiter => ".") %></td>
+</tr>
+
+<tr  height="50">
+<td><b>Ajustes</b></td>
+</tr>
+<% valorajuste = 0 %>
+<% valorajustebanco = 0 %>
+<% if @ajustes.empty? %>
+<% else %> 
+<% @ajustes.each do |ajuste| %>
+<tr>
+  <td colspan="3"> Valores entregados al  <%=h ajuste.lcau_fecha %>  procesados al  <%=h ajuste.lisb_fecha%>  (listado <%=h ajuste.listadocaucion_id.to_s %> ) </td> 
+<% valorajuste = ajuste.lcau_importetotal.to_d %>
+  <td align= "center">-<%=h number_to_currency(ajuste.lcau_importetotal, :precision => 2, :separator => ",", :delimiter => ".") %></td>
+<% valorajustebanco = valorajustebanco + valorajuste %>
+</tr>
+<tr> <td colspan = "4" align="right"> -<%=h number_to_currency(valorajustebanco, :precision => 2, :separator => ",", :delimiter => ".") %>  </td> </tr>
+<% end %>
+<% end %>
+</tr>
+<% totalajustamanual = 0 %>
+<% if @ajustemanuals.empty? %>
+<% else %> 
+   <% @ajustemanuals.each do |ajustemanual| %>
+<tr>
+    <td colspan="2" align="right"><%=h ajustemanual.devc_detalle %></td>
+    <td align= "center"><%=h ajustemanual.devc_fecha %></td>
+    <td align= "center">-<%=h number_to_currency(ajustemanual.devc_importe, :precision => 2, :separator => ",", :delimiter => ".") %> <% totalajustamanual = (totalajustamanual + ajustemanual.devc_importe.to_f) %> </td>
+</tr>
+<% end %>
+<tr> <td colspan = "4" align="right"> <%=h number_to_currency(totalajustamanual, :precision => 2, :separator => ",", :delimiter => ".") %>  </td> </tr>
+<% end %>
+
+<% totalajustereing = 0 %>
+<% if @ajustereingresobancos.empty? %>
+<% else %> 
+   <% @ajustereingresobancos.each do |ajustereingresobanco| %>
+<tr>
+    <td colspan="2" align="right"><%=h ajustereingresobanco.devc_detalle %></td>
+    <td align= "center"><%=h ajustereingresobanco.devc_fecha %></td>
+    <td align= "center"><%=h number_to_currency(ajustereingresobanco.devc_importe, :precision => 2, :separator => ",", :delimiter => ".") %> <% totalajustereing = (totalajustereing + ajustereingresobanco.devc_importe.to_f) %> </td>
+</tr>
+<% end %>
+<tr> <td colspan = "4" align="right"> <%=h number_to_currency(totalajustereing, :precision => 2, :separator => ",", :delimiter => ".") %>  </td> </tr>
+<% end %>
+ 
+<!--<% totalajusteanterior = 0 %>
+ <% if @ajustemanualinis.empty? %>
+    <% else %>
+     <% @ajustemanualinis.each do |ajustemanualini| %>
+       <tr><td colspan="2"> Suma de todos los valores con fecha de vencimiento anterior a la fecha de inicio</td><td> - <%=h ajustemanualini.devc_importe %> <% totalajusteanterior = (totalajusteanterior + ajustemanualini.devc_importe) %> </td> </tr>
+        <tr> <td colspan = "4" align="right"> -<%=h totalajusteanterior %>  </td> </tr>
+     <% end %>
+   <% end %> -->
+
+<tr class="rowStylecaucion">
+  <th colspan="2" align="left"> SALDO s/BANCO  </th>
+  <td> <%=h to_time %> </td>
+  <% saldocont3 = (saldocont2 - valorajustebanco - totalajustereing + totalajustamanual) %>
+  <td align="right"> <%=h number_to_currency(saldocont3, :precision => 2, :separator => ",", :delimiter => ".") %></td>
+</tr> 
+</table>
+<!--</div>-->
+<br />
+
+<table align="center">
+<tr>
+<td  class="boton" width="200"  align="center">
+<img  src="/images/pdf.png" width="20px" height="20px" border="0"> 
+<span style="vertical-align: top"> 
+<%= link_to 'Generar PDF', :controller => 'listadocaucions/estadocaucion', :action => 'estadocaucion.pdf', :saldocont1 => number_to_currency(saldocont1, :precision => 2, :separator => ",", :delimiter => "."), :from_time => from_time, :to_time => to_time, :saldoinicio => (from_time - 1.days), :totalpres => number_to_currency(totalpres, :precision => 2, :separator => ",", :delimiter => "."), :totalcauc => number_to_currency(totalcauc, :precision => 2, :separator => ",", :delimiter => "."), :totalpendientetodo => number_to_currency((totalcauc + saldoajusteanttot), :precision => 2, :separator => ",", :delimiter => "."), :totalreing => number_to_currency(totalreing, :precision => 2, :separator => ",", :delimiter => "."), :valorajustebanco =>  number_to_currency(valorajustebanco, :precision => 2, :separator => ",", :delimiter => "."), :valorajustemanual => totalajustamanual, :saldocont2 => number_to_currency(saldocont2, :precision => 2, :separator => ",", :delimiter => "."), :valorajuste => valorajuste, :totalajusdg => totalajusdg, :valorajusreing => number_to_currency(valorajustebanco, :precision => 2, :separator => ",", :delimiter => "."), :totalajusteanterior => number_to_currency(totalajusteanterior, :precision => 2, :separator => ",", :delimiter => "."),:saldocont3 => number_to_currency(saldocont3, :precision => 2, :separator => ",", :delimiter => "."), :fecha => (from_time - 20.days) %>
+</span>
+</td>
+<!--<td  class="boton" width="200"  align="center">
+<%= link_to 'Cheques pendientes', :controller => 'listadocaucions', :action => 'chequespendiente', :id => '1' %>
+</td> -->
+</tr>
+</table>
+

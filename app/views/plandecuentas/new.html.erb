@@ -1,0 +1,133 @@
+<h1>Crear cuenta</h1>
+<br/>
+<table>
+<tr>
+ <td class="boton" width="120" align="center">
+   <%= image_tag "volver.png" %> 
+   <span style="vertical-align: top">  
+  <%= link_to 'Volver', :controller => 'plandecuentas', :action => 'index', :page => params[:page] %>
+   </span>
+ </td>
+</tr>
+</table>
+
+
+
+<% form_for(@plandecuenta) do |f| %>
+  <%= f.error_messages %>
+
+<table>
+ <tr>
+  <td>
+<Fieldset class="form"  width="200" >
+<LEGEND ALIGN="left" class="formlegend">Ingresar datos</LEGEND>
+  <table>
+
+  <tr>
+     <td>
+       Cuenta:     
+     </td>
+     <td>
+       <%= f.text_field :pcue_cuenta, :class => "textosbox" %>
+   
+     </td>
+    </tr>
+  
+        <tr>
+     <td>
+       Descripci&oacute;n:     
+     </td>
+     <td>
+       <%= f.text_field :pcue_descripcion, :class => "textosbox" %>
+   
+     </td>
+    </tr>
+    <tr>
+     <td>
+       Cuenta con arqueo:     
+     </td>
+     <td>
+       <%= f.select(:pcue_arqueo , options_for_select([['No', 'No'],['Si', 'Si']]), {}, :class => "textosbox") %>   
+     </td>
+   </tr>
+   <tr>
+     <td>
+       Ajuste monetario:     
+     </td>
+     <td>
+       <%= f.select(:pcue_ajustemonetario, options_for_select([['No', 'No'],['Si', 'Si']]), {}, :class => "textosbox") %>   
+     </td>
+   </tr>
+   <tr>
+     <td>
+       Cuenta de tesoreria o contabilidad:     
+     </td>
+     <td>
+       <%= f.select(:pcue_tesorecontab, options_for_select([['T', 'T'],['C', 'C']]), {}, :class => "textosbox") %>   
+     </td>
+   </tr>
+   <tr>
+     <td>
+       Permite asientos:     
+     </td>
+     <td>
+       <%= f.select(:pcue_permiteasiento, options_for_select([['No', 'No'],['Si', 'Si']]), {}, :class => "textosbox") %>   
+     </td>
+   </tr>
+      <tr>
+     <td>
+       Naturaleza de la cuenta:     
+     </td>
+     <td>
+       <%= f.select(:pcue_naturaleza, options_for_select([['Activo', 'Activo'],['Pasivo', 'Pasivo'], ['PatrimonioNeto', 'PatrimonioNeto'],['Resultados', 'Resultados'], ['CuentadeOrden', 'CuentadeOrden']], params[:naturaleza].to_s), {}, :class => "textosbox") %>   
+     </td>
+   </tr>
+    <tr>
+     <td>
+       Sucursal:     
+     </td>
+     <td>
+        <%= f.collection_select(:sucursal_id, @sucursales, :id, :sucu_nombre, {:include_blank => true})  %> 
+     </td>
+   </tr>
+    <tr>
+     <td>
+       Percepcion de ingresos:     
+     </td>
+     <td>
+         <%= f.select(:pcue_pbi, options_for_select([['',''],['STA.FE', 'STA.FE'],['E.RIOS', 'E.RIOS']]), {}, :class => "textosbox") %> 
+     </td>
+   </tr>
+  <tr>
+     <td>
+       	Nivel de la cuenta:     
+     </td>
+     <td>
+         <%= f.select(:pcue_nivel, options_for_select([['1', '1'], ['2', '2'], ['3', '3'], ['4', '4'], ['5', '5']], (params[:nivel].to_i + 1).to_s), {}, :class => "textosbox") %> 
+     </td>
+   </tr>
+     <tr>
+     <td>
+       	Cuenta padre:     
+     </td>
+     <td>
+        <%= f.text_field :pcue_padre, :value => params[:cuentap].to_i, :class => "textosbox" %> 
+     </td>
+   </tr>
+</table>
+</Fieldset>
+</td>
+</tr>
+</table>
+<table>
+  <tr height="70">
+     <td colspan="2" align="center">
+
+    <%= f.submit 'Crear', :class => "textosbox" %>
+    </td>
+ </tr>
+</table>
+
+<% end %>
+
+

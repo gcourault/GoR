@@ -1,0 +1,65 @@
+<h1>Editando sucursal</h1>
+
+<% form_for(@sucursal) do |f| %>
+  <%= f.error_messages %>
+
+  <p class="textbox">
+    <%= f.label :sucu_codigo %><br />
+    <%= f.text_field :sucu_codigo %>
+  </p>
+  <p class="textboxad">
+    <%= f.label :sucu_nombre %><br />
+    <%= f.text_field :sucu_nombre %>
+  </p>
+  <p class="textbox">
+    <%= f.label :sucu_abreviatura %><br />
+    <%= f.text_field :sucu_abreviatura %>
+  </p>
+  <p class="textboxad">
+    <%= f.label :sucu_domicilio %><br />
+    <%= f.text_field :sucu_domicilio %>
+  </p>
+  <p class="textbox">
+    <%= f.label :sucu_impu_municipal %><br />
+    <%= f.text_field :sucu_impu_municipal %>
+  </p>
+  <p class="textboxad">
+    <%= f.label :sucu_insc_municipal %><br />
+    <%= f.text_field :sucu_insc_municipal %>
+  </p>
+  <p class="textbox">
+    <%= f.label :sucu_provinciapib %><br />
+    <%= f.text_field :sucu_provinciapib %>
+  </p>
+  <p class="textboxad">
+    <%= f.label :sucu_inicioactividades %><br />
+    <%= f.text_field :sucu_inicioactividades %>
+  </p>
+  <p class="textbox">
+    <%= f.label :sucu_porcuentayorden %><br />
+    <%= f.text_field :sucu_porcuentayorden %>
+  </p>
+  <p class="textboxad">
+    <%= f.label :sucu_controlaservicio %><br />
+    <%= f.text_field :sucu_controlaservicio %>
+  </p>
+  <p class="textbox">
+    <%= f.label :sucu_email %><br />
+    <%= f.text_field :sucu_email %>
+  </p>
+  <p class="textboxad">
+    <%= f.label :sucu_usuario %><br />
+    <%= f.text_field :sucu_usuario %>
+  </p>
+  <p class="textbox">
+    <%= f.label :sucu_ultmod %><br />
+    <%= f.date_select :sucu_ultmod %>
+  </p>
+  <p class="botoncrud">
+    <%= f.submit 'Modificar' %>
+  </p>
+<% end %>
+<div  class="botonnuevo" style="align:center;">
+<%= link_to 'Mostrar', @sucursal %> |
+<%= link_to 'Volver', sucursals_path %>
+</div>

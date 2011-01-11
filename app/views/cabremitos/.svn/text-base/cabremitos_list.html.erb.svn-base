@@ -1,0 +1,33 @@
+<% form_for :search, :action => :search do |form| %>
+<div class="<%= cycle('even', 'odd') %>">
+<label for="init_date">Fecha búsqueda:</label>
+<%= select_date Date.today %>
+
+<%= select_date end_date %>
+<%= submit_tag "Buscar", :class => "button" %>
+</div>
+
+<% end %>
+
+<table class="list">
+<thead>
+<tr>
+<th class="number">Número</th>
+<th class="date">Fecha</th>
+<th class="customer">Cliente</th>
+<!-- <th class="total">Total</th> -->
+</tr>
+</thead>
+
+<tbody>
+<% @cabremitos.each do |cabremito| %>
+<tr class="<%= cycle('even', 'odd')%>">
+<td class="center"><%= link_to cabremito.crem_nrocomprobante, edit_cabremito_path(cabremito) %></td>
+<td class="center"><%= cabremito.crem_fecha.to_formatted_s(:crem_fecha) %></td>
+<td><%= cabremito.cliente.clie_razonsocial %></td>
+<!-- <td class="right"><%= format_price(invoice.total) %></td> -->
+</tr>
+<% end %>
+</tbody>
+  
+</table>

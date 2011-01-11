@@ -1,0 +1,18 @@
+<h1>Listing cabremitos</h1>
+
+<table>
+  <tr>
+  </tr>
+
+<% @cabremitos.each do |cabremito| %>
+  <tr>
+    <td><%= link_to 'Show', cabremito %></td>
+    <td><%= link_to 'Edit', edit_cabremito_path(cabremito) %></td>
+    <td><%= link_to 'Destroy', cabremito, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New cabremito', new_cabremito_path %>

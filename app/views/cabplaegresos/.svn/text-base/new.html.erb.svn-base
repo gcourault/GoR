@@ -1,0 +1,71 @@
+<h1>Nueva planilla de egreso</h1>
+<br/>
+<table>
+<tr>
+ <td class="boton" width="120" align="center">
+   <%= image_tag "volver.png" %> 
+   <span style="vertical-align: top">  
+   <%= link_to 'Volver', cabplaegresos_path, :page => params[:page] %>
+   </span>
+ </td>
+</tr>
+</table>
+<br />
+<% form_for(@cabplaegreso) do |f| %>
+  <%= f.error_messages %>
+<table>
+ <tr>
+  <td>
+   <Fieldset class="form">
+<LEGEND ALIGN="left" class="formlegend">Ingrese los datos</LEGEND>
+   <table>
+    <tr>
+     <td>
+       Número de planilla:     
+     </td>
+     <td>
+        <!-- se calcula -->
+      <% nroplanilla = Cabplaegreso.maximum(:cpeg_nroplanilla, :conditions => ["sucursal_id = ?", session[:sucursal]]) %>
+      <%= f.text_field(:cpeg_nroplanilla, :value => (nroplanilla + 1), :readonly => true, :size => 10, :class => "textosbox") %>
+     </td>
+   </tr>
+   <tr>
+     <td>
+       Fecha de la planilla:     
+     </td>
+     <td>
+      <%= f.date_select(:cpeg_fecha, {}, {:class => "textosbox"}) %>
+     </td>
+   </tr>
+   <tr>
+    <td>
+       A cargo de:     
+    </td>
+    <td>
+     <%= f.select(:cpeg_acargode, options_for_select([['Central', 'C'],['Sucursal', 'S']]), {}, :class => "textosbox") %>   
+     </td>
+   </tr>
+  <!-- <tr>
+     <td>
+       Importe:     
+     </td>
+     <td>
+       <%= f.text_field :cpeg_importe, :size => 10 %>
+     </td>
+   </tr> -->
+   
+</table>
+</Fieldset>
+
+</td>
+</tr>
+</table>
+<table>
+  <tr height="70">
+    <td colspan="2" align="center">
+      <%= f.submit 'Crear', :class => "textosbox" %>
+    </td>
+  </tr>
+</table>
+<% end %>
+

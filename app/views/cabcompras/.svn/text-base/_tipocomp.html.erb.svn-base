@@ -1,0 +1,15 @@
+
+<% form_for(@cabcompra,  :url => { :action => 'new',  :nrope => params[:nrope] }, :method => :post) do |f| %>
+   <td>
+    Seleccione el comprobante a cargar:
+   </td>
+  <td>
+
+
+
+  <%= f.collection_select(:tipocomprobante_id, @tipocomprobantes, :id, :tcom_nombre) %>
+
+   <%= f.submit "Cargar!!!" %>
+  </td>
+<% end %>
+

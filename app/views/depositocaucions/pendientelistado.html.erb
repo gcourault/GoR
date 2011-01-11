@@ -1,0 +1,49 @@
+<h1> Listado de cheques pendientes por listados</h1>
+
+<% if @listadopendientes.empty? %> 
+<h2> No hay listados con cheques pendientes</h2>
+<% else %>
+<table class="tabladentrocont">
+<% total = 0 %>
+<% importe = 0 %>
+<% @idlists.each do |idlist| %>
+ <% totalpend = 0 %>
+ <tr class="headerStyle">
+  <th align="right" >Nro cheque</th>
+  <th align= "center"> Fecha vencimiento </th>
+  <th align= "center"> Listado </th>
+  <th align= "center"> Importe </th> 
+ </tr>
+
+  <% @listadopendientes.each do |pendiente| %>
+  <% if (idlist == pendiente.listado.to_i) %>
+   <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+	<td align="right"><%=h pendiente.nro %></td>
+   	<td align= "center"><%=h pendiente.fechavenc %></td>
+   	<td align= "center"><%=h pendiente.listado %></td>
+   	<td align= "center"><%=h number_to_currency(pendiente.importe, :precision => 2, :separator => ",", :delimiter => ".")  %> <% totalpend = (totalpend + pendiente.importe.to_f) %> <% importe = pendiente.importelist.to_d %></td>
+   </tr>
+ <% end %>
+ <% end %>
+ <% total = total + totalpend %>
+ <tr> <td colspan = "4" align="right">Total pendiente del listado: <%=h number_to_currency(totalpend, :precision => 2, :separator => ",", :delimiter => ".")  %>  </td> </tr>
+  <tr> <td colspan = "4" align="right">Total del listado: <%=h number_to_currency(importe, :precision => 2, :separator => ",", :delimiter => ".") %>  </td> </tr>
+
+<% end %>
+
+</table>
+ <div> Total pendientes de los listados <%= number_to_currency(importe, :precision => 2, :separator => ",", :delimiter => ".") %> </div>
+
+<% end %>
+<br />
+<br />
+<table align="center">
+<tr>
+<td  class="boton" width="200"  align="center">
+   <%= image_tag "volver.png" %> 
+ <span style="vertical-align: top"> 
+ <%= link_to 'Volver', :controller => 'depositocaucions', :action => 'index' %>
+ </span>
+</td>
+</tr>
+</table>

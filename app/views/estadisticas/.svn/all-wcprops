@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/gescom-onrails/!svn/ver/379/app/views/estadisticas
+END
+costoventa.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/gescom-onrails/!svn/ver/362/app/views/estadisticas/costoventa.html.erb
+END
+index.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/gescom-onrails/!svn/ver/379/app/views/estadisticas/index.html.erb
+END
+rubrosucu.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/gescom-onrails/!svn/ver/362/app/views/estadisticas/rubrosucu.html.erb
+END
+tarjeta.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/gescom-onrails/!svn/ver/379/app/views/estadisticas/tarjeta.html.erb
+END
+ventasindex.pdf.prawn
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/gescom-onrails/!svn/ver/226/app/views/estadisticas/ventasindex.pdf.prawn
+END
+ventastipo.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/gescom-onrails/!svn/ver/379/app/views/estadisticas/ventastipo.html.erb
+END
+ventasmonto.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/gescom-onrails/!svn/ver/379/app/views/estadisticas/ventasmonto.html.erb
+END
+_xlscosto.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/gescom-onrails/!svn/ver/239/app/views/estadisticas/_xlscosto.html.erb
+END
+_xlscostocompra.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/gescom-onrails/!svn/ver/340/app/views/estadisticas/_xlscostocompra.html.erb
+END
+comprasuc.pdf.prawn
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/gescom-onrails/!svn/ver/173/app/views/estadisticas/comprasuc.pdf.prawn
+END
+comprasucu.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/gescom-onrails/!svn/ver/379/app/views/estadisticas/comprasucu.html.erb
+END
+comprasucuval.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/gescom-onrails/!svn/ver/362/app/views/estadisticas/comprasucuval.html.erb
+END

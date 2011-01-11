@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/gescom-onrails/!svn/ver/377/app/views/cabpedidowebs
+END
+edit.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/gescom-onrails/!svn/ver/218/app/views/cabpedidowebs/edit.html.erb
+END
+_pedidos.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/gescom-onrails/!svn/ver/267/app/views/cabpedidowebs/_pedidos.html.erb
+END
+index.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/gescom-onrails/!svn/ver/377/app/views/cabpedidowebs/index.html.erb
+END
+new.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/gescom-onrails/!svn/ver/273/app/views/cabpedidowebs/new.html.erb
+END
+show.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/gescom-onrails/!svn/ver/183/app/views/cabpedidowebs/show.html.erb
+END

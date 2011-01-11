@@ -1,0 +1,18 @@
+<h1>Listing renplaegresos</h1>
+
+<table>
+  <tr>
+  </tr>
+
+<% @renplaegresos.each do |renplaegreso| %>
+  <tr>
+    <td><%= link_to 'Show', renplaegreso %></td>
+    <td><%= link_to 'Edit', edit_renplaegreso_path(renplaegreso) %></td>
+    <td><%= link_to 'Destroy', renplaegreso, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New renplaegreso', new_renplaegreso_path %>

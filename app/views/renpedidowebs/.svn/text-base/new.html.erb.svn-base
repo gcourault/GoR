@@ -1,0 +1,34 @@
+<h1>Agregar item al pedido</h1>
+<table>
+<% form_for(@renpedidoweb) do |f| %>
+  <%= f.error_messages %>
+ <tr>
+  <td>
+    <%= f.label "Art&iacute;culo:" %>
+  </td>
+  <td>
+    <%= f.collection_select(:articulo_id, @articulos, :id, :arti_descripcion) %>
+  </td>  
+ </tr>
+ <tr>
+  <td>
+    <%= f.label "Cantidad:" %>
+  </td>
+  <td>
+    <%= f.text_field :rweb_cantidad, :size => 10, :onkeypress => "return IsNumber(event);" %>
+  </td>
+ </tr>
+   <%= f.hidden_field (:cabpedidoweb_id, :value => params[:idcabpedido].to_i , :readonly => true) %> 
+ <tr>
+    <td colspan="2" align="center">
+   <%= f.submit 'Agregar'%>
+  </td>
+ </tr>
+<% end %>
+</table>
+
+<br />
+<img  src="/images/volver.png" width="20px" height="20px" border="0"> 
+<span style="vertical-align: top">
+<%= link_to 'Volver', :controller => 'renpedidowebs', :idcabpedido => params[:idcabpedido], :page => params[:page] %>
+</span>

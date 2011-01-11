@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/gescom-onrails/!svn/ver/97/vendor/plugins/belongs_to_enum
+END
+Rakefile
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/gescom-onrails/!svn/ver/97/vendor/plugins/belongs_to_enum/Rakefile
+END
+CHANGELOG
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/gescom-onrails/!svn/ver/97/vendor/plugins/belongs_to_enum/CHANGELOG
+END
+install.rb
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/gescom-onrails/!svn/ver/97/vendor/plugins/belongs_to_enum/install.rb
+END
+MIT-LICENSE
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/gescom-onrails/!svn/ver/97/vendor/plugins/belongs_to_enum/MIT-LICENSE
+END
+uninstall.rb
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/gescom-onrails/!svn/ver/97/vendor/plugins/belongs_to_enum/uninstall.rb
+END
+README
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/gescom-onrails/!svn/ver/97/vendor/plugins/belongs_to_enum/README
+END

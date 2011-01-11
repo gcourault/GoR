@@ -1,0 +1,32 @@
+<h1>Agregar un Cheque de Tercero</h1>
+
+<br/>
+<table>
+<tr>
+ <td class="boton" width="120" align="center">
+   <!-- <img  src="/images/volver.png" width="20px" height="20px" border="0">  -->
+   <%= image_tag "volver.png" %> 
+   <span style="vertical-align: top">  
+    <%= link_to 'Volver', :controller => 'rencargachequeters', :action=> 'index', :id => 1, :page => params[:page] , :idcomp => params[:idcomp] %>
+   </span>
+ </td>
+</tr>
+</table>
+<br />
+
+<% form_for(@chequetercero) do |f| %>
+  <%= f.error_messages %>
+
+  <%= render :partial => "datoscheque" , :locals => { :f => f } %>
+  <%= render :partial => "importecheque" , :locals => { :f => f } %>
+
+  <table>
+  <tr height="70">
+    <td colspan="2" align="center">
+      <%= f.submit 'Grabar' %>
+    </td>
+  </tr>
+  </table>
+
+<% end %>
+

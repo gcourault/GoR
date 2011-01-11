@@ -1,0 +1,74 @@
+<h1>Editar concepto de egreso</h1>
+<br/>
+<table>
+<tr>
+ <td class="boton" width="120" align="center">
+   <%= image_tag "volver.png" %> 
+   <span style="vertical-align: top">  
+  <%= link_to 'Volver', :controller => 'conceptoegresos', :action => 'index', :page => params[:page] %>
+   </span>
+ </td>
+</tr>
+</table>
+<% form_for(@conceptoegreso) do |f| %>
+  <%= f.error_messages %>
+
+<table>
+ <tr>
+  <td>
+<Fieldset class="form"  width="200" >
+<LEGEND ALIGN="left" class="formlegend">Modificar datos</LEGEND>
+  <table>
+    <tr>
+     <td>
+       Detalle:     
+     </td>
+     <td>
+       <%= f.text_field :cegr_detalle, :class => "textosbox" %>
+   
+     </td>
+    </tr>
+      <tr>
+     <td>
+       Tipo de concepto:     
+     </td>
+     <td>
+       <%= f.select(:cegr_tipoconcepto , options_for_select([['G', 'G'],['C', 'C'], ['V', 'V'],['P', 'P'], ['T', 'T'],['L', 'L']], @conceptoegreso.cegr_tipoconcepto.to_s), {}, :class => "textosbox") %> 
+   
+     </td>
+    </tr>
+        <tr>
+     <td>
+       Lleva retenci&oacute;n de ganancia:     
+     </td>
+     <td>
+      <%= f.select(:cegr_retganancia , options_for_select([['No', 'No'],['Si', 'Si']], @conceptoegreso.cegr_retganancia.to_s), {}, :class => "textosbox") %>   
+   
+     </td>
+    </tr>
+    <tr>
+   
+     <td>
+       Cuenta contable:     
+     </td>
+     <td>
+       <%= f.collection_select (:plandecuenta_id, @plandecuenta, :id, :codigo_nombre) %>   
+     </td>
+   </tr>
+   <%= hidden_field(:valor, :page, :value => params[:page]) %> 
+</table>
+</Fieldset>
+</td>
+</tr>
+</table>
+<table>
+  <tr height="70">
+     <td colspan="2" align="center">
+    <%= f.submit 'Modificar', :class => "textosbox" %>
+    </td>
+ </tr>
+</table>
+
+<% end %>
+
+

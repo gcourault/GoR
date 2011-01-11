@@ -1,0 +1,31 @@
+<h1>Editar deposito caución</h1>
+<table>
+<tr>
+<td class="boton"  align="center">
+<%= link_to 'Mostrar', @depositocaucion %> </td>
+<td class="boton"  align="center">
+<%= link_to 'Volver', depositocaucions_path %>
+</td>
+</tr>
+</table>
+<% form_for(@depositocaucion) do |f| %>
+  <%= f.error_messages %>
+ <p >
+    <%= f.label "Nro de boleta de deposito:" %>
+    <%= f.text_field :dcau_nroboletadeposito %>
+  </p>
+ <p >
+    <%= f.label "Concepto de la caución:" %>
+   <%= @conceptocaucions = Conceptocaucion.find(:all, :order =>"ccau_detalle")
+     f.collection_select(:conceptocaucion_id,
+     @conceptocaucions, :id, :ccau_detalle, :prompt=>"Seleccione un concepto:") %>
+  </p>
+ <p>
+    <%= f.label "Fecha de acreditaci&oacute;n:" %>
+    <%= f.date_select :dcau_fechadeposito,  {:include_blank => true, :default => nil}  %>
+  </p>
+  <p>
+    <%= f.submit 'Modificar' %>
+  </p>
+<% end %>
+

@@ -1,0 +1,233 @@
+<h1>Consulta de compra de un art&iacute;culo por cliente</h1>
+<br />
+<% if params[:fechadesde].blank? %>
+<% from_time =  Date.today - 1.months %>
+<% else %>
+<% from_time = params[:fechadesde] %>
+<% end %>
+<% if params[:fechahasta].blank? %>
+<% to_time =  Date.today   %>
+<% else %>
+<% to_time = params[:fechahasta] %>
+<% end %>
+
+<% params[:sucursal] = session[:sucursalseleccionada] %>
+
+
+<Fieldset class="filtro">
+<legend ALIGN="left" class="formlegend"> Busqueda de cliente </legend>
+<table align="left" class="tablafiltro">
+
+<% form_tag  :controller => 'clientes', :action => 'clientearticulo' do %> 
+ <tr>
+    <td width="100">
+      Sucursal: 
+    </td>
+       <% if session[:sucursal].to_i == 1 %>
+     
+        <% @sucursals = Sucursal.find(:all) %>
+    <% else %>
+        <% @sucursals = Sucursal.find(:all, :conditions => ['id = ?', session[:sucursal]]) 
+           params[:sucursal] = session[:sucursal] %>
+    <% end %>
+    <td>
+       <%= select_tag(:sucursal, options_for_select(@sucursals.collect {|u| [u.sucu_nombre,u.id]}, params[:sucursal].to_i), {:class => "textosbox", :onChange => remote_function( :url => {:action => 'asignasucursal'} , :with => "'sucursal_id=' + this.value" )}) %>
+   </td>
+   <td>
+       Raz&oacute;n social:
+    </td>
+    <td>
+     <div id="datos_clientes">
+        <%= render :partial => '/clientes/traeclientes' %>
+     </div>
+    </td>
+    <td>  <input type="checkbox" name="bcuit" value="" />  CUIT:
+       <%= text_field_tag :clientecuit, params[:clientecuit], :class => "textosbox" %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Fecha desde:
+    </td>
+    <td >
+      <%=  select_date from_time , {:prefix => "fechadesde"}, {:class => "textosbox"} %> 
+    </td>
+    <td>
+      Fecha hasta: 
+    </td>
+    <td>
+      <%= select_date to_time, {:prefix=>"fechahasta"}, {:class => "textosbox"} %>
+    </td>
+   </tr> 
+   <tr>
+    <td>
+     Art&iacute;culo:
+    </td>
+    <td colspan="3">
+      <%= @articulos = Articulo.find(:all, :order => ['arti_descripcion']) 
+     select_tag(:articulo, options_for_select(@articulos.collect {|u| [u.arti_descripcion,u.id]}, params[:articulo].to_i), {:class => "textosbox"}) %>
+    </td>
+    <td>
+      <%= submit_tag "Consultar", :class => "textosbox", :onclick=>"javascript:mostrar_div('output')" %>
+    </td>
+ </tr>
+<% end %>
+
+</table>
+</Fieldset>
+<br />
+<% if !@cliente.nil?  %>
+<% if @cliente.clie_cuit.to_i > 0 %>
+<% saldoMoviTotal = 0 %>
+<% @sucursals = Sucursal.find(:all) %>
+<% for sucu in @sucursals %>
+<% @clientecuits = Cliente.find(:all, :conditions => ["sucursal_id = ? and clie_cuit = ? ", sucu.id , @cliente.clie_cuit ]) %>
+<% @clientecuits.each do |clientecuit| %>
+ <% if !clientecuit.nil? %>
+
+  <% @articuloclientes = Cliente.articulocliente(clientecuit.id[0], params[:fechadesde], params[:fechahasta], params[:articulo], sucu.id) %>
+   <% if !@articuloclientes.nil? && @articuloclientes.size > 0 %>
+ <br />
+<table border="1">
+  	<% if !@articuloclientes.nil? %>
+          <% totalunidades = 0 
+             totalimporte = 0 %>
+	  <tr>
+	    <td>
+            
+	     <Fieldset class="filtro">
+	     <legend ALIGN="left" class="formlegend"> Sucursal: <%= sucu.sucu_nombre %> </legend>
+	         <table class="tabladentrocont" border="0" cellpadding="0" cellspacing="0">
+    		  <tr class="headerStyle">
+      			<th width="100">Fecha</th>
+      			<th width="120">Comprobante</th>
+     			<th>Art&iacute;culo</th>
+      			<th>Cantidad ud.</th>
+                        <th>Precio unitario</th>
+      			<th>Importe</th>
+      
+    		 </tr>
+   		 <% @articuloclientes.each do |arti| %>
+    		 <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+     			<td><%=h arti.fecha %></td>
+     			<td><%=h arti.comprobante %>-<%=h arti.ptoventa %>-<%= arti.nrocompro %></td>
+                        <td><%=h arti.articulo %></td>
+                        <td align="center"><%=h arti.cantidad %></td> <% totalunidades = totalunidades + arti.cantidad.to_i %>
+ 			<td><%=h number_to_currency(arti.preciounitario, :precision => 2, :separator => ",", :delimiter => ".") %></td>
+     			<td><%=h number_to_currency(arti.monto, :precision => 2, :separator => ",", :delimiter => ".") %> </td> <% totalimporte = totalimporte + arti.monto.to_d %>
+     			
+                </tr>
+            <% end %>
+        <tr>
+            <td colspan="3" class="h6" align="right"><b> Total unidades: </td><td class="h6" align="center"> <b><%= totalunidades %> </td> 
+        </tr>
+        <tr>
+            <td class="h6" colspan="5" align="right" ><b> Total importe: </td><td class="h6"> <b><%=  number_to_currency(totalimporte, :precision => 2, :separator => ",", :delimiter => ".") %> </td> 
+        </tr>
+     </table>
+   </Fieldset>
+   </td>
+    </tr>
+ <% end %>
+ </table>
+
+<% end %>
+<% end %>
+<% end %>
+<% end %>
+<% else %>
+<!-- si el cliente tiene cuit 0 -->
+<table border="1">
+  	<% if !@articuloclientes.nil? %>
+          <% totalunidades = 0 
+             totalimporte = 0 %>
+	  <tr>
+	    <td>
+	     <Fieldset class="filtro">
+	     <legend ALIGN="left" class="formlegend"> Sucursal: <%= session[:sucursalseleccionada] %> </legend>
+	         <table class="tabladentrocont" border="0" cellpadding="0" cellspacing="0">
+    		  <tr class="headerStyle">
+      			<th width="100">Fecha</th>
+      			<th width="120">Comprobante</th>
+     			<th>Art&iacute;culo</th>
+      			<th>Cantidad ud.</th>
+   			<th>Precio unitario</th>
+      			<th>Importe</th>
+       		  </tr>
+   		  <% @articuloclientes.each do |arti| %>
+    		  <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+     			<td><%=h arti.fecha %></td>
+     			<td><%=h arti.comprobante %>-<%=h arti.ptoventa %>-<%= arti.nrocompro %></td>
+                        <td><%=h arti.articulo %></td>
+                        <td align="center"><%=h arti.cantidad %></td> <% totalunidades = totalunidades + arti.cantidad.to_i %>
+			<td><%=h number_to_currency(arti.preciounitario, :precision => 2, :separator => ",", :delimiter => ".") %></td>
+     			<td><%=h number_to_currency(arti.monto, :precision => 2, :separator => ",", :delimiter => ".") %> </td> <% totalimporte = totalimporte + arti.monto.to_d %>
+     			
+               </tr>
+            <% end %>
+           <tr>
+             <td class="h6" colspan="3" align="right"><b> Total unidades: </td><td class="h6" align="center"> <b><%= totalunidades %> </td> 
+           </tr>
+           <tr>
+             <td class="h6" colspan="5" align="right"><b> Total importe: </td><td class="h6"> <b><%=  number_to_currency(totalimporte, :precision => 2, :separator => ",", :delimiter => ".") %> </td> 
+           </tr>
+      
+	    </table>
+	    </Fieldset>
+	   </td>
+	   </tr>
+	<% end %>
+	</table>
+
+<% end %>
+<% else %>
+ <table border="1">
+  	<% if !@articuloclientes.nil? && @articuloclientes.size > 0  %>
+          <% totalunidades = 0 
+             totalimporte = 0 %>
+	  <tr>
+	    <td>
+	     <Fieldset class="filtro">
+	     <legend ALIGN="left" class="formlegend"> Sucursal: <%= session[:sucursalseleccionada] %> </legend>
+	         <table class="tabladentrocont" border="0" cellpadding="0" cellspacing="0">
+    		  <tr class="headerStyle">
+                        <th> Cliente </th>
+      			<th width="100">Fecha</th>
+      			<th width="120">Comprobante</th>
+     			<th>Art&iacute;culo</th>
+      			<th>Cantidad ud.</th>
+   			<th>Precio unitario</th>
+      			<th width="130">Importe</th>
+       		  </tr>
+   		  <% @articuloclientes.each do |arti| %>
+    		  <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+                        <td><%=h arti.cuit %> -  <%=h arti.nombre %>
+     			<td><%=h arti.fecha %></td>
+     			<td><%=h arti.comprobante %>-<%=h arti.ptoventa %>-<%= arti.nrocompro %></td>
+                        <td><%=h arti.articulo %></td>
+                        <td align="center"><%=h arti.cantidad %></td> <% totalunidades = totalunidades + arti.cantidad.to_i %>
+			<td><%=h number_to_currency(arti.preciounitario, :precision => 2, :separator => ",", :delimiter => ".") %></td>
+     			<td><%=h number_to_currency(arti.monto, :precision => 2, :separator => ",", :delimiter => ".") %> </td> <% totalimporte = totalimporte + arti.monto.to_d %>
+     			
+               </tr>
+            <% end %>
+           <tr>
+             <td class="h6" colspan="4" align="right"><b> Total unidades: </td><td class="h6" align="center"> <b><%= totalunidades %> </td> 
+           </tr>
+           <tr>
+             <td class="h6" colspan="6" align="right"><b> Total importe: </td><td class="h6"> <b><%=  number_to_currency(totalimporte, :precision => 2, :separator => ",", :delimiter => ".") %> </td> 
+           </tr>
+      
+	    </table>
+	    </Fieldset>
+	   </td>
+	   </tr>
+            </table>
+          <% else %>
+         <h4> La consulta no tiene resultados </h4>
+	<% end %>
+	
+
+<% end %>
+
+

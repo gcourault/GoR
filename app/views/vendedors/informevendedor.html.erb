@@ -1,0 +1,68 @@
+<h1>Informe del Vendedor </h1>
+
+<% if params[:fechadesde].blank? %>
+<% from_time =  Date.today - 365.days   %>
+
+
+<% end %>
+<% if params[:fechahasta].blank? %>
+<% to_time =  Date.today   %>
+
+<% end %>
+
+<Fieldset class="filtro">
+<table align="left">
+<% form_tag vendedors_path, :method => 'get', :action => 'informevendedor' do %>  
+ <tr height="70">
+     <td>
+       Seleccione un vendedor: 
+     </td>
+     <td>
+      <%= @vendedors = Vendedor.find(:all) 
+      select_tag(:id, options_for_select(@vendedors.collect {|u| [u.vend_nombre,u.id]}, params[:id].to_i)) %>
+     </td>
+     <td  colspan="3" align="right">
+      <%= submit_tag "Consultar" %>
+     </td>
+   </tr>
+   <tr>
+     <td >
+       Fecha desde:
+     </td>
+     <td>
+       <%=  select_date from_time , :prefix => "fechadesde" %> 
+     </td>
+     <td>
+       Fecha hasta: 
+     </td>
+     <td>
+      <%= select_date to_time, :prefix=>"fechahasta"  %>
+     </td> 
+ </tr>
+<% end %>
+</table>
+</Fieldset>
+<br />
+<table align="left" border="1" >
+<tr>
+<td>
+<% if @vendedor.blank? %> 
+<% else %>
+<table align="left" >
+
+<tr>
+<td> <b> Nombre:</td><td> <%= @vendedor.vend_nombre %> </td>
+</tr>
+<tr>
+<td> <b> Sucursal:</td><td> <%= @vendedor.sucursal.sucu_nombre %> </td>
+</tr>
+<tr>
+<td> <b> Código: </td> <td> <%= @vendedor.vend_codigo %> </td>
+</tr>
+</table>
+<% end %>
+</td>
+<td> </td>
+</tr>
+
+</table>

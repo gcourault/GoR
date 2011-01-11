@@ -1,0 +1,36 @@
+<p>
+  <b>Glis nrolista:</b>
+  <%=h @grillalista.glis_nrolista %>
+</p>
+<p>
+  <b>Glis idlista:</b>
+  <%=h @grillalista.listaprecio_id %>
+</p>
+<p>
+  <b>Glis nrogrilla:</b>
+  <%=h @grillalista.glis_nrogrilla %>
+</p>
+
+<p>
+  <b>Glis nrocolumna:</b>
+  <%=h @grillalista.glis_nrocolumna %>
+</p>
+
+<p>
+  <b>Glis porcentaje:</b>
+  <%=h @grillalista.glis_porcentaje %>
+</p>
+
+<p>
+  <b>Glis usuario:</b>
+  <%=h @grillalista.glis_usuario %>
+</p>
+
+<p>
+  <b>Glis ultmod:</b>
+  <%=h @grillalista.glis_ultmod %>
+</p>
+
+
+<%= link_to 'Edit', edit_grillalista_path(@grillalista) %> |
+<%= link_to 'Back', grillalistas_path %>

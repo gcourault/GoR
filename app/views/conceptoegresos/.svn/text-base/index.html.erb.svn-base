@@ -1,0 +1,41 @@
+<h1>Listado de conceptos de egresos</h1>
+<% form_tag conceptoegresos_path, :method => 'get' do %>  
+ <Fieldset class="filtro">
+      Buscar concepto de egreso:
+      <%= text_field_tag :concepto, params[:concepto], :class => "textosbox", :size => 30 %>
+     
+      <%= submit_tag "Buscar", :class => "textosbox" %>
+</Fieldset>
+<% end %> 
+<br />
+<table>
+<tr>
+<td class="boton"  align="center">
+  <%= image_tag "add.png" %>
+ <span style="vertical-align: top"> 
+ <%= link_to 'Crear nuevo concepto de egreso', new_conceptoegreso_path %>
+ </span>
+</td>
+</tr>
+</table>
+
+<div class="tablaContainer">
+ <table class="tabladentrocont">
+  <tr class="headerStyle">
+    <th>Codigo</th>
+    <th>Detalle</th>
+    <th colspan="3">Cuenta contable</th>
+  </tr>
+
+<% @conceptoegresos.each do |conceptoegreso| %>
+   <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+    <td><%=h conceptoegreso.cegr_codigo %></td>
+    <td><%=h conceptoegreso.cegr_detalle %></td>
+    <td><%=h conceptoegreso.plandecuenta.pcue_cuenta if conceptoegreso.plandecuenta %></td><td> - </td> <td><%=h conceptoegreso.plandecuenta.pcue_descripcion if conceptoegreso.plandecuenta %></td>
+    <td><%= link_to 'Editar', edit_conceptoegreso_path(conceptoegreso, :page => params[:page]) %></td>
+    <td><%= link_to 'Borrar', conceptoegreso, :confirm => 'Esta seguro de borrar el concepto de egreso?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+<%=will_paginate @conceptoegresos, :prev_label => '&laquo; Anterior', :next_label => 'Siguiente &raquo;' %>
+</div>

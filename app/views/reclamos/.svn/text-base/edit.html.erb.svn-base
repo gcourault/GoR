@@ -1,0 +1,163 @@
+<h1>Editando reclamo</h1>
+<br />
+<table  > <tr>
+<td class="boton" align="center">
+<%= link_to 'Mostar', :controller => 'reclamos', :action => 'show', :id => @reclamo.id, :page => params[:page] %> </td>
+<td> | </td> 
+<td class="boton" align="center">
+<%= link_to 'Volver',  :controller => 'reclamos', :action => '',  :sucursal => @reclamo.sucursal_id, :anio => (@reclamo.recl_fecha).year, :page => params[:page] %>
+</td> </tr>
+</table>
+<br />
+<% form_for(@reclamo) do |f| %>
+  <%= f.error_messages %>
+<table>
+ <tr>
+  <td >
+    <%= f.label "Cliente:" %>
+  </td>
+  <td>
+    <%= f.text_field :recl_nombrecliente %>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   <%= f.label "Documento:" %>
+  </td>
+  <td>
+   <%= f.text_field :recl_documento %>
+  </td>
+ </tr>
+ <tr>
+  <td>
+    <%= f.label "Estado:" %>
+  </td>
+  <td>
+    <%= f.text_field :recl_estado %>
+  </td>
+ </tr>
+ <tr>
+  <td>
+    <%= f.label "Nro PRT:" %>
+  </td>
+  <td>
+    <%= f.text_field :recl_nroprt %>
+  </td>
+ </tr>
+ <tr>
+  <td>
+    <%= f.label "Fecha:" %>
+  </td>
+  <td>
+    <%= f.date_select :recl_fecha %>  
+  </td>
+ </tr>
+ <tr>
+  <td>
+    <%= f.label "Nro interno:" %>
+  </td>
+  <td>
+    <%= f.text_field :recl_nrointerno %>
+  </td>
+ </tr>
+ <tr>
+  <td>
+    <%= f.label "Cod IP:" %>
+  </td>
+  <td>
+    <%= f.text_field :recl_codip %>
+  </td>
+ </tr>
+ <tr>
+  <td>
+    <%= f.label "Descripci&oacute;n producto:" %>
+  </td>
+  <td>
+    <%= f.text_field :recl_descripcionprod %>
+  </td>
+ </tr>
+ <tr>
+  <td>
+    <%= f.label "Dictaminado por:" %>
+  </td>
+  <td>
+    <%= f.text_field :recl_dicpor %>
+  </td>
+ </tr>
+ <tr>
+  <td>
+    <%= f.label "Dictamen:" %>
+  </td>
+  <td>
+    <%= f.text_field :recl_dictamen %>
+  </td>
+ </tr>
+ <tr>
+  <td>
+    <%= f.label "Motivo:" %>
+  </td>
+  <td>
+    <%= f.text_field :recl_motivo %>
+  </tr>
+ <tr>
+  <td>
+    <%= f.label "Bonificaci&oacute;n:" %>
+  </td>
+  <td>
+    <%= f.text_field :recl_bonificacion %>
+  </td>
+ </tr>
+ <tr>
+  <td>
+    <%= f.label "Nota credito:" %>
+  </td>
+  <td>
+    <%= f.text_field :recl_notacredito %>
+  </td>
+ </tr>
+ <tr>
+  <td>
+    <%= f.label "Fecha Nota de Cr&eacute;dito:" %>
+  </td>
+  <td>
+    <%= f.date_select :recl_fechanc,  {:include_blank => true, :default => nil}  %>
+  </td>
+ </tr>
+ <tr>
+  <td>
+    <%= f.label "Cr&eacute;dito cliente:" %>
+  </td>
+  <td>
+    <%= f.text_field :recl_creditocliente %>
+  </td>
+ </tr>
+   <%= hidden_field(:valor, :page, :value => params[:page]) %> 
+ <tr>
+  <td>
+     <%= f.label "Sucursal:" %>
+  </td>
+  <td>
+     <%= @sucursales = Sucursal.find(:all, :order =>"sucu_nombre")
+     f.collection_select(:sucursal_id,
+     @sucursales, :id, :sucu_nombre, :prompt=>"Seleccione una sucursal:") %>
+  </td>
+ </tr>
+ <tr>
+  <td>
+     <%= f.label "Art&iacute;culo:" %>
+  </td>
+  <td>
+     <%= @articulos = Articulo.find(:all, :order =>"arti_descripcion")
+     f.collection_select(:articulo_id,
+     @articulos, :id, :arti_descripcion, :prompt=>"Seleccione un articulo:") %>
+  </td>
+ </tr>
+ <tr>
+  <td colspan="2" align="center" height="70">
+    <%= f.submit 'Modificar' %>
+  </td>
+ </tr>
+</table> 
+<% end %>
+
+

@@ -1,0 +1,883 @@
+
+<h1>Resumen del cliente</h1>
+
+<% if params[:fechadesde].blank? %>
+<% from_time =  Date.today - 1.months %>
+<% else %>
+<% from_time = params[:fechadesde] %>
+<% end %>
+<% if params[:fechahasta].blank? %>
+<% to_time =  Date.today   %>
+<% else %>
+<% to_time = params[:fechahasta] %>
+<% end %>
+
+<% params[:sucursal] = session[:sucursalseleccionada] %>
+
+
+<Fieldset class="filtro">
+<legend ALIGN="left" class="formlegend"> Busqueda por sucursal y raz&oacute;n social del cliente o por CUIT</legend>
+<table align="left" class="tablafiltro">
+
+<% form_tag  :controller => 'clientes', :action => 'resumencliente' do %> 
+ <tr>
+    <td width="100">
+      Sucursal: 
+    </td>
+    <td>
+       <%= @sucursals = Sucursal.find(:all) 
+     select_tag(:sucursal, options_for_select(@sucursals.collect {|u| [u.sucu_nombre,u.id]}, params[:sucursal].to_i), {:class => "textosbox", :onChange => remote_function( :url => {:action => 'asignasucursal'} , :with => "'sucursal_id=' + this.value" )}) %>
+   </td>
+   <td>
+       Raz&oacute;n social:
+    </td>
+    <td>
+     <div id="datos_clientes">
+        <%= render :partial => '/clientes/traeclientes' %>
+     </div>
+    </td>
+    <td>  <input type="checkbox" name="bcuit" value="" />  CUIT:
+       <%= text_field_tag :clientecuit, params[:clientecuit], :class => "textosbox" %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Fecha desde:
+    </td>
+    <td >
+      <%=  select_date from_time , {:prefix => "fechadesde"}, {:class => "textosbox"} %> 
+    </td>
+    <td>
+      Fecha hasta: 
+    </td>
+    <td>
+      <%= select_date to_time, {:prefix=>"fechahasta"}, {:class => "textosbox"} %>
+    </td>
+    <td colspan="2">
+      <%= submit_tag "Consultar", :class => "textosbox", :onclick=>"javascript:mostrar_div('output')" %>
+    </td>
+ </tr>
+<% end %>
+
+</table>
+</Fieldset>
+<table>
+ <tr>
+   <%  central_url = "http://200.70.35.102/cenries/cr010000.asp?error=0" %>
+   <td  width="300px"  align="center"> 
+   <%= image_tag "banco2.png" %><%= link_to 'Consultar por CUIT en el banco central', central_url, :class => "textosbox", :target => "_blank" %>
+   </td>
+    <%  riesgo_url = "http://www.riesgoonline.com/home/" %>
+   <td  width="200px"  align="center"> 
+   <%= image_tag "SearchUser.png" %><%= link_to 'Riesgo on line', riesgo_url, :class => "textosbox", :target => "_blank" %>
+   </td>
+       <%  arba_url = "http://orion.dsi.ec.gba.gov.ar/ConsultasGenerales/recuperarEstadoDeuda.do?action=recuperarEstadoDeuda&cuit="+ params[:clientecuit].to_s %>
+   <td> 
+   <%= image_tag "arba.png" %><%= link_to 'Consultar en ARBA', arba_url, :class => "textosbox", :target => "_blank" %>
+   </td>
+ </tr>
+</table>
+<br />
+
+<% if !@cliente.nil?  %>
+<% i = 1 %>
+<% j = 0 %>
+<% remitostotal = 0 %>
+<% chequependtotal = 0 %>
+<% chequesrechaztotal = 0 %>
+<% saldoMoviTotal = 0 %>
+<% if @cliente.clie_cuit.to_i > 0 %>
+
+
+<% for sucu in @sucursals %>
+<%  @clientecuits = Cliente.find(:all, :conditions => ["sucursal_id = ? and clie_cuit = ? ", sucu , @cliente.clie_cuit ]) %>
+<% @clientecuits.each do |clientecuit| %>
+ <% if !clientecuit.nil? %>
+  <% j = j +1 %>
+   <% clientedato = "cliente"+j.to_s+"dato" %>
+   <% facturadato = "factura"+j.to_s+"dato" %>
+   <% artidato = "arti"+j.to_s+"dato" %>
+   <% ctactedato = "ctacte"+j.to_s+"dato" %>
+   <% chequedato = "cheque"+j.to_s+"dato" %>
+   <% chequependato = "chequepen"+j.to_s+"dato" %>
+   <% chequerecdato = "chequerec"+j.to_s+"dato" %>
+   <% remitodato = "remito"+j.to_s+"dato" %>
+
+
+  <% @movimientos = Cliente.movimiento(clientecuit.id[0], params[:fechadesde], params[:fechahasta], sucu) %>
+   <%  @articulos = Cliente.articulo(clientecuit.id[0], params[:fechadesde], params[:fechahasta], sucu) %>
+   <% if !@movimientos.nil? %>
+ <br />
+
+<table border="1" align="center">
+  <tr>
+      <td>
+    <p><a class="expand" onclick="muestra_oculta('<%= clientedato %>')" title=""><%= image_tag "arrow-down-icon.png" %>Datos del cliente sucursal <%= clientecuit.sucursal.sucu_nombre %> </a></p>
+
+     <div id= "<%= clientedato %>">
+   
+     <Fieldset class="filtro">
+     
+     <legend ALIGN="left" class="formlegend"> Datos del cliente  </legend>
+ 
+     <table align="left" class="tablafiltro">
+       <tr>
+          <td><b> Raz&oacute;n social: </td>
+          <td> <%= clientecuit.clie_razonsocial %></td>
+          <td><b> Direcci&oacute;n: </td>
+          <td> <%= clientecuit.clie_domicilio %> </td>
+        </tr>
+        <tr>
+          <td><b> CUIT: </td>
+          <td> <%= clientecuit.clie_cuit %> </td>
+          <td><b> C&oacute;digo: </td>
+          <td> <%= clientecuit.clie_codigo %> </td>
+        </tr>
+        <tr>
+          <td><b> Localidad: </td>
+          <td> <%= clientecuit.localidad.loca_nombre %> </td>
+          <td><b> Tel&eacute;fono: </td>
+          <td> <%= clientecuit.clie_telefono %> </td>
+        </tr>
+         <tr>
+          <td><b> Sucursal: </td>
+          <td colspan="2"> <%= clientecuit.sucursal.sucu_nombre %> </td>
+        </tr>
+        <tr>
+	  <td><b> E-mail: </td>
+	  <td> <%= clientecuit.clie_email %> </td>
+	  <td><b> Contacto: </td>
+	  <td> <%= clientecuit.clie_contacto %> </td>
+        </tr>
+       
+          <% if !@articulos.nil? && @articulos.size > 0 %>
+             <tr>
+               <td colspan="4">
+                 <% Cliente.graficorubro(clientecuit.id[0], params[:fechadesde], params[:fechahasta], sucu.id, i) %>
+                 <%= image_tag "rubrocliente"+i.to_s+""+clientecuit.sucursal_id.to_s+".png" %> 
+                 <% i = i + 1 %>
+               </td>
+              </tr>
+              
+               <% @artimes = Cliente.articulopormes(clientecuit.id[0], params[:fechadesde], params[:fechahasta], sucu.id) %>
+                <% if !@artimes.nil? && @artimes.size > 0 %>
+                 
+                  <tr height="70"> <td colspan="4"><b> Evolucion de las compras del cliente por mes </td> </tr>
+                  
+                      <tr class="headerStyle">
+                          <th>Mes - A&ntilde;o</th>
+     			  <th width="70">Unidades</th>
+     			  <th>Importe</th>
+      		          </tr>
+                          <% @artimes.each do |art| %>
+                           <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+                            <td><%=h art.mes %> - <%=h art.anio %></td>
+                            <td align="center"><%=h art.cantidad %></td> 
+                            <td><%=h number_to_currency(art.monto, :precision => 2, :separator => ",", :delimiter => ".") %>  </td>
+                          </tr>
+                        <% end %>
+                   </tr>
+                
+              
+                <% end %>
+           <% end %>
+     </table>
+    </Fieldset>
+  </div>
+   </td>
+  
+
+   <td>
+     <p><a class="expand" onclick="muestra_oculta('<%= artidato %>')" title=""><%= image_tag "arrow-down-icon.png" %>Art&iacute;culos comprados</a></p>
+
+     <div id= "<%= artidato %>" style="display: none;">
+    <Fieldset class="filtro">
+    <legend ALIGN="left" class="formlegend"> Art&iacute;culos comprados entre estas fechas </legend>
+    <% if !@articulos.nil? && @articulos.size > 0 %>
+     <% totalcanti = 0 %>
+     <% totalimporte = 0 %>
+     <table align="left" class="tablafiltro">
+       <tr class="headerStyle">
+        <th>Art&iacute;culo</th>
+        <th>Unidades</th>
+        <th>Importe</th>
+       </tr>
+       <% @articulos.each do |art| %>
+       <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+         <td><%=h art.articulo %></td>
+         <td><%=h art.cantidad %></td> <% totalcanti = totalcanti + art.cantidad.to_i %>
+         <td width ="80"><%=h number_to_currency(art.monto, :precision => 2, :separator => ",", :delimiter => ".") %> <% totalimporte = totalimporte + art.monto.to_d %> </td>
+ <td><%= link_to 'Detalle', :controller =>'clientes', :action => 'detallearticulo', :id => 1, :cliente => clientecuit.id[0], :fechadesde => params[:fechadesde], :fechahasta => params[:fechahasta], :articulo => art.artid, :sucursal => sucu.id, :sucunombre => sucu.sucu_nombre %> </td>
+       </tr>
+      <% end %>
+      <tr><td align="right">Total unidades: </td> <td><b><%= totalcanti  %> </td></tr>
+      <tr><td align="right" colspan="2"> Total vendido: </td> <td width="110"><b> <%= number_to_currency(totalimporte, :precision => 2, :separator => ",", :delimiter => ".")  %> </td></tr>
+     
+     </table>
+    </Fieldset>
+   </div>
+   </td>
+  <% end %>
+  
+  </tr>
+
+  <% @facturas = Cliente.factura(clientecuit.id[0], params[:fechadesde], params[:fechahasta], sucu) %> 
+   <% if !@facturas.nil? && @facturas.size > 0 %>
+   <tr>
+    
+   <td colspan="2">
+      <p><a class="expand" onclick="muestra_oculta('<%= facturadato %>')" title=""> <%= image_tag "arrow-down-icon.png" %> Facturas del cliente</a></p>
+
+     <div id= "<%= facturadato %>" style="display: none;">
+   <Fieldset class="filtro">
+   <legend ALIGN="left" class="formlegend"> Facturas del periodo</legend>
+
+    <table class="tabladentrocont" border="0" cellpadding="0" cellspacing="0">
+     <tr class="headerStyle">
+      <th>Fecha</th>
+      <th>Comprobante</th>
+      <th>Importe</th>
+      <th>Vendedor</th>
+      <th>Revendedor</th>
+      
+    </tr>
+    <% @facturas.each do |fac| %>
+    <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+     <td><%=h fac.cfac_fecha %></td>
+     <% tipoc = Tipocomprobante.find(fac.id_tipocomprobante) %>
+     <td><%=h tipoc.tcom_abreviatura if tipoc %>-<%=h fac.cfac_puntosventa %>-<%= fac.cfac_nrocomprobante %></td>
+     <td><%=h number_to_currency(fac.monto, :precision => 2, :separator => ",", :delimiter => ".") %> </td>
+     <% ven = Vendedor.find(fac.id_vendedor) %>
+     <td><%=h ven.vend_codigo %> </td>
+     <td><%=h fac.id_revendedor %></td>
+     <td><%= link_to 'Ver factura', :controller =>'clientes', :action => 'detallefactura', :id => [fac.id_cabfactura+","+ fac.id_sucursal] %> </td>
+    </tr>
+    <% end %>
+ 
+ </table>
+</Fieldset>
+ </div>
+ </td>
+ </tr>
+ <% end %>
+  
+  <!-- <% @movimientos = Cliente.movimiento(clientecuit.id[0], params[:fechadesde], params[:fechahasta], sucu) %>-->
+   <% if !@movimientos.nil? && @movimientos.size > 0 %>
+   <tr>
+   <td colspan="2">
+     <p><a class="expand" onclick="muestra_oculta('<%= ctactedato %>')" title=""> <%= image_tag "arrow-down-icon.png" %> Datos de la cuenta corriente</a></p>
+
+     <div id= "<%= ctactedato %>" style="display: none;">
+   <Fieldset class="filtro">
+   <legend ALIGN="left" class="formlegend"> Pendientes de cobro</legend>
+
+    <table class="tabladentrocont" border="0" cellpadding="0" cellspacing="0">
+     <tr class="headerStyle">
+      <th>Fecha</th>
+      <th>Comprobante</th>
+      <th>Debe</th>
+      <th>Haber</th>
+      <th>Afectaci&oacute;n</th>
+      <th>Vendedor</th>
+    </tr>
+    <% @movimientos.each do |mov| %>
+    <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+     <td><%=h mov.fecha %></td>
+     <td><%=h mov.comprobante %>-<%=h mov.puntov %>-<%= mov.nro %></td>
+     <td><%=h number_to_currency(mov.debe, :precision => 2, :separator => ",", :delimiter => ".") %> </td>
+     <td><%=h number_to_currency(mov.haber, :precision => 2, :separator => ",", :delimiter => ".") %> </td>
+     <td><% @comprobafectado = Tipocomprobante.find_by_id(mov.tafect.to_i) if mov.tafect  %><%=h @comprobafectado.tcom_abreviatura if !@comprobafectado.nil? %>-<%=h mov.ptoafectado %>-<%= mov.nroafectado %></td>
+     <td><%=h mov.vendedor %></td>
+    </tr>
+    <% end %>
+  <tr>
+  <% @saldoant = Cliente.saldoant(sucu, params[:fechadesde], clientecuit.id[0])
+   @saldomov = Cliente.saldomov(sucu, params[:fechadesde], params[:fechahasta], clientecuit.id[0]) %>
+  <% saldoa = 0 %>
+   <td colspan="2"><b> Saldo anterior: <% @saldoant.each do |sa| %> <%= number_to_currency(sa.SaldoAnterior, :precision => 2, :separator => ",", :delimiter => ".")  %> <% saldoa = sa.SaldoAnterior.to_d %><% end %> </td> <td></td><td colspan="3"><b> Saldo a la fecha <%= to_time %>: <% @saldomov.each do |sm| %> <%= number_to_currency((sm.SaldoMovi.to_d), :precision => 2, :separator => ",", :delimiter => ".") %>  <% end  %> </td>
+  </tr>
+ </table>
+
+ </Fieldset>
+</div>
+ </td>
+ </tr>
+ <% end %>
+
+
+<% @chequefacturas = Cliente.chequefactura(clientecuit.id[0], params[:fechadesde], params[:fechahasta], sucu) %>
+   <% if !@chequefacturas.nil? && @chequefacturas.size > 0 %>
+   <tr>
+   <td colspan="2">
+         <p><a class="expand" onclick="muestra_oculta('<%= chequedato %>')" title=""> <%= image_tag "arrow-down-icon.png" %>Cheques ingresados</a></p>
+
+     <div id= "<%= chequedato %>" style="display: none;">
+   <Fieldset class="filtro">
+   <legend ALIGN="left" class="formlegend">Cheques ingresados entre dichas fechas</legend>
+
+    <table class="tabladentrocont" border="0" cellpadding="0" cellspacing="0">
+     <tr class="headerStyle">
+      <th>Fecha ingreso</th>
+      <th>Cuit</th>
+      <th>Numero</th>
+      <th>Fecha vencimiento</th>
+      <th>Importe</th>
+      <th>Comprobante</th>
+    </tr>
+    <% @chequefacturas.each do |cqf| %>
+    <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+     <td><%=h cqf.cter_ingreso %></td>
+     <td><%=h cqf.cter_cuitlibrador %> </td>
+     <td><%=h cqf.cter_nrocheque %> </td>
+     <td><%=h cqf.cter_vencimiento %> </td>
+     <td><%=h number_to_currency(cqf.cter_importe, :precision => 2, :separator => ",", :delimiter => ".") %> </td>
+    
+ <!-- muestro la factura o recibo asociado al cheque y el cliente de dicho comprobante-->
+   <% if !cqf.id_cabfactura.nil? && cqf.id_cabfactura.to_i > 0 %>
+    
+      <!-- <td><%=h cqf.cabfactura.tipocomprobante.tcom_abreviatura  if !cqf.cabfactura.nil? %> - <%= cqf.cabfactura.cfac_puntosventa if !cqf.cabfactura.nil? %> - <%= cqf.cabfactura.cfac_nrocomprobante if !cqf.cabfactura.nil? %></td> -->
+ <% factura = Cabfactura.find([cqf.id_cabfactura.to_i, cqf.id_sucursal.to_i]) if cqf.id_cabfactura.to_i > 0 %>
+    
+       <td><%=h factura.tipocomprobante.tcom_abreviatura if factura  %> - <%= factura.cfac_puntosventa if factura %> - <%= factura.cfac_nrocomprobante if factura %></td>
+      
+    <% else %>
+          <% if !cqf.id_cabrecibo.to_i.nil? && cqf.id_cabrecibo.to_i > 0 %>
+      
+       <td><%=h cqf.cabrecibo.tipocomprobante.tcom_abreviatura if !cqf.cabrecibo.nil? %> - <%= cqf.cabrecibo.crec_puntosventa  if !cqf.cabrecibo.nil? %> - <%= cqf.cabrecibo.crec_nrocomprobante  if !cqf.cabrecibo.nil? %></td>
+    <% recibo = Cabrecibo.find([cqf.id_cabrecibo.to_i, cqf.id_sucursal.to_i])  if cqf.id_cabrecibo.to_i > 0  %>
+     
+       <td><%=h recibo.tipocomprobante.tcom_abreviatura if recibo.tipocomprobante_id.to_i > 0 %> - <%= recibo.crec_puntosventa if recibo %> - <%= recibo.crec_nrocomprobante if recibo %></td>
+      <% end %>
+    
+ <% end %>
+       <td><%=h cqf.cter_observaciones %></td>
+    </tr>
+    <% end %>
+
+ </table>
+
+ </Fieldset>
+ </div>
+ </td>
+ </tr>
+ <% end %>
+  <% @cheques = Cliente.cheque(clientecuit.id[0], params[:fechahasta], sucu) %>
+   <% if !@cheques.nil? && @cheques.size > 0 %>
+   <tr>
+   <td colspan="2">
+     <p><a class="expand" onclick="muestra_oculta('<%= chequependato %>')" title=""><%= image_tag "arrow-down-icon.png" %>Cheques pendientes de cobro</a></p>
+
+     <div id= "<%= chequependato %>" style="display: none;">
+   <Fieldset class="filtro">
+   <legend ALIGN="left" class="formlegend"> Cheques pendientes a la fecha </legend>
+ 
+   <% totalcheq = 0 %>
+   <table class="tabladentrocont" border="0" cellpadding="0" cellspacing="0">
+    <tr class="headerStyle">
+      <th>CUIT</th>
+      <th>Fecha</th>
+      <th>N&uacute;mero</th>
+      <th>Importe</th>
+      <th>Fecha vencimiento</th>
+    </tr>
+
+    <% @cheques.each do |cheq| %>
+    <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+     <td><%=h cheq.cter_cuitlibrador %></td>
+     <td><%=h cheq.cter_emision %></td>
+     <td><%=h cheq.cter_nrocheque %></td>
+     <td><%=h number_to_currency(cheq.cter_importe, :precision => 2, :separator => ",", :delimiter => ".") %> <% totalcheq = totalcheq + cheq.cter_importe.to_d %></td>
+     <td><%=h cheq.cter_vencimiento %></td>
+    </tr>
+    <% end %>
+ <tr>
+  <% chequependtotal = chequependtotal + totalcheq %>
+  <td colspan="3" align="right"><b> TOTAL: </td> <td><b><%=h number_to_currency(totalcheq, :precision => 2, :separator => ",", :delimiter => ".")  %></td>
+ </tr>
+ </table>
+    <% end %>
+
+ </Fieldset>
+ </div>
+ </td>
+</tr>
+<% end %>
+ <% @chequerechazados = Cliente.chequerechazado(clientecuit.id[0], sucu) %>
+   <% if !@chequerechazados.nil? && @chequerechazados.size > 0 %>
+<tr>
+<td colspan="2">
+    <p><a class="expand" onclick="muestra_oculta('<%= chequerecdato %>')" title=""><%= image_tag "arrow-down-icon.png" %>Cheques rechazados</a></p>
+     <div id= "<%= chequerecdato %>" style="display: none;">
+  <Fieldset class="filtro">
+      <legend ALIGN="left" class="formlegend"> Cheques rechazados</legend>
+	<% if !@chequerechazados.nil? && @chequerechazados.size > 0 %>
+        <% totalrechazado = 0 %>
+	<table class="tabladentrocont" border="0" cellpadding="0" cellspacing="0">
+	  <tr class="headerStyle">
+	   <th>CUIT</th>
+	   <th>Fecha</th>
+	   <th>N&uacute;mero</th>
+	   <th>Importe</th>
+	   <th>Fecha vencimiento</th>
+           <th>Cancelado</th>
+	  </tr>
+ 	<% @chequerechazados.each do |cheq| %>
+	  <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+	    <td><%=h cheq.cter_cuitlibrador %></td>
+	    <td><%=h cheq.cter_emision %></td>
+	    <td><%=h cheq.cter_nrocheque %></td>
+	    <td><%=h number_to_currency(cheq.cter_importe, :precision => 2, :separator => ",", :delimiter => ".") %> </td>
+	    <td><%=h cheq.cter_vencimiento %></td>
+ 	    <% @cancelacheq = Chequetercero.chequerechazadocancelado(cheq.id_chequetercero, cheq.id_sucursal.to_i)%>
+	    <% @cancelacheq.each do |cancel| %>
+	    <% if cancel.importe.nil? %>
+	    <td> NO </td> <% totalrechazado = totalrechazado + cheq.cter_importe.to_d %>
+	    <% else %> 
+	      <% if cancel.importe.to_d >= cheq.cter_importe.to_d %>  <td> SI </td> <% end %>
+	      <% if (cancel.importe.to_d < cheq.cter_importe.to_d) %>  <td> PARCIAL (imp: <%= cancel.importe.to_d %> , interes: <%= cancel.intereses.to_d %>, gastos: <%= cancel.gastos.to_d %> , total: $<%= cancel.total.to_d %>) <% totalrechazado = totalrechazado + (cheq.cter_importe.to_d - cancel.total.to_d) %> </td> <% end %>
+	    <% end %>
+	<% end %>
+	  </tr>
+	<% end %>
+	 <% chequesrechaztotal = chequesrechaztotal + totalrechazado %>
+	</table>
+	<% end %>
+	</Fieldset>
+
+	</div>
+</td>
+</tr>
+<% end %>
+
+
+
+<% nrolista = Maestrolista.maximum(:mlis_nrolista) %>
+ <% @remitospendientes = Cliente.remitospendiente(clientecuit.id[0], nrolista, params[:fechadesde], params[:fechahasta], sucu) %>
+   <% if !@remitospendientes.nil? && @remitospendientes.size > 0 %>
+   <tr>
+   <td colspan="2">
+       <p><a class="expand" onclick="muestra_oculta('<%= remitodato %>')" title=""><%= image_tag "arrow-down-icon.png" %>Remitos pendientes</a></p>
+     <div id= "<%= remitodato %>" style="display: none;">
+   <Fieldset class="filtro">
+   <legend ALIGN="left" class="formlegend"> Remitos pendientes </legend>
+ 
+   <% totalremitos = 0 %>
+   <table class="tabladentrocont" border="0" cellpadding="0" cellspacing="0">
+        <tr class="headerStyle">
+        <th>Art&iacute;culo</th>
+        <th>Unidades</th>
+        <th>Importe</th>
+    </tr>
+
+    <% @remitospendientes.each do |rem| %>
+    <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+     <td><%=h rem.arti %></td>
+     <td><%=h rem.totalarti %></td>
+    
+     <td><%=h number_to_currency(rem.totalcosto, :precision => 2, :separator => ",", :delimiter => ".") %> <% totalremitos = totalremitos + rem.totalcosto.to_d %> </td>
+    
+    </tr>
+    <% end %>
+ <tr>
+  <% remitostotal = remitostotal + totalremitos %>
+  <td colspan="3" align="right"><b> TOTAL: </td> <td><b><%=h number_to_currency(totalremitos, :precision => 2, :separator => ",", :delimiter => ".")  %></td>
+ </tr>
+ </table>
+ <% end %>
+
+ </Fieldset>
+ </div>
+ </td>
+</tr>
+
+
+
+</table>
+</div>
+<% end %>
+<% @saldomov = Cliente.saldomov(sucu, params[:fechadesde], params[:fechahasta], clientecuit.id[0]) %>
+<% @saldomov.each do |sm| %>  <% saldoMoviTotal = (saldoMoviTotal + sm.SaldoMovi.to_d ) %> <% end  %>
+<% end %>
+  
+<% end %>
+<!--<div align="center">
+<b> Saldo pendiente total: <%= number_to_currency(saldoMoviTotal, :precision => 2, :separator => ",", :delimiter => ".")  %>
+</div>-->
+
+<% else %>
+<!-- si el cliente tiene cuit 0 -->
+<table border="1">
+  	<% if !@cliente.nil? %>
+            <% if !@saldomovunico.nil? && @saldomovunico.size > 0 %>
+        <% @saldomovunico.each do |sm| %>  <% saldoMoviTotal = (saldoMoviTotal + sm.SaldoMovi.to_d ) %> <% end  %> <% end  %>
+	  <tr>
+	    <td>
+                 <p><a class="expand" onclick="muestra_oculta('clientedato')" title=""><%= image_tag "arrow-down-icon.png" %>Datos del cliente </a></p>
+
+     <div id= "clientedato">
+   
+	     <Fieldset class="filtro">
+	     <legend ALIGN="left" class="formlegend"> Datos del cliente </legend>
+	     <table align="left" class="tablafiltro">
+	       <tr>
+	          <td><b> Raz&oacute;n social: </td>
+	          <td> <%= @cliente.clie_razonsocial %></td>
+	          <td><b> Direcci&oacute;n: </td>
+	          <td> <%= @cliente.clie_domicilio %> </td>
+	        </tr>
+	        <tr>
+	          <td><b> CUIT: </td>
+	          <td> <%= @cliente.clie_cuit  %> </td>
+	          <td><b> C&oacute;digo: </td>
+	          <td> <%= @cliente.clie_codigo  %> </td>
+	        </tr>
+	        <tr>
+	          <td><b> Localidad: </td>
+	          <td> <%= @cliente.localidad.loca_nombre  %> </td>
+	          <td><b> Tel&eacute;fono: </td>
+	          <td> <%= @cliente.clie_telefono  %> </td>
+	        </tr>
+                <tr>
+	          <td><b> E-mail: </td>
+	          <td> <%= @cliente.clie_email %> </td>
+	          <td><b> Contacto: </td>
+	          <td> <%= @cliente.clie_contacto %> </td>
+	        </tr>
+                 <tr>
+                   
+                 <% if !@articulounicos.nil? && @articulounicos.size > 0 %>
+
+                      <td colspan="4">
+                           <%= image_tag "rubrocliente99"+@cliente.sucursal_id.to_s+".png" %> 
+                      </td>
+                  <% end %>
+               </tr>
+	    </table>
+	    </Fieldset>
+           </div>
+	   </td>
+	   <td>
+                 <p><a class="expand" onclick="muestra_oculta('artidato')" title=""><%= image_tag "arrow-down-icon.png" %>Art&iacute;culos comprados</a></p>
+
+     <div id= "artidato">
+	    <Fieldset class="filtro">
+	    <legend ALIGN="left" class="formlegend"> Art&iacute;culos comprados entre estas fechas </legend>
+	    <% if !@articulounicos.nil? && @articulounicos.size > 0 %>
+	     <table align="left" class="tablafiltro">
+	       <tr class="headerStyle">
+	        <th>Art&iacute;culo</th>
+	        <th>Unidades</th>
+	        <th>Importe</th>
+	       </tr>
+	       <% @articulounicos.each do |art| %>
+	       <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+	         <td><%=h art.articulo %></td>
+	         <td><%=h art.cantidad %></td>
+	         <td width ="80"><%=h number_to_currency(art.monto, :precision => 2, :separator => ",", :delimiter => ".") %> </td>
+                  <td><%= link_to 'Detalle', :controller =>'clientes', :action => 'detallearticulo', :id => 1, :cliente => @cliente.id[0], :fechadesde => params[:fechadesde], :fechahasta => params[:fechahasta], :articulo => art.artid, :sucursal => params[:sucursal], :sucunombre => params[:sucursal] %> </td>
+	       </tr>
+	      <% end %>
+	     </table>
+	    <% end %>
+	    </Fieldset>
+            </div>
+	   </td>
+	  </tr>
+
+   <% if !@facturaunicos.nil? && @facturaunicos.size > 0 %>
+   <tr>
+   <td colspan="2">
+        <p><a class="expand" onclick="muestra_oculta('facturadato')" title=""><%= image_tag "arrow-down-icon.png" %>Facturas del cliente</a></p>
+
+     <div id= "facturadato">
+   <Fieldset class="filtro">
+   <legend ALIGN="left" class="formlegend"> Facturas del periodo</legend>
+
+    <table class="tabladentrocont" border="0" cellpadding="0" cellspacing="0">
+     <tr class="headerStyle">
+      <th>Fecha</th>
+      <th>Comprobante</th>
+      <th>Importe</th>
+      <th>Vendedor</th>
+      <th>Revendedor</th>
+      
+    </tr>
+    <% @facturaunicos.each do |fac| %>
+    <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+     <td><%=h fac.cfac_fecha %></td>
+     <% tipoc = Tipocomprobante.find(fac.id_tipocomprobante) %>
+     <td><%=h tipoc.tcom_abreviatura if tipoc %>-<%=h fac.cfac_puntosventa %>-<%= fac.cfac_nrocomprobante %></td>
+     <td><%=h number_to_currency(fac.monto, :precision => 2, :separator => ",", :delimiter => ".") %> </td>
+     <% ven = Vendedor.find(fac.id_vendedor) %>
+     <td><%=h ven.vend_codigo %> </td>
+     <td><%=h fac.id_revendedor %></td>
+     <td><%= link_to 'Ver factura', :controller =>'clientes', :action => 'detallefactura', :id => [fac.id_cabfactura+","+ fac.id_sucursal] %> </td>
+    </tr>
+    <% end %>
+ 
+ </table>
+
+ </Fieldset>
+ </div>
+ </td>
+ </tr>
+ <% end %>
+
+	  <tr>
+	   <td colspan="2">
+            <p><a class="expand" onclick="muestra_oculta('ctactedato')" title=""><%= image_tag "arrow-down-icon.png" %>Cuenta corriente del cliente</a></p>
+
+     <div id= "ctactedato">
+	   <Fieldset class="filtro">
+	   <legend ALIGN="left" class="formlegend"> Pendientes de cobro</legend>
+	   <% if !@movimientounicos.nil? && @movimientounicos.size > 0 %>
+	    <table class="tabladentrocont" border="0" cellpadding="0" cellspacing="0">
+	     <tr class="headerStyle">
+              <th>Fecha</th>
+	      <th>Comprobante</th>
+	      <th>Debe</th>
+	      <th>Haber</th>
+	      <th>Afectaci&oacute;n</th>
+	      <th>Vendedor</th>
+	    </tr>
+	    <% @movimientounicos.each do |mov| %>
+	    <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+	     <td><%=h mov.fecha %></td>
+	     <td><%=h mov.comprobante %>-<%=h mov.puntov %>-<%= mov.nro %></td>
+	     <td><%=h number_to_currency(mov.debe, :precision => 2, :separator => ",", :delimiter => ".") %> </td>
+	     <td><%=h number_to_currency(mov.haber, :precision => 2, :separator => ",", :delimiter => ".") %> </td>
+	     <td><% @comprobafectado = Tipocomprobante.find_by_id(mov.tafect.to_i) if mov.tafect  %><%=h @comprobafectado.tcom_abreviatura if !@comprobafectado.nil? %>-<%=h mov.ptoafectado %>-<%= mov.nroafectado %></td>
+	     <td><%=h mov.vendedor %></td>
+	    </tr>
+	    <% end %>
+	  <tr>
+	  <% saldoa = 0 %>
+	   <td colspan="2"><b> Saldo anterior: <% @saldoantunico.each do |sa| %> <%= number_to_currency(sa.SaldoAnterior, :precision => 2, :separator => ",", :delimiter => ".")  %> <% saldoa = sa.SaldoAnterior.to_d %><% end %> </td> <td></td><td colspan="3"><b> Saldo a la fecha <%= to_time %>: <% @saldomovunico.each do |sm| %> <%= number_to_currency( sm.SaldoMovi.to_d, :precision => 2, :separator => ",", :delimiter => ".") %> <% end  %> </td>
+	  </tr>
+	 </table>
+	 <% end %>
+	 </Fieldset>
+        </div>
+	 </td>
+	 </tr>
+
+   <% if !@chequefacturaunicos.nil? && @chequefacturaunicos.size > 0 %>
+   <tr>
+   <td colspan="2">
+    <p><a class="expand" onclick="muestra_oculta('chequedato')" title=""><%= image_tag "arrow-down-icon.png" %>Cheques ingresados</a></p>
+
+     <div id= "chequedato">
+   <Fieldset class="filtro">
+   <legend ALIGN="left" class="formlegend">Cheques ingresados entre dichas fechas</legend>
+
+    <table class="tabladentrocont" border="0" cellpadding="0" cellspacing="0">
+     <tr class="headerStyle">
+      <th>Fecha ingreso</th>
+      <th>Cuit</th>
+      <th>Numero</th>
+      <th>Fecha vencimiento</th>
+      <th>Importe</th>
+      <th>Comprobante</th>
+    </tr>
+    <% @chequefacturaunicos.each do |cqf| %>
+    <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+     <td><%=h cqf.cter_ingreso %></td>
+     <td><%=h cqf.cter_cuitlibrador %> </td>
+     <td><%=h cqf.cter_nrocheque %> </td>
+     <td><%=h cqf.cter_vencimiento %> </td>
+     <td><%=h number_to_currency(cqf.cter_importe, :precision => 2, :separator => ",", :delimiter => ".") %> </td>
+    
+ <!-- muestro la factura o recibo asociado al cheque y el cliente de dicho comprobante-->
+   <% if !cqf.id_cabfactura.nil? && cqf.id_cabfactura.to_i > 0 %>
+    
+      <!-- <td><%=h cqf.cabfactura.tipocomprobante.tcom_abreviatura  if !cqf.cabfactura.nil? %> - <%= cqf.cabfactura.cfac_puntosventa if !cqf.cabfactura.nil? %> - <%= cqf.cabfactura.cfac_nrocomprobante if !cqf.cabfactura.nil? %></td> -->
+ <% factura = Cabfactura.find(cqf.id_cabfactura.to_i, cqf.id_sucursal.to_i) if cqf.id_cabfactura.to_i > 0 %>
+     <td><%=h factura.tipocomprobante.tcom_abreviatura if factura  %> - <%= factura.cfac_puntosventa if factura %> - <%= factura.cfac_nrocomprobante if factura %></td>
+     <% else %>
+      <% if !cqf.id_cabrecibo.to_i.nil? && (cqf.id_cabrecibo.to_i > 0) %>
+      
+      <!-- <td><%=h cqf.cabrecibo.tipocomprobante.tcom_abreviatura if !cqf.cabrecibo.nil? %> - <%= cqf.cabrecibo.crec_puntosventa  if !cqf.cabrecibo.nil? %> - <%= cqf.cabrecibo.crec_nrocomprobante  if !cqf.cabrecibo.nil? %></td>-->
+    <% recibo = Cabrecibo.find(cqf.id_cabrecibo.to_i, cqf.id_sucursal.to_i)  if cqf.id_cabrecibo.to_i > 0  %>
+     <% if !recibo.nil? %>
+       <td><%=h recibo.tipocomprobante.tcom_abreviatura if recibo.tipocomprobante_id.to_i > 0 %> - <%= recibo.crec_puntosventa if recibo %> - <%= recibo.crec_nrocomprobante if recibo %></td>
+    <% end %>
+    <% end %>
+    <% end %>
+     <td><%=h cqf.cter_observaciones %></td>
+    </tr>
+    <% end %>
+
+ </table>
+
+ </Fieldset>
+ </div>
+
+ </td>
+ </tr>
+ <% end %>
+
+
+   <% if !@remitospendienteunicos.nil? && @remitospendienteunicos.size > 0 %>
+   <tr>
+   <td colspan="2">
+      <p><a class="expand" onclick="muestra_oculta('remitodato')" title=""><%= image_tag "arrow-down-icon.png" %>Remitos pendientes</a></p>
+
+     <div id= "remitodato">
+   <Fieldset class="filtro">
+   <legend ALIGN="left" class="formlegend"> Remitos pendientes </legend>
+ 
+   <% totalremitos = 0 %>
+   <table class="tabladentrocont" border="0" cellpadding="0" cellspacing="0">
+        <tr class="headerStyle">
+        <th>Art&iacute;culo</th>
+        <th>Unidades</th>
+        <th>Importe</th>
+    </tr>
+
+    <% @remitospendienteunicos.each do |rem| %>
+    <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+     <td><%=h rem.arti %></td>
+     <td><%=h rem.totalarti %></td>
+    
+     <td><%=h number_to_currency(rem.totalcosto, :precision => 2, :separator => ",", :delimiter => ".") %> <% totalremitos = totalremitos + rem.totalcosto.to_d %></td>
+    
+    </tr>
+    <% end %>
+ <tr>
+  <% remitostotal = remitostotal + totalremitos %>
+  <td colspan="3" align="right"><b> TOTAL: </td> <td><b><%=h number_to_currency(totalremitos, :precision => 2, :separator => ",", :delimiter => ".")  %></td>
+ </tr>
+ </table>
+ <% end %>
+
+ </Fieldset>
+ </div>
+ </td>
+</tr>
+  <tr>
+	 <td colspan="2">
+               <p><a class="expand" onclick="muestra_oculta('chequependato')" title=""><%= image_tag "arrow-down-icon.png" %>Cheques pendientes</a></p>
+
+     <div id= "chequependato">
+	   <Fieldset class="filtro">
+	   <legend ALIGN="left" class="formlegend"> Cheques pendientes a la fecha </legend>
+	   <% if !@chequeunicos.nil? && @chequeunicos.size > 0 %>
+	   <% totalcheq = 0 %>
+	   <table class="tabladentrocont" border="0" cellpadding="0" cellspacing="0">
+	    <tr class="headerStyle">
+	      <th>CUIT</th>
+	      <th>Fecha</th>
+	      <th>N&uacute;mero</th>
+	      <th>Importe</th>
+	      <th>Fecha vencimiento</th>
+	    </tr>
+	
+	    <% @chequeunicos.each do |cheq| %>
+	    <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+	     <td><%=h cheq.cter_cuitlibrador %></td>
+	     <td><%=h cheq.cter_emision %></td>
+	     <td><%=h cheq.cter_nrocheque %></td>
+	     <td><%=h number_to_currency(cheq.cter_importe, :precision => 2, :separator => ",", :delimiter => ".") %> <%   totalcheq = totalcheq + cheq.cter_importe.to_d %></td>
+	     <td><%=h cheq.cter_vencimiento %></td>
+	    </tr>
+	    <% end %>
+	 <tr>
+            <% chequependtotal = chequependtotal + totalcheq %>
+	  <td colspan="3" align="right"><b> TOTAL: </td> <td><b><%=h number_to_currency(totalcheq, :precision => 2, :separator => ",", :delimiter => ".")  %></td>
+	 </tr>
+	 </table>
+	 <% end %>
+	 </Fieldset>
+ </div>
+	 </td>
+	</tr>
+	
+	<tr>
+	<td colspan="2">
+        <p><a class="expand" onclick="muestra_oculta('chequerecdato')" title=""><%= image_tag "arrow-down-icon.png" %>Cheques rechazados</a></p>
+
+     <div id= "chequerecdato">
+	<Fieldset class="filtro">
+	<legend ALIGN="left" class="formlegend"> Cheques rechazados</legend>
+	<% if !@chequerechazadounicos.nil? && @chequerechazadounicos.size > 0 %>
+        <% totalrechazado = 0 %>
+	<table class="tabladentrocont" border="0" cellpadding="0" cellspacing="0">
+	  <tr class="headerStyle">
+	   <th>CUIT</th>
+	   <th>Fecha</th>
+	   <th>N&uacute;mero</th>
+	   <th>Importe</th>
+	   <th>Fecha vencimiento</th>
+	   <th>Cancelado</th>
+	  </tr>
+	
+	<% @chequerechazadounicos.each do |cheq| %>
+	  <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+	    <td><%=h cheq.cter_cuitlibrador %></td>
+	    <td><%=h cheq.cter_emision %></td>
+	    <td><%=h cheq.cter_nrocheque %></td>
+	    <td><%=h number_to_currency(cheq.cter_importe, :precision => 2, :separator => ",", :delimiter => ".") %> </td>
+	    <td><%=h cheq.cter_vencimiento %></td>
+	    <% @cancelacheq = Chequetercero.chequerechazadocancelado(cheq.id_chequetercero, cheq.id_sucursal.to_i)%>
+	  <% @cancelacheq.each do |cancel| %>
+	 <% if cancel.importe.nil? %>
+	    <td> NO </td> <% totalrechazado = totalrechazado + cheq.cter_importe.to_d %>
+	    <% else %> 
+	      <% if cancel.importe.to_d >= cheq.cter_importe.to_d %>  <td> SI </td> <% end %>
+	      <% if (cancel.importe.to_d < cheq.cter_importe.to_d) %>  <td> PARCIAL (imp: <%= cancel.importe.to_d %> , interes: <%= cancel.intereses.to_d %>, gastos: <%= cancel.gastos.to_d %> , total: $<%= cancel.total.to_d %>) <% totalrechazado = totalrechazado + (cheq.cter_importe.to_d - cancel.total.to_d) %> </td> <% end %>
+	    <% end %>
+	<% end %>
+	  </tr>
+	<% end %>
+	 <% chequesrechaztotal = chequesrechaztotal + totalrechazado %>
+	</table>
+	<% end %>
+	</Fieldset>
+       </div>
+	</td>
+	</tr>
+
+	<% end %>
+
+	</table>
+
+<% end %>
+
+<br />
+<div align="center">
+
+<table border="2" align="center" bordercolor="red">
+<tr><td colspan="2" align="center"><b> Total de riesgo asociado al cliente</td></tr>
+   <tr>
+    <td>
+    Saldo en cuenta corriente: </td><td> <%= number_to_currency(saldoMoviTotal, :precision => 2, :separator => ",", :delimiter => ".") %>
+    </td>
+   </tr>
+   <tr>
+    <td>
+    Total de cheques pendientes: </td><td> <%= number_to_currency(chequependtotal, :precision => 2, :separator => ",", :delimiter => ".") %> 
+    </td>
+   </tr>
+   <tr>
+    <td>
+    Total de cheques rechazados: </td><td> <%=  number_to_currency(chequesrechaztotal, :precision => 2, :separator => ",", :delimiter => ".") %> 
+    </td>
+   </tr>
+   <tr>
+    <td>
+    Total de remitos pendientes: </td><td> <%= number_to_currency(remitostotal, :precision => 2, :separator => ",", :delimiter => ".")  %> 
+  </td>
+ </tr>
+  <tr>
+  <td>
+    <b>Total: </td><td> <b><%= number_to_currency((saldoMoviTotal + remitostotal + chequependtotal + chequesrechaztotal), :precision => 2, :separator => ",", :delimiter => ".")  %> 
+  </td>
+  </tr>
+  </table>
+
+</div>
+<% elsif @cliente.nil? && ( !params[:clientecuit].nil? || !params[:clie_razonsocial].nil?) %>
+<div> <h4>El cliente no pertenece a la sucursal seleccionada o no es cliente de Fleming y Martolio </h4></div>
+
+<% end %>
+

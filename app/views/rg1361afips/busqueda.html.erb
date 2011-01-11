@@ -1,0 +1,745 @@
+<h1>Archivos para la resoluci&oacute;n RG 1361</h1>
+
+<% if params[:fecha].blank? %>
+<% time =  Date.today   %>
+<% else %>
+<% time = params[:fecha] %>
+<% end %>
+
+<br />
+<% form_tag :controller => 'rg1361afips', :action => 'busqueda' do %> 
+ <Fieldset class="filtro">
+      Seleccione el mes y a&ntilde;o de los registros a generar:
+      <%= select_date(time, {:prefix => "fecha", :discard_day => true}, {:class => "textosbox"}) %> 
+     
+      <%= submit_tag "Generar", :class => "textosbox" %>
+</Fieldset>
+<% end %> 
+<% if !@rg1361afipcabs.nil? && @rg1361afipcabs.size > 0 %>
+<!-- DESDE ACA VENTAS -->
+<% total = 0 %>
+<% totalregistros = 0 %>
+<% mes =  time.month.to_s.length == 1 ? "0"+time.month.to_s : time.month.to_s %>
+<% nombre = "VENTAS_"+time.year.to_s + mes+""  %>
+<% nombreperc = "OTRAS_PERCEP_"+time.year.to_s + mes+""  %>
+<!--<% f = File.new("public/rg1361afips/"+"#{nombre}",  "w") %>
+<% fp = File.new("public/rg1361afips/"+"#{nombreperc}",  "w") %> --> <!-- para ponerle el path a los archivos -->
+<% f = File.new("#{nombre}",  "w") %>
+<% fp = File.new("#{nombreperc}",  "w") %>
+
+<% totalregistros = totalregistros + @cantidadrengs.size.to_i %> <!-- total de registros -->
+<% totalfacturas = 0  
+   totalfacturasreg = 0 
+   totalfacsreg = 0 %>
+<% totalexentos = 0 
+   totalexentosreg = 0 %>
+<% totalivas = 0
+   totalivasreg = 0 %>
+<% totalpercepcionivas = 0 
+   totalpercepcionivasreg = 0 %>
+<% totalnetos = 0 
+   totalnetosreg = 0 %>
+
+<% totalfacporreg = 0 %>
+<% totalpercepcporreg = 0 %>
+<% totalexecporreg = 0 %>
+<!-- cabeceras -->
+
+<% if !@rg1361afipcabs.nil? %>
+<% @rg1361afipcabs.each do |cabfac|%> 
+
+   <%  tipocomprob = cabfac.comprobante.to_s %>
+   <%  tipodocu = cabfac.codigodoc.to_s %>
+   <%  cuitcliente = cabfac.cuitclie.to_s %>
+   <%  nombrecliente = cabfac.nombrecli.to_s %>	
+
+   <% totalfacturas = totalfacturas.to_s.to_d + cabfac.totalfac.to_d %>
+   <% totalexentos = totalexentos + cabfac.exentofac.to_d %>
+   <% totalpercepcionivas = totalpercepcionivas + cabfac.percepcionibrfac.to_d %>
+
+   <% totalivas = totalivas + cabfac.ivafac.to_d %>
+   <% totalnetos = totalnetos + cabfac.netofac.to_d %>
+   
+  <!-- para cada cabecera busco los renglones -->
+   <% if cabfac.cfac_viajantepublico.to_s == "B" || cabfac.cfac_viajantepublico.to_s == "C" || cabfac.cfac_viajantepublico.to_s == "R" || cabfac.cfac_viajantepublico.to_s == "D" %>
+       <% @renfacs = Rg1361afip.consultarenncv(cabfac.id_cabfactura, cabfac.id_sucursal) %>
+       <!-- @renfacs = Renfactura.find(:all, :conditions['cabfactura_id = ? and sucursal_id = ?', "#{cabfac.id_cabfactura}", "#{cabfac.id_sucursal}"], :group => "alicuota_id")  -->
+   <% else %> 
+       <% @renfacs = Rg1361afip.consultarenfac(cabfac.id_cabfactura, cabfac.id_sucursal) %>
+   <% end %>
+         <!-- for de renglones  length - 1-->
+        <% registrosporfactura = @renfacs.size %>
+        <% i = 0 %>
+         <% @renfacs.each do |rf| %>
+              <% total += 1 %>
+                <% i += 1 %>
+                <% registro = " " *375 %>
+                <% registro[0..0] = "1" %>
+                <% fecha = rf.fecha.to_s.split("-")  %>
+                <% registro[1..8] = fecha[0] + fecha[1] + fecha[2] %>
+                <% tipoc = tipocomprob.to_s == "90" ? "60" : tipocomprob.to_s %>
+                <% registro[9..10] =  tipoc.length == 1 ? "0"+tipoc : tipoc  %>
+                <% registro[11..11] = " "%>
+
+                <% ptovent = "0" *4 %>
+    		<% ptovent[(4 -(cabfac.cfac_puntosventa.to_s.length))..4] = cabfac.cfac_puntosventa.to_s  %>
+                <% registro[12..15] = ptovent %>
+
+    		<% nrocomp = "0" *20 %>
+    		<% nrocomp[(20 -(cabfac.cfac_nrocomprobante.to_s.length))..20] = cabfac.cfac_nrocomprobante.to_s  %>
+                <% registro[16..35] = nrocomp %>
+                <% registro[36..55] = nrocomp %>
+                
+		<% if cabfac.tiporesponsable.to_i == 5
+                   registro[56..57] = "99"
+                   else
+                   registro[56..57] =  tipodocu.length == 1 ? "0"+tipodocu : tipodocu  
+                   end %>
+ 
+                <% cuitcli = "0" *11 %>
+                <% cuitcli[(11 -(cabfac.cuitclie.to_i.to_s.length))..11] = cabfac.cuitclie.to_i.to_s %>
+                <% registro[58..68] = cuitcli %>
+
+                <% nombre = nombrecliente.tr("ÑÜ¥", "N").tr("Â","A") %>
+                  		
+                <% registro[69..99] = nombre.to_s.slice(0..29) %>
+
+                <!-- conceptos q no integran el neto gravado -->
+		<% registro[114..128] =  "0" *15 %>
+                <!--esto es una redibujada pero sino no dan el neto y el iva de los reg con las cab por las liquidaciones-->
+                <% if cabfac.cfac_viajantepublico.to_s == "T" %>
+                 <% netoreg = "0" *15 %>
+                 <% netodec = (cabfac.neto.to_d.round(2) * 100 ) %>
+    		 <% netoreg[(15 -(netodec.to_i.to_s.length))..15] = netodec.to_i.to_s  %>
+                 <% registro[129..143] = netoreg %>
+                
+                 <% ivareg = "0" *15 %>
+                 <% ivadec = (cabfac.iva.to_d.round(2) * 100 ) %>
+    		 <% ivareg[(15 -(ivadec.to_i.to_s.length))..15] = ivadec.to_i.to_s  %>
+                 <% registro[148..162] = ivareg %>
+                       <!--suma para controlar importes -->
+		<% totalnetosreg = totalnetosreg + cabfac.netofac.to_d %>
+                <% totalivasreg = totalivasreg + cabfac.ivafac.to_d %>
+                <% else %>
+                 <% netoreg = "0" *15 %>
+                 <% netodec = (rf.neto.to_d.round(2) * 100 ) %>
+    		 <% netoreg[(15 -(netodec.to_i.to_s.length))..15] = netodec.to_i.to_s  %>
+                 <% registro[129..143] = netoreg %>
+                
+                 <% ivareg = "0" *15 %>
+                 <% ivadec = (rf.iva.to_d.round(2) * 100 ) %>
+    		 <% ivareg[(15 -(ivadec.to_i.to_s.length))..15] = ivadec.to_i.to_s  %>
+                 <% registro[148..162] = ivareg %>
+                      <!--suma para controlar importes -->
+		<% totalnetosreg = totalnetosreg + rf.netotipo.to_d %>
+                <% totalivasreg = totalivasreg + rf.ivatipo.to_d %>
+                <% end %>
+
+                <!--alicuota iva -->
+                <% alivareg = "0" *4 %>
+                <% alivad = (rf.aliiva.to_d.round(2) * 100 ) %>
+    		<% alivareg[(4 -(alivad.to_i.to_s.length))..4] = alivad.to_i.to_s  %>
+                <% registro[144..147] = alivareg %>
+                           
+                <!-- impuesto liquidado a RNI-->
+                <% impliqreg = "0" *15 %>
+                <% registro[163..177] = impliqreg %>
+
+		<!--neto de operaciones exentas  -->	
+		<% exentoreg = "0" *15 %>
+                <% execdec = (cabfac.cfac_exento.to_s.to_d.round(2) * 100 ) %>
+    		<% exentoreg[(15 -(execdec.to_i.to_s.length))..15] = execdec.to_i.to_s if rf.iva.to_s == "0.00" %>
+                <% registro[178..192] = exentoreg %>
+
+                <% totalexecporreg = totalexecporreg + cabfac.exentofac.to_s.to_d if rf.iva.to_s == "0.00" %>
+		<!--percepciones sobre impuestos nacionales -->	
+                <% impnacreg = "0" *15 %>
+                <% registro[193..207] = impnacreg %>
+
+               <!-- impuestos municipales -->	
+                <% impmunireg = "0" *15 %>
+                <% registro[223..237] = impmunireg %>
+
+		<!-- impuestos internos -->	
+                <% impintreg = "0" *15 %>
+                <% registro[238..252] = impintreg %>
+
+                <% situafip = "0" *2 %>
+                <% situafip[(2 -(cabfac.tiporesponsable.to_i.to_s.length))..2] = cabfac.tiporesponsable.to_i.to_s %>
+		<% registro[253..254] = situafip %>
+                
+                <!-- codigo moneda -->
+                <% registro[255..257] =  "PES" %>
+      
+ 		 <!-- tipo de cambio -->
+                 <% registro[258..267] =  "0" *10 %>
+
+                 <!-- cantidad de alicuotas de iva -->
+                 <% registro[268..268] = registrosporfactura.to_s %>
+
+                 <!--codigo de la operacion -->
+       	         <% registro[269..269] =  rf.aliiva.to_d == 0.0 ? "E" : " " %>
+
+ 		 <!-- CAI -->
+                 <% registro[270..283] =  "0" *14 %>
+
+		 <!-- fecha de vencimiento -->
+                 <% registro[284..291] =  fecha[0] + fecha[1] + fecha[2]%>
+		
+		 <!-- fecha de anulacion del comprobante -->
+                 <% registro[292..299] =  "0" *8 %>
+
+                <% totalregv = "0" *15 %>
+                <% registro[99..113] = totalregv %>
+                <% percregv = "0" *15 %>
+                <% registro[208..222] = percregv %>
+
+  
+                 <% if i.to_i == registrosporfactura.to_i %>
+                    <!--importe total de la operacion -->
+                     <% totalreg = "0" *15 %>
+                     <% totaldec = (cabfac.cfac_total.to_s.to_d.round(2) * 100 ) %>
+    		     <% totalreg[(15 -(totaldec.to_i.to_s.length))..15] = totaldec.to_i.to_s %>
+                     <% registro[99..113] = totalreg %>
+  		     <!--importe percepciones de ingresos brutos -->
+                     <% percreg = "0" *15 %>
+                     <% percdec = (cabfac.cfac_percepcionibr.to_s.to_d.round(2) * 100 ) %>
+    		     <% percreg[(15 -(percdec.to_i.to_s.length))..15] = percdec.to_i.to_s %>
+                     <% registro[208..222] = percreg %>
+                     <!-- suma de los valore de los reg -->
+                      <% totalfacporreg = totalfacporreg + cabfac.totalfac.to_d %>
+                      <% totalpercepcporreg = totalpercepcporreg + cabfac.percepcionibrfac.to_d %>
+
+                    <!--genero reg de percepciones -->
+                      <% if (cabfac.cfac_percepcionibr.to_s.to_d > 0) %>
+                           <% registrop = " " *94 %>
+                           <% registrop[0..7] = fecha[0] + fecha[1] + fecha[2] %>
+                           <% registrop[8..9] =  tipoc.length == 1 ? "0"+tipoc : tipoc  %>
+                           <% registrop[10..13] = ptovent %>
+                           <% nperc = "0" *8 %>
+    		           <% nperc[(8 -(cabfac.cfac_nrocomprobante.to_s.length))..8] = cabfac.cfac_nrocomprobante.to_s  %>
+              
+                           <% registrop[14..21] = nperc %>
+                           <% registrop[22..23] = cabfac.codibafip.to_s %>
+                           <% registrop[24..38] = percreg %>
+                           <% registrop[39..78] = "0" *40 %>
+                           <% registrop[79..93] = "0" *15 %>
+                           <% fp.write(registrop + "\r\n") %>
+                      <% end %>
+                    <!--fin reg de percepciones -->
+                <% end %>
+                 <% registro[300..374] =  "0" *75 %>
+        
+               <% f.write(registro + "\r\n") %> <!-- \r -->
+        <% end %>
+     <% end %>  
+           <!-- registro 2 de la ultima linea -->
+		<% registro2 = " " *253 %>
+                <% registro2[0..0] = "2" %>
+                <% anio = time.year.to_s  %>
+                <% mes = "00"
+                 mes[(2 -(time.month.to_i.to_s.length))..2] = time.month.to_s %>
+                <% registro2[1..6] = anio + mes  %>
+
+		<% totalregi = "0" *12 %>
+               
+                <% totalregi[(12 -(total.to_s.length))..12] = total.to_s %>
+                <% registro2[36..47] = totalregi %>
+  
+		<% cuit = Empresa.find(:first) %>
+                <% regcuit = "0" *11 %>
+                <% regcuit[(11 -(cuit.empr_cuit.to_s.length))..11] = cuit.empr_cuit.to_s %>
+		<% registro2[58..68] = regcuit  %>
+               
+	        <% totalfreg = "0" *15 %>
+                <% totalfdec = (totalfacporreg.to_s.to_d.round(2) * 100 ) %>
+    		<% totalfreg[(15 -(totalfdec.to_i.to_s.length))..15] = totalfdec.to_i.to_s %>
+                <% registro2[99..113] = totalfreg %>
+
+                <% registro2[114..128] = "0" *15 %>
+              
+                <% netofreg = "0" *15 %>
+                <% netofdec = (totalnetosreg.to_s.to_d.round(2) * 100 ) %>
+    		<% netofreg[(15 -(netofdec.to_i.to_s.length))..15] = netofdec.to_i.to_s %>
+                <% registro2[129..143] = netofreg %>
+ 
+		<% ivafreg = "0" *15 %>
+                <% ivafdec = (totalivasreg.to_s.to_d.round(2) * 100 ) %>
+    		<% ivafreg[(15 -(ivafdec.to_i.to_s.length))..15] = ivafdec.to_i.to_s %>
+                <% registro2[148..162] = ivafreg %>
+                
+		<!-- imp no insc-->
+		<% registro2[163..177] = "0" *15 %>
+  
+		<% exentofreg = "0" *15 %>
+                <% exentofdec = (totalexecporreg.to_s.to_d.round(2) * 100 ) %>
+    		<% exentofreg[(15 -(exentofdec.to_i.to_s.length))..15] = exentofdec.to_i.to_s %>
+                <% registro2[178..192] = exentofreg %>	
+               
+                <% registro2[193..207] = "0" *15 %>
+
+		<% percibrfreg = "0" *15 %>
+                <% percibrfdec = (totalpercepcporreg.to_s.to_d.round(2) * 100 ) %>
+    		<% percibrfreg[(15 -(percibrfdec.to_i.to_s.length))..15] = percibrfdec.to_i.to_s %>
+                <% registro2[208..222] = percibrfreg %>	
+                
+		<!--percepciones municipales -->
+                <% registro2[223..237] = "0" *15 %>
+
+ 		<!--impuestos internoses -->
+                <% registro2[238..253] = "0" *15 %>
+                
+                <% f.write(registro2 + "\r\n")  %>
+   <% end %> 
+
+<% f.close() %>
+<% fp.close() %>
+<!-- HASTA ACA VENTAS -->
+
+<!-- DESDE ACA COMPRAS -->
+
+<% totalcompra = 0 %>
+<% totalregistroscompra = 0 %>
+<% mes =  time.month.to_s.length == 1 ? "0"+time.month.to_s : time.month.to_s  %>
+<% nombre = "COMPRAS_"+time.year.to_s + mes +"" %>
+<!--<% fc = File.new("public/rg1361afips/"+"#{nombre}",  "w") %>-->
+<% fc = File.new("#{nombre}",  "w") %>
+<% totalnetosregcom =  0
+   totalivasregcom = 0 
+   totalexecporregcom = 0
+   totalfacporregcom = 0
+   totalpercepcporregcom = 0 
+   totalpercepcivaporregcom = 0 
+   totalnetonogravcom = 0 
+   totalimpinternocom = 0
+   totalimpmunicom = 0 
+   totalretgancom = 0 %>
+<% if !@rg1361afipcabcompras.nil? %>
+<% @rg1361afipcabcompras.each do |cabcom|%> 
+	   <% @rencoms = Rg1361afip.consultarencom(cabcom.id_cabcompra, cabcom.id_sucursal) %>
+            <!-- for de renglones  length - 1-->
+      <% if @rencoms.nil? || @rencoms.size <= 0 %>
+        <% totalcompra += 1 %>
+                <% registroc = " " *369 %>
+                <% registroc[0..0] = "1" %>
+                <% fecha = cabcom.fecha.to_s.split("-")  %>
+                <% registroc[1..8] = fecha[0] + fecha[1] + fecha[2] %>
+                <% tipoc = cabcom.comprobante.to_s == "90" ? "60" : cabcom.comprobante.to_s %>
+                <% registroc[9..10] =  tipoc.length == 1 ? "0"+tipoc : tipoc  %>
+                <% registroc[11..11] = " "%>
+
+                <% ptovent = "0" *4 %>
+    		<% ptovent[(4 -(cabcom.ccom_puntosventa.to_s.length))..4] = cabcom.ccom_puntosventa.to_s  %>
+                <% registroc[12..15] = ptovent %>
+
+    		<% nrocomp = "0" *20 %>
+    		<% nrocomp[(20 -(cabcom.ccom_desdecompro.to_s.length))..20] = cabcom.ccom_desdecompro.to_s  %>
+                <% registroc[16..35] = nrocomp %>
+
+                <!-- fecha regis contable -->
+                <% registroc[36..43] = fecha[0] + fecha[1] + fecha[2] %>
+
+	        <% codaduana = "0" *3 %>
+                <% codaduana[(3 -(cabcom.ccom_codigoaduana.to_i.to_s.length))..3] = cabcom.ccom_codigoaduana.to_i.to_s %>
+                <% registroc[44..46] = codaduana %>
+
+		<% coddestinac = " " *4 %>
+                <% coddestinac[(4 -(cabcom.ccom_codigodestinacion.to_i.to_s.length))..4] = cabcom.ccom_codigodestinacion.to_i.to_s %>
+                <% registroc[47..50] = " " *4 %>
+
+                <% nrodesp = "0" *6 %>
+                <% nrodesp[(6 -(cabcom.ccom_nrodespacho.to_i.to_s.length))..6] = cabcom.ccom_nrodespacho.to_i.to_s %>
+                <% registroc[51..56] = nrodesp %>
+
+	        <% registroc[57..57] = cabcom.ccom_digverdespacho.to_s %>
+
+                <% registroc[58..59] = cabcom.codigodoc.length == 1 ? "0"+cabcom.codigodoc : cabcom.codigodoc  %>
+ 
+                <% cuitprov = "0" *11 %>
+                <% cuitprov[(11 -(cabcom.cuitprove.to_i.to_s.length))..11] = cabcom.cuitprove.to_i.to_s %>
+                <% registroc[60..70] = cuitprov %>
+
+                <% nombrep = cabcom.nombreprove.tr("ÑÜ¥", "N").tr("Â","A").to_s %>
+                <% np = nombrep.lstrip.rstrip  %>	
+                <% registroc[71..100] = np.split[0..29].to_s %>
+
+                <% registroc[131..145] = "0" *15  %>
+
+		<!--alicuota iva -->
+                <% registroc[146..149] = "0" *4 %>
+                
+                <% registroc[150..164] = "0" *15  %>
+             
+                <!--neto de operaciones exentas  -->	
+                <% registroc[165..179] = "0" *15 %>
+ 
+		<% situafipc = "0" *2 %>
+                <% situafipc[(2 -(cabcom.tiporesponsable.to_i.to_s.length))..2] = cabcom.tiporesponsable.to_i.to_s %>
+		<% registroc[255..256] = situafipc %>
+                
+                <!-- codigo moneda -->
+                <% registroc[257..259] =  "PES" %>
+      
+ 		 <!-- tipo de cambio -->
+                 <% registroc[260..269] =  "0" *10 %>
+
+                 <!-- cantidad de alicuotas de iva -->
+                 <% registroc[270..270] = "1" %>
+                
+ 		 <!-- CAI -->
+                 <% registroc[272..285] =  "0" *14 %>
+
+		 <!-- fecha de vencimiento -->
+                 <% registroc[286..293] =  fecha[0] + fecha[1] + fecha[2]%>
+
+                    <!--importe total de la operacion -->
+                     <% totalregc = "0" *15 %>
+                     <% totaldec = (cabcom.ccom_total.to_s.to_d.round(2) * 100 ) %>
+    		     <% totalregc[(15 -(totaldec.to_i.to_s.length))..15] = totaldec.to_i.to_s %>
+                     <% registroc[101..115] = totalregc %>
+ 
+		     <!--importe percepciones al valor agregado -->
+                     <% percivaregc = "0" *15 %>
+                     <% percivadec = ((cabcom.ccom_percepcioniva.to_s.to_d.round(2) + cabcom.ccom_retencioniva.to_s.to_d.round(2))* 100 ) %>
+    		     <% percivaregc[(15 -(percivadec.to_i.to_s.length))..15] = percivadec.to_i.to_s %>
+                     <% registroc[180..194] = percivaregc %>
+
+  		     <!--importe percepciones de ingresos brutos -->
+                     <% percregc = "0" *15 %>
+                     <% percdec = ((cabcom.ccom_percepcionib.to_s.to_d.round(2) + cabcom.ccom_retencionib.to_s.to_d.round(2))* 100 ) %>
+    		     <% percregc[(15 -(percdec.to_i.to_s.length))..15] = percdec.to_i.to_s %>
+                     <% registroc[210..224] = percregc %>
+
+		     <!-- conceptos q no integran el neto gravado -->
+                     <% ngc = "0" *15 %>
+                     <% netogc = (cabcom.ccom_nogravado.to_s.to_d.round(2) * 100 ) %>
+    		     <% ngc[(15 -(netogc.to_i.to_s.length))..15] = netogc.to_i.to_s %>
+		     <% registroc[116..130] =  ngc %>
+
+                     <!-- percep a pago a cta. de otros imp -->
+                     <% perimpc = "0" *15 %>
+                     <% pidec = (cabcom.ccom_retencionganancia.to_s.to_d.round(2) * 100 ) %>
+    		     <% perimpc[(15 -(pidec.to_i.to_s.length))..15] = pidec.to_i.to_s  %>
+                     <% registroc[195..209] = perimpc %>
+
+                     <!-- impuestos municipales -->	
+                     <% impmuniregc = "0" *15 %>
+                     <% ivadec = (cabcom.ccom_retencionmunicipal.to_s.to_d.round(2) * 100 ) %>
+    		     <% impmuniregc[(15 -(ivadec.to_i.to_s.length))..15] = ivadec.to_i.to_s %>
+                     <% registroc[225..239] = impmuniregc %>
+
+		     <!-- impuestos internos -->	
+                     <% impintc = "0" *15 %>
+                     <% impintcdec = (cabcom.ccom_impuestointerno.to_s.to_d.round(2) * 100 ) %>
+    		     <% impintc[(15 -(impintcdec.to_i.to_s.length))..15] = impintcdec.to_i.to_s  %>
+                     <% registroc[240..254] = impintc %>
+
+                     <!-- suma de los valore de los reg -->
+                     <% totalfacporregcom = totalfacporregcom + cabcom.totalcom.to_d %>
+                     <% totalpercepcporregcom = totalpercepcporregcom + (cabcom.percepcionibrcom.to_d + cabcom.retencionibrcom.to_s.to_d) %>
+    		     <% totalpercepcivaporregcom = totalpercepcivaporregcom + (cabcom.percepcionivarcom.to_s.to_d + cabcom.retencionivacom.to_s.to_d ) %>
+                     <% totalnetonogravcom = totalnetonogravcom + cabcom.nogravadototcom.to_s.to_d %>
+                     <% totalimpinternocom = totalimpinternocom + cabcom.impinttotcom.to_s.to_d %> 
+                     <% totalimpmunicom = totalimpmunicom + cabcom.retmunitotcom.to_s.to_d %> 
+                     <% totalretgancom = totalretgancom + cabcom.retgantotcom.to_s.to_d %> 
+                <% registroc[294..368] =  "0" *75 %>
+                <% fc.write(registroc + "\r\n") %> <!-- \r -->
+          <% else %>    
+            <% registrosporcomp = @rencoms.size %>
+            <% i = 0 %>
+            <% @rencoms.each do |rc| %>
+              <% totalcompra += 1 %>
+                <% i += 1 %>
+                <% registroc = " " *369 %>
+                <% registroc[0..0] = "1" %>
+                <% fecha = cabcom.fecha.to_s.split("-")  %>
+                <% registroc[1..8] = fecha[0] + fecha[1] + fecha[2] %>
+                <% tipoc = cabcom.comprobante.to_s == "90" ? "60" : cabcom.comprobante.to_s %>
+                <% registroc[9..10] =  tipoc.length == 1 ? "0"+tipoc : tipoc  %>
+                <% registroc[11..11] = " "%>
+
+                <% ptovent = "0" *4 %>
+    		<% ptovent[(4 -(cabcom.ccom_puntosventa.to_s.length))..4] = cabcom.ccom_puntosventa.to_s  %>
+                <% registroc[12..15] = ptovent %>
+
+    		<% nrocomp = "0" *20 %>
+    		<% nrocomp[(20 -(cabcom.ccom_desdecompro.to_s.length))..20] = cabcom.ccom_desdecompro.to_s  %>
+                <% registroc[16..35] = nrocomp %>
+
+                <!-- fecha regis contable -->
+                <% registroc[36..43] = fecha[0] + fecha[1] + fecha[2] %>
+
+	        <% codaduana = "0" *3 %>
+                <% codaduana[(3 -(cabcom.ccom_codigoaduana.to_i.to_s.length))..3] = cabcom.ccom_codigoaduana.to_i.to_s %>
+                <% registroc[44..46] = codaduana %>
+
+		<% coddestinac = " " *4 %>
+                <% coddestinac[(4 -(cabcom.ccom_codigodestinacion.to_i.to_s.length))..4] = cabcom.ccom_codigodestinacion.to_i.to_s %>
+                <% registroc[47..50] = " " *4 %>
+
+                <% nrodesp = "0" *6 %>
+                <% nrodesp[(6 -(cabcom.ccom_nrodespacho.to_i.to_s.length))..6] = cabcom.ccom_nrodespacho.to_i.to_s %>
+                <% registroc[51..56] = nrodesp %>
+
+	        <% registroc[57..57] = cabcom.ccom_digverdespacho.to_s %>
+
+                <% registroc[58..59] = cabcom.codigodoc.length == 1 ? "0"+cabcom.codigodoc : cabcom.codigodoc  %>
+ 
+                <% cuitprov = "0" *11 %>
+                <% cuitprov[(11 -(cabcom.cuitprove.to_i.to_s.length))..11] = cabcom.cuitprove.to_i.to_s %>
+                <% registroc[60..70] = cuitprov %>
+
+                <% nombrep = cabcom.nombreprove.tr("ÑÜ¥", "N").tr("Â","A").to_s %>
+                <% np = nombrep.lstrip.rstrip  %>	
+                <% registroc[71..100] = np.split[0..29].to_s %>
+                            
+                <% netoregc = "0" *15 %>
+                <% netodec = (rc.neto.to_d.round(2) * 100 ) %>
+    		<% netoregc[(15 -(netodec.to_i.to_s.length))..15] = netodec.to_i.to_s  %>
+                <% registroc[131..145] = netoregc %>
+
+		<!--alicuota iva -->
+                <% alivaregc = "0" *4 %>
+                <% alivad = (rc.aliiva.to_d.round(2) * 100 ) %>
+    		<% alivaregc[(4 -(alivad.to_i.to_s.length))..4] = alivad.to_i.to_s  %>
+                <% registroc[146..149] = alivaregc %>
+                
+                 <% ivaregc = "0" *15 %>
+                 <% ivadec = (rc.iva.to_d.round(2) * 100 ) %>
+    		 <% ivaregc[(15 -(ivadec.to_i.to_s.length))..15] = ivadec.to_i.to_s  %>
+                 <% registroc[150..164] = ivaregc %>
+
+                <!--suma para controlar importes -->
+		<% totalnetosregcom = totalnetosregcom + rc.netotipo.to_d %>
+                <% totalivasregcom = totalivasregcom + rc.ivatipo.to_d %>
+                
+                <!--neto de operaciones exentas  -->	
+		<% exentoregc = "0" *15 %>
+                <% execdec = (cabcom.ccom_exento.to_s.to_d.round(2) * 100 ) %>
+    		<% exentoregc[(15 -(execdec.to_i.to_s.length))..15] = execdec.to_i.to_s if rc.iva.to_s.to_d == 0 %>
+                <% registroc[165..179] = exentoregc %>
+
+                <% totalexecporregcom = totalexecporregcom + cabcom.exentocom.to_s.to_d if rc.iva.to_s.to_d == 0 %>
+
+		<% situafipc = "0" *2 %>
+                <% situafipc[(2 -(cabcom.tiporesponsable.to_i.to_s.length))..2] = cabcom.tiporesponsable.to_i.to_s %>
+		<% registroc[255..256] = situafipc %>
+                
+                <!-- codigo moneda -->
+                <% registroc[257..259] =  "PES" %>
+      
+ 		 <!-- tipo de cambio -->
+                 <% registroc[260..269] =  "0" *10 %>
+
+                 <!-- cantidad de alicuotas de iva -->
+                 <% registroc[270..270] = registrosporcomp.to_s %>
+                
+ 		 <!-- CAI -->
+                 <% registroc[272..285] =  "0" *14 %>
+
+		 <!-- fecha de vencimiento -->
+                 <% registroc[286..293] =  fecha[0] + fecha[1] + fecha[2]%>
+		
+                 <% if i.to_i == registrosporcomp.to_i %>
+                    <!--importe total de la operacion -->
+                     <% totalregc = "0" *15 %>
+                     <% totaldec = (cabcom.ccom_total.to_s.to_d.round(2) * 100 ) %>
+    		     <% totalregc[(15 -(totaldec.to_i.to_s.length))..15] = totaldec.to_i.to_s %>
+                     <% registroc[101..115] = totalregc %>
+ 
+		     <!--importe percepciones al valor agregado -->
+                     <% percivaregc = "0" *15 %>
+                     <% percivadec = ((cabcom.ccom_percepcioniva.to_s.to_d.round(2) + cabcom.ccom_retencioniva.to_s.to_d.round(2))* 100 ) %>
+    		     <% percivaregc[(15 -(percivadec.to_i.to_s.length))..15] = percivadec.to_i.to_s %>
+                     <% registroc[180..194] = percivaregc %>
+
+  		     <!--importe percepciones de ingresos brutos -->
+                     <% percregc = "0" *15 %>
+                     <% percdec = ((cabcom.ccom_percepcionib.to_s.to_d.round(2) + cabcom.ccom_retencionib.to_s.to_d.round(2))* 100 ) %>
+    		     <% percregc[(15 -(percdec.to_i.to_s.length))..15] = percdec.to_i.to_s %>
+                     <% registroc[210..224] = percregc %>
+
+		     <!-- conceptos q no integran el neto gravado -->
+                     <% ngc = "0" *15 %>
+                     <% netogc = (cabcom.ccom_nogravado.to_s.to_d.round(2) * 100 ) %>
+    		     <% ngc[(15 -(netogc.to_i.to_s.length))..15] = netogc.to_i.to_s %>
+		     <% registroc[116..130] =  ngc %>
+
+                     <!-- percep a pago a cta. de otros imp -->
+                     <% perimpc = "0" *15 %>
+                     <% pidec = (cabcom.ccom_retencionganancia.to_s.to_d.round(2) * 100 ) %>
+    		     <% perimpc[(15 -(pidec.to_i.to_s.length))..15] = pidec.to_i.to_s  %>
+                     <% registroc[195..209] = perimpc %>
+
+                     <!-- impuestos municipales -->	
+                     <% impmuniregc = "0" *15 %>
+                     <% ivadec = (cabcom.ccom_retencionmunicipal.to_s.to_d.round(2) * 100 ) %>
+    		     <% impmuniregc[(15 -(ivadec.to_i.to_s.length))..15] = ivadec.to_i.to_s  %>
+                     <% registroc[225..239] = impmuniregc %>
+
+		     <!-- impuestos internos -->	
+                     <% impintc = "0" *15 %>
+                     <% impintcdec = (cabcom.ccom_impuestointerno.to_s.to_d.round(2) * 100 ) %>
+    		     <% impintc[(15 -(impintcdec.to_i.to_s.length))..15] = impintcdec.to_i.to_s  %>
+                     <% registroc[240..254] = impintc %>
+
+                     <!-- suma de los valore de los reg -->
+                     <% totalfacporregcom = totalfacporregcom + cabcom.totalcom.to_d %>
+                     <% totalpercepcporregcom = totalpercepcporregcom + (cabcom.percepcionibrcom.to_d + cabcom.retencionibrcom.to_s.to_d) %>
+    		     <% totalpercepcivaporregcom = totalpercepcivaporregcom + (cabcom.percepcionivarcom.to_s.to_d + cabcom.retencionivacom.to_s.to_d ) %>
+                     <% totalnetonogravcom = totalnetonogravcom + cabcom.nogravadototcom.to_s.to_d %>
+                     <% totalimpinternocom = totalimpinternocom + cabcom.impinttotcom.to_s.to_d %> 
+                     <% totalimpmunicom = totalimpmunicom + cabcom.retmunitotcom.to_s.to_d %> 
+                     <% totalretgancom = totalretgancom + cabcom.retgantotcom.to_s.to_d %> 
+
+                   <% else %>
+                     <!--importe total de la operacion -->
+                     <% registroc[101..115] = "0" *15 %>
+ 
+		     <!--importe percepciones al valor agregado -->
+                     <% registroc[180..194] = "0" *15 %>
+
+  		     <!--importe percepciones de ingresos brutos -->
+                     <% registroc[210..224] = "0" *15 %>
+
+		     <!-- conceptos q no integran el neto gravado -->
+                     <% registroc[116..130] =  "0" *15 %>
+
+                     <!-- percep a pago a cta. de otros imp -->
+                     <% registroc[195..209] = "0" *15 %>
+
+                     <!-- impuestos municipales -->	
+                     <% registroc[225..239] = "0" *15 %>
+
+		     <!-- impuestos internos -->	
+                     <% registroc[240..254] = "0" *15 %>
+                
+                    <!--fin reg de percepciones -->
+                <% end %>
+
+                 <% registroc[294..368] =  "0" *75 %>
+          
+                 <% fc.write(registroc + "\r\n") %> <!-- \r -->
+         <% end %>
+    <% end %>
+     <% end %>  
+           <!-- registro 2 de la ultima linea -->
+		<% registro2c = " " *269 %>
+                <% registro2c[0..0] = "2" %>
+                <% anio = time.year.to_s  %>
+                <% mes = "00"
+                 mes[(2 -(time.month.to_i.to_s.length))..2] = time.month.to_s %>
+                <% registro2c[1..6] = anio + mes  %>
+
+		<% totalregic = "0" *12 %>
+                <% totalregic[(12 -(totalcompra.to_s.length))..12] = totalcompra.to_s %>
+                <% registro2c[17..28] = totalregic %>
+                            
+		<% cuit = Empresa.find(:first) %>
+                <% regcuit = "0" *11 %>
+                <% regcuit[(11 -(cuit.empr_cuit.to_s.length))..11] = cuit.empr_cuit.to_s %>
+		<% registro2c[60..70] = regcuit  %>
+
+                <% totalfregc = "0" *15 %>
+                <% totalfdec = (totalfacporregcom.to_s.to_d.round(2) * 100 ) %>
+    		<% totalfregc[(15 -(totalfdec.to_i.to_s.length))..15] = totalfdec.to_i.to_s %>
+                <% registro2c[101..115] = totalfregc %>
+
+                <% totalnngregc = "0" *15 %>
+                <% totalfdec = (totalnetonogravcom.to_s.to_d.round(2) * 100 ) %>
+    		<% totalnngregc[(15 -(totalfdec.to_i.to_s.length))..15] = totalfdec.to_i.to_s %>
+                <% registro2c[116..130] = totalnngregc %>
+              
+                <% netofregc = "0" *15 %>
+                <% netofdec = (totalnetosregcom.to_s.to_d.round(2) * 100 ) %>
+    		<% netofregc[(15 -(netofdec.to_i.to_s.length))..15] = netofdec.to_i.to_s %>
+                <% registro2c[131..145] = netofregc %>
+
+		<% ivafregc = "0" *15 %>
+                <% ivafdec = (totalivasregcom.to_s.to_d.round(2) * 100 ) %>
+    		<% ivafregc[(15 -(ivafdec.to_i.to_s.length))..15] = ivafdec.to_i.to_s %>
+                <% registro2c[150..164] = ivafregc %>
+    	
+    		<% exentofregc = "0" *15 %>
+                <% exentofdec = (totalexecporregcom.to_s.to_d.round(2) * 100 ) %>
+    		<% exentofregc[(15 -(exentofdec.to_i.to_s.length))..15] = exentofdec.to_i.to_s %>
+                <% registro2c[165..179] = exentofregc %>	
+               
+                <% percivafregc = "0" *15 %>
+                <% percibrfdec = (totalpercepcivaporregcom.to_s.to_d.round(2) * 100 ) %>
+    		<% percivafregc[(15 -(percibrfdec.to_i.to_s.length))..15] = percibrfdec.to_i.to_s %>
+                <% registro2c[180..194] = percivafregc %>
+   
+		<!--imp percepciones nacionales -->
+                <% retganfregc = "0" *15 %>
+                <% percibrfdec = (totalretgancom.to_s.to_d.round(2) * 100 ) %>
+    		<% retganfregc[(15 -(percibrfdec.to_i.to_s.length))..15] = percibrfdec.to_i.to_s %>
+                <% registro2c[195..209] = retganfregc %>
+              
+		<% percibrfregc = "0" *15 %>
+                <% percibrfdec = (totalpercepcporregcom.to_s.to_d.round(2) * 100 ) %>
+    		<% percibrfregc[(15 -(percibrfdec.to_i.to_s.length))..15] = percibrfdec.to_i.to_s %>
+                <% registro2c[210..224] = percibrfregc %>	
+             
+
+ 		<!--impuestos muni -->
+                <% impmunicregc = "0" *15 %>
+                <% percibrfdec = (totalimpmunicom.to_s.to_d.round(2) * 100 ) %>
+    		<% impmunicregc[(15 -(percibrfdec.to_i.to_s.length))..15] = percibrfdec.to_i.to_s %>
+                <% registro2c[225..239] = impmunicregc%>
+		
+                <!--impuestos internos -->
+                <% intintregc = "0" *15 %>
+                <% percibrfdec = (totalimpinternocom.to_s.to_d.round(2) * 100 ) %>
+    		<% intintregc[(15 -(percibrfdec.to_i.to_s.length))..15] = percibrfdec.to_i.to_s %>
+               
+                <% registro2c[240..255] = intintregc %>
+                
+                <% fc.write(registro2c + "\r\n")  %>
+     
+
+<% end %>
+<% fc.close() %>
+
+<!-- HASTA ACA COMPRAS -->
+<br />
+<% if totalfacporreg > 0 %>
+<table  border="1">
+    <tr class="headerStyle"><td></td> <td> VENTAS </td><td> COMPRAS </td> </tr>
+   
+     <tr> <td> Mercaderia exenta </td> <td> <%=h number_to_currency(totalexecporreg, :precision => 2, :separator => ",", :delimiter => ".") %> </td> <td> <%=h number_to_currency(totalexecporregcom, :precision => 2, :separator => ",", :delimiter => ".") %> </td></tr>
+
+     <tr><td> Neto gravado </td> <td> <%=h number_to_currency(totalnetosreg, :precision => 2, :separator => ",", :delimiter => ".") %> </td> <td> <%=h number_to_currency(totalnetosregcom, :precision => 2, :separator => ",", :delimiter => ".") %> </td> </tr>
+
+     <tr> <td> Debito fiscal </td> <td> <%=h number_to_currency(totalivasreg, :precision => 2, :separator => ",", :delimiter => ".") %>  </td> <td> <%=h number_to_currency(totalivasregcom, :precision => 2, :separator => ",", :delimiter => ".") %>  </td> </tr>
+
+     <tr> <td> Percepciones ing. brutos </td> <td> <%=h  number_to_currency(totalpercepcporreg, :precision => 2, :separator => ",", :delimiter => ".") %></td><td> <%=h number_to_currency(totalpercepcporregcom, :precision => 2, :separator => ",", :delimiter => ".") %></td> </tr>
+
+
+       <tr> <td> Percepciones iva </td><td> </td> <td> <%=h number_to_currency(totalpercepcivaporregcom, :precision => 2, :separator => ",", :delimiter => ".") %></td> </tr>
+
+        <tr> <td> Impuesto Interno </td> <td> </td> <td> <%=h number_to_currency(totalimpinternocom, :precision => 2, :separator => ",", :delimiter => ".") %> </td> </tr>
+
+        <tr> <td> Neto no gravado </td> <td> </td>  <td> <%=h number_to_currency(totalnetonogravcom, :precision => 2, :separator => ",", :delimiter => ".") %> </td></tr>
+
+        <tr> <td> Impueto minicipal </td> <td> </td>   <td> <%=h number_to_currency(totalimpmunicom, :precision => 2, :separator => ",", :delimiter => ".") %> </td></tr>
+
+        <tr> <td> Retencion ganancia</td> <td> </td>  <td> <%=h number_to_currency(totalretgancom, :precision => 2, :separator => ",", :delimiter => ".") %> </td></tr>
+
+     <tr>  <td> <b>Importe total </td> <td> <b><%=h  number_to_currency(totalfacporreg, :precision => 2, :separator => ",", :delimiter => ".") %>  </td> <td><b> <%=h number_to_currency(totalfacporregcom, :precision => 2, :separator => ",", :delimiter => ".") %>  </td> </tr>
+ 
+</table>
+<!-- <% sumaitemsventa = totalexecporreg + totalnetosreg + totalivasreg + totalpercepcporreg %>
+<% if totalfacporreg != sumaitemsventa %>
+<br />
+<div><b> El total de las ventas no coincide con la suma de los items. Por favor fijese en los renglones de los comprobantes! <%=h  number_to_currency(sumaitemsventa, :precision => 2, :separator => ",", :delimiter => ".") %>. La diferencia es de  <%=h  number_to_currency((totalfacporreg - sumaitemsventa), :precision => 2, :separator => ",", :delimiter => ".") %></div>
+<% end %>
+<% sumaitemscompra = totalexecporregcom + totalnetosregcom + totalpercepcporregcom + totalivasregcom + totalpercepcivaporregcom + totalimpinternocom + totalnetonogravcom + totalimpmunicom + totalretgancom %>
+<% if totalfacporregcom != sumaitemscompra %>
+<br />
+<div><b> El total de las compras no coincide con la suma de los items. Por favor fijese en los renglones de los comprobantes! <%=h  number_to_currency(sumaitemscompra, :precision => 2, :separator => ",", :delimiter => ".") %>. La diferencia es de <%=h  number_to_currency((totalfacporregcom - sumaitemscompra), :precision => 2, :separator => ",", :delimiter => ".") %>  </div>
+<% end %> -->
+ 
+<% end %>
+
+<% end %>

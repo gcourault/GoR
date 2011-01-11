@@ -1,0 +1,18 @@
+
+  <tr>
+    <td align="left">
+      Total:
+    </td>
+    <td align ="left" colspan= "3">
+  <% if @edita.nil? %>
+      <!-- <input type="numeric" readonly="readonly" name="ccom_total" size="10" > -->
+      <%= f.text_field :ccom_total, :onkeypress => "return IsNumberdecimal(event);", :size => 10, :class => "textosbox" %> 
+   <% else %> 
+     <%= f.text_field :ccom_total, :readonly => true, :size => 10, :class => "textosbox" %>
+  <% end %>
+    </td> 
+ </tr>
+   <%= f.hidden_field (:ccom_nroplaegreso, :value => params[:nrope].to_i, :readonly => true) %> 
+    <%= f.hidden_field (:cabplaegreso_id, :value => params[:idpe].to_i, :readonly => true) %>
+
+

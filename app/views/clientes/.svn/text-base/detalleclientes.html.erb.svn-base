@@ -1,0 +1,59 @@
+<h1> Compras del cliente <%= params[:nombre] %> por mes y rubro </h1>
+<% if !@clientepormontomes.blank? %> 
+<br />
+<table>
+ <tr>
+  <td>
+ <%= image_tag "volver.png" %> 
+<a href="javascript:history.back()">Volver</a>
+  </td>
+ </tr>
+</table>
+
+<br />
+<table  >
+  <tr class="headerStyle">
+    <th >Mes - A&ntilde;o</th> 
+    <th>Rubro</th>
+    <th>Unidades</th>
+    <th>Monto facturado</th>
+
+   </tr>
+
+    <% @fecha.each do |f| %>
+    <% fech = f.split("-") %>
+    <% total = 0 %>
+    <% @clientepormontomes.each do |clientepormontome| %>
+
+    <% if  fech[1].to_i == clientepormontome.anio.to_i && fech[0].to_i == clientepormontome.mes.to_i %>
+   <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+    <td><%=h clientepormontome.mes %> - <%=h clientepormontome.anio %></td>
+    <td><%=h clientepormontome.rubro %> </td>
+    <td align="center"><%=h clientepormontome.cantidad %> </td>
+    
+    <td><%=h number_to_currency(clientepormontome.monto, :precision => 2, :separator => ",", :delimiter => ".") %> </td> 
+    <% total = total + clientepormontome.monto.to_d %>
+   </tr>
+  <% end %>
+ <% end %>
+
+   <% if total > 0 %>
+    <tr><td class="h6" colspan="3" align="right"><b> Total:</td><td class="h6" ><b><%= number_to_currency(total, :precision => 2, :separator => ",", :delimiter => ".") %><td></tr>
+   <% end %>
+
+ <% end %>
+
+
+</table>
+<br />
+ <table>
+    <tr>
+       <td><%= image_tag "clienterubro.png"%>  </td> 
+    </tr>
+    <tr>
+       <td><%= image_tag "clienterubrouni.png"%>  </td> 
+    </tr>
+ </table> 
+<% end %>
+
+

@@ -1,0 +1,36 @@
+<table>
+<tr>
+<td class="boton" width="100" align="center">
+ <img  src="/images/volver.png" width="20px" height="20px" border="0"> 
+ <span style="vertical-align: top">  
+  <%= link_to 'Volver', :controller => 'listadocaucions', :action => '', :page => params[:page] %>
+ </span> 
+</td>
+
+</tr>
+</table>
+<p>
+ <b> Nro. Listado cauci&oacute;n:
+  <%=h @listadobanco.listadocaucion_id %>
+</p>
+<p>
+  <b>Sucursal:
+  <%=h @listadobanco.sucursal.sucu_nombre %>
+</p>
+<p>
+  <b>Importe del banco:
+  <%=h @listadobanco.lisb_importe %>
+</p>
+<p>
+  <b>Fecha del banco:
+  <%=h @listadobanco.lisb_fecha %>
+</p>
+<p>
+  <b>Usuario:
+  <%=h @listadobanco.lisb_fecha %>
+</p>
+<p>
+  <b>Ultima modificaci&oacute;n:
+  <%=h @listadobanco.lisb_fecha %>
+</p>
+

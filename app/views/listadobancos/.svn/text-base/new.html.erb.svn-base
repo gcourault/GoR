@@ -1,0 +1,49 @@
+<h1>Agregar fecha e importe del banco al listado</h1>
+<table>
+<tr>
+<td class="boton" width="100" align="center">
+ <%= image_tag "volver.png" %> 
+ <span style="vertical-align: top">  
+  <%= link_to 'Volver', :controller => 'listadocaucions', :action => '', :page => params[:page] %>
+ </span>
+</td>
+
+</tr>
+</table>
+<br />
+<% form_for(@listadobanco) do |f| %>
+  <%= f.error_messages %>
+<table>
+<tr>
+    <td>
+    <%= f.hidden_field :listadocaucion_id, :value => params[:listadoid] %>
+  </td>
+   <td>
+    <%= f.hidden_field :sucursal_id, :value => '11' %>
+  </td>
+</tr>
+<tr>
+ <td>
+    <%= f.label "Fecha del banco:" %>
+   </td>
+   <td>
+    <%= f.date_select(:lisb_fecha, {}, :class => "textosbox")  %>
+  </td>
+</tr>
+<tr>
+  <td>
+    <%= f.label "Importe del banco:" %>
+  </td>
+   <td>
+    <%= f.text_field :lisb_importe, :class => "textosbox" %>
+  </td>
+</tr>
+<%= hidden_field(:valor, :page, :value => params[:page]) %> 
+<tr>
+ <td colspan="2" align="center" height="70">
+    <%= f.submit 'Agregar', :class => "textosbox" %>
+  </td>
+</tr>
+</table>
+<% end %>
+

@@ -1,0 +1,281 @@
+<h1>Datos del comprobante</h1>
+<%= image_tag "volver.png" %> 
+<a href="javascript:history.back()">Volver</a>
+
+<table align="center">
+ <tr>
+ <table>
+
+ <tr>
+  <td>
+<Fieldset class="form">
+<LEGEND ALIGN="left" class="formlegend">Datos del comprobante</LEGEND>
+    <table>
+  <tr>
+    <td>
+      Fecha comprobante:
+    </td>
+    <td>
+     <b>
+     <%=h @factura.cfac_fecha %>
+    </td>
+       <td>
+      Vendedor:
+    </td>
+    <td>
+     <b>
+     <%=h @factura.vendedor.vend_nombre if @factura.vendedor %>
+    </td>
+   <td>
+      Revendedor:
+    </td>
+    <td >
+     <b>
+     <%=h @factura.revendedor.reve_nombre if @factura.revendedor %>
+    </td>
+  
+  </tr>
+  <tr>
+   <td>
+      Tipo comprobante:
+    </td>
+    <td >
+      <b>
+      <%=h @factura.tipocomprobante.tcom_nombre %>
+    </td>
+    <td>
+      Punto de venta:
+    </td>
+    <td>
+      <b>
+      <%=h @factura.cfac_puntosventa %>
+    </td>
+    <td>
+     Nro comprobante:
+    </td>
+    <td>
+      <b>
+      <%=h @factura.cfac_nrocomprobante %>
+    </td>
+    
+  </tr>
+  <tr>
+    <td>
+      Cliente:
+    </td>
+    <td colspan="3">
+    
+     <b>
+     <%=h @factura.cliente.clie_razonsocial %>
+    </td>
+    <td>
+      Condici&oacute;n de pago:
+    </td>
+    <td >
+      <b> <%=h @factura.condicionpago.cpag_nombre %>
+    
+    </td>
+   </tr>
+   <tr>
+    <td>
+      Jurisdicci&oacute;n:
+    </td>
+    <td>
+      <b>
+      <%=h @factura.jurisdiccion.juri_nombre if @factura.jurisdiccion %>
+    </td>
+    <td>
+      Nro lista precio:
+    </td>
+    <td>
+      <b> 
+      <%=h @factura.cfac_nrolistaprecio %>
+    </td>
+      <td>
+      Por cuenta y orden:
+    </td>
+    <td>
+      <b> 
+      <%=h @factura.cfac_porcuentayorden %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Detalle promoci&oacute;n:
+    </td>
+    <td colspan="3">
+      <b> 
+      <%=h @factura.cfac_detallepromocion %>
+    </td>
+    <td>
+      Porcentaje promoci&oacute;n:
+    </td>
+    <td>
+      <b> 
+      <%=h @factura.cfac_porcpromocion %>
+    </td>
+     
+  </tr>
+  <tr>
+   <td>
+      Desc promoci&oacute;n:
+    </td>
+    <td>
+      <b> 
+      <%=h @factura.cfac_descpromocion %>
+    </td>
+    <td>
+      Vehiculo:
+    </td>
+    <td>
+      <b> 
+      <%=h @factura.cfac_vehiculo %>
+    </td>
+        <td>
+      Patente:
+    </td>
+    <td>
+      <b> 
+      <%=h @factura.cfac_patente %>
+    </td>
+  </tr>
+    <tr>
+      <td colspan="6" align="center" >
+        <table>
+         <tr> 
+          <td>
+            <Fieldset class="form">
+            <LEGEND ALIGN="left" class="formlegend">Importes</LEGEND>
+             <table>
+               <tr>
+                <td>
+                  Exento:
+                </td>
+                <td>
+                  <b> <%=h @factura.cfac_exento %>
+                </td>
+                <td>
+                  Neto gravado:
+                </td>
+                <td>
+                  <b><%=h @factura.cfac_netogravado %>
+                </td>
+                <td>
+                  Alicuota inscripto:
+                </td>
+                <td>
+                  <b><%=h @factura.cfac_alicuotainscripto %>
+                </td>
+                 <td>
+                  Iva:
+                </td>
+                <td>
+                  <b><%=h @factura.cfac_iva %>
+                </td>
+             </tr>
+             <tr>
+              <td>
+                  Alicuota percepci&oacute;n iva:
+                </td>
+                <td>
+                  <b> <%=h @factura.cfac_alicuotaperiva %>
+                </td>
+                <td>
+                   Percepci&oacute;n iva:
+                </td>
+                <td>
+                  <b><%=h @factura.cfac_percepcioniva %>
+                </td>
+                <td>
+                  Alicuota percepci&oacute;n ibr:
+                </td>
+                <td>
+                  <b><%=h @factura.cfac_alicuotaperibr %>
+                </td>
+                 <td>
+                   Percepci&oacute;n ibr:
+                </td>
+                <td>
+                  <b><%=h @factura.cfac_percepcionibr %>
+                </td>
+             </tr>
+              <tr>
+              <td>
+                  Ajuste bi:
+                </td>
+                <td>
+                  <b> <%=h @factura.cfac_ajustebi %>
+                </td>
+                <td>
+                   Ajuste por redondeo:
+                </td>
+                <td>
+                  <b><%=h @factura.cfac_ajusteredondeo %>
+                </td>
+                <td>
+                  Total:
+                </td>
+                <td>
+                  <b><%=h @factura.cfac_total %>
+                </td>
+                
+             </tr>
+          </table>
+         </Fieldset>
+         </td>
+         </tr>
+        </table>
+   
+      </td>
+    </tr>
+
+</table>
+</Fieldset>
+</td>
+</tr>
+</table>
+</tr>
+
+<%  @renfacturas = Renfactura.find(:all, :conditions => ['cabfactura_id = ? and sucursal_id = ?', @factura.id[0], @factura.id[1]]) %>
+<% if @renfacturas.empty? %> 
+<% else %>
+<tr>
+<table align="center">
+ <tr>
+  <td>
+ <Fieldset class="form">
+ <legend ALIGN="left" class="formlegend" >Detalle del comprobante</legend>
+
+
+<table align="center" border="1">
+  <tr>
+    <th>Art&iacute;culo</th>
+    <th>Cantidad ud.</th>
+    <th>Precio unitario</th>
+    <th>Alicuota iva</th>
+    <th>Neto</th>
+    <th>Iva</th>
+    <th>Descuento promoci&oacute;n</th>
+    <th>total</th>
+  </tr>
+
+<% @renfacturas.each do |renfactura| %>
+  <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+    <td> <%=h renfactura.articulo.arti_descripcion %> </td>
+    <td> <%=h renfactura.rfac_cantidad %> </td>
+    <td> <%=h renfactura.rfac_preciounitario2 %> </td>
+    <td> <%=h renfactura.alicuotaiva.aiva_alicuota %> </td>
+    <td> <%=h renfactura.rfac_netogravado2 %> </td>
+    <td> <%=h renfactura.rfac_iva2 %> </td>
+    <td> <%=h renfactura.rfac_descpromocion %> </td>
+    <td> <%=h number_to_currency(renfactura.rfac_totalrenglon2, :precision => 2, :separator => ",", :delimiter => ".") %> </td>
+  </tr>
+<% end %>
+</table>
+</Fieldset>
+</td>
+</tr>
+</table>
+</tr>
+<% end %>
+</table>

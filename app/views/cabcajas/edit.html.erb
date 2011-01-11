@@ -1,0 +1,48 @@
+<h1>Editing cabcaja</h1>
+
+<% form_for(@cabcaja) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :sucursal_id %><br />
+    <%= f.text_field :sucursal_id %>
+  </p>
+  <p>
+    <%= f.label :cabcaja_id %><br />
+    <%= f.text_field :cabcaja_id %>
+  </p>
+  <p>
+    <%= f.label :vendedor_id %><br />
+    <%= f.text_field :vendedor_id %>
+  </p>
+  <p>
+    <%= f.label :ccaj_nrocaja %><br />
+    <%= f.text_field :ccaj_nrocaja %>
+  </p>
+  <p>
+    <%= f.label :ccaj_fecha %><br />
+    <%= f.text_field :ccaj_fecha %>
+  </p>
+  <p>
+    <%= f.label :ccaj_cerrada %><br />
+    <%= f.text_field :ccaj_cerrada %>
+  </p>
+  <p>
+    <%= f.label :ccaj_importar %><br />
+    <%= f.text_field :ccaj_importar %>
+  </p>
+  <p>
+    <%= f.label :ccaj_usuario %><br />
+    <%= f.text_field :ccaj_usuario %>
+  </p>
+  <p>
+    <%= f.label :ccaj_ultmod %><br />
+    <%= f.date_select :ccaj_ultmod %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @cabcaja %> |
+<%= link_to 'Back', cabcajas_path %>

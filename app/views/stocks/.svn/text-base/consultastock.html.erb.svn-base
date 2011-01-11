@@ -1,0 +1,57 @@
+<!-- restrigir la index por url -->
+<div align="left">
+<% restrict_to "(rol 6 | rol 7 ) & !blacklist" do %>
+   <% form_tag  :controller => 'stocks', :action => 'consultastock' do %>  
+     <Fieldset class="filtroiphone" >
+     <legend align="left" class="formlegendmovi"> Consulta de stock </legend>
+      <table align="left" class="tablafiltro" >
+      <tr>
+       <td colspan="2" class="movil">
+        Modelo y medida:
+        <%= text_field_tag :modelo, params[:modelo], :size => 15, :class => "movil" %>
+        <%= text_field_tag :medida, params[:medida], :size => 10, :class => "movil"  %>
+      </td>
+     </tr>
+     <tr>
+       <td class="movil">  
+         marca-rubro-codigo:
+         <%= text_field_tag :marcacod, params[:marcacod], :size => 3, :class => "movil"  %>
+         <%= text_field_tag :rubrocod, params[:rubrocod], :size => 3, :class => "movil"  %>
+         <%= text_field_tag :codigo, params[:codigo], :size => 3, :class => "movil"  %>
+       </td>
+      <td class="movil">
+      <%= submit_tag "Buscar", :name => nil, :class => "movil"  %>
+      </td>
+   </tr>
+   <% end %>
+  </table>
+ </Fieldset>
+
+<% end %>
+<% if !@articulos.nil? && @articulos.size > 0 %>
+
+<table>
+<tr>
+<td class="movil">
+<table>
+  <tr class="headerStyle">
+   <td class="movil"> </td>
+   <td class="movil"> Descripci&oacute;n</td>
+  </tr>
+
+<% @articulos.each do |articulo| %>
+  <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+    <td class="movil"><%= link_to_remote 'stock', :update => 'stock', :url => {:controller => 'stocks', :action =>'stock', :id => articulo.id} %> </td>
+     <td class="movil"><%=h  articulo.arti_descripcion %> </td>
+  </tr>
+<% end %>
+</table>
+</td>
+<td class="movil" valign="top">
+<div id="stock">
+</div>
+</td>
+</tr>
+</table>
+<% end %>
+</div>

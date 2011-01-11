@@ -1,0 +1,58 @@
+<table>
+<tr>
+<td class="boton"  align="center">
+<%= link_to 'Publicar', edit_maestrolista_path(@maestrolista) %> 
+</td>
+<td> | </td> 
+<td class="boton" align="center">
+<%= link_to 'Editar articulos de lista', :controller => 'listaprecios', :action => 'index', :maestrolistaid => @maestrolista.id %> 
+</td>
+<td> | </td> 
+<td class="boton" align="center">
+<%= link_to 'Volver', maestrolistas_path %> 
+</td>
+</tr>
+</table>
+<p>
+  <b>Nro. de lista:</b>
+  <%=h @maestrolista.mlis_nrolista %>
+</p>
+
+<p>
+  <b>Nro. de lista origen:</b>
+  <%=h @maestrolista.mlis_nrolistaorigen %>
+</p>
+
+<p>
+  <b>Fecha de creaci&oacute;n:</b>
+  <%=h @maestrolista.mlis_creacion %>
+</p>
+
+<p>
+  <b>Fecha de vigencia:</b>
+  <%=h @maestrolista.mlis_vigencia %>
+</p>
+<p>
+  <b>Nombre:</b>
+  <%=h @maestrolista.mlis_nombre %>
+</p>
+
+<p>
+  <b>Tipo de lista:</b>
+  <%=h @maestrolista.mlis_internapublica %>
+</p>
+<p>
+  <b>Observaciones:</b>
+  <%=h @maestrolista.mlis_observaciones %>
+</p>
+
+<p>
+  <b>Usuario:</b>
+  <%=h @maestrolista.mlis_usuario %>
+</p>
+
+<p>
+  <b>Ultima mod:</b>
+  <%=h @maestrolista.mlis_ultmod %>
+</p>
+

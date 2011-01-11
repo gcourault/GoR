@@ -1,0 +1,64 @@
+<h1>Nuevo Reingreso o Ajuste</h1>
+<br />
+<table>
+<tr>
+<td class="boton"  align="center">
+ <%= image_tag "volver.png" %> 
+ <span style="vertical-align: top"> 
+ <%= link_to 'Volver', devueltocaucions_path %>
+ </span>
+</td>
+</tr>
+</table>
+<br />
+<% form_for(@devueltocaucion) do |f| %>
+  <%= f.error_messages %>
+<table>
+ <tr>
+  <td>
+     <%= f.label "Sucursal:" %>
+  </td>
+  <td>      
+<%= @sucursales = Sucursal.find(:all) 
+   f.select (:sucursal_id, options_for_select(@sucursales.collect {|u| [u.sucu_nombre,u.id]}, 11),  {}, :class => "textosbox") %>
+  </td>
+ </tr>
+ <tr>
+   <td>
+    <%= f.label "Detalle:" %>
+   </td>
+   <td>
+    <%= f.text_field :devc_detalle, :class => "textosbox" %>
+  </td>
+ </tr>
+ <tr>
+  <td>
+    <%= f.label "Fecha:" %>
+  </td>
+  <td>
+    <%= f.date_select(:devc_fecha, {}, :class => "textosbox")  %>
+  </td>
+ </tr>
+  <td>
+    <%= f.label "Importe:" %>
+ </td>
+   <td>
+    <%= f.text_field :devc_importe, :class => "textosbox" %>
+  </td>
+ </tr>
+ <tr>
+  <td>
+    <%= f.label "Tipo:" %>
+  </td>
+  <td>
+    <%= f.select (:devc_tipo , options_for_select([['Reingreso', 'R'],['Ajuste', 'A'],['Ajuste Dep Gestion', 'G']]),  {}, :class => "textosbox" ) %>   
+  </td>
+ </tr>
+ <tr>
+ <td colspan="2" align="center" height="70">
+    <%= f.submit 'Crear', :class => "textosbox"  %>
+  </td>
+</tr>
+</table>
+<% end %>
+

@@ -1,0 +1,12 @@
+<h1>Editing cabremito</h1>
+
+<% form_for(@cabremito) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @cabremito %> |
+<%= link_to 'Back', cabremitos_path %>

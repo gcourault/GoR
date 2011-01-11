@@ -1,0 +1,17 @@
+<h1>New listadocaucion</h1>
+
+<% form_for(@listadocaucion) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.submit 'Create' %>
+  </p>
+<% end %>
+<table>
+<tr>
+<td class="boton"  align="center">
+<%= link_to 'Back', listadocaucions_path %>
+</td>
+
+</tr>
+</table>

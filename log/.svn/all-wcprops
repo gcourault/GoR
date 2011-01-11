@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/svn/gescom-onrails/!svn/ver/82/log
+END
+test.log
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/gescom-onrails/!svn/ver/8/log/test.log
+END
+production.log
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/gescom-onrails/!svn/ver/8/log/production.log
+END
+server.log
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/gescom-onrails/!svn/ver/8/log/server.log
+END

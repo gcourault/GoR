@@ -1,0 +1,104 @@
+<h1 align="left">Editar la forma de pago para el/los comprobante/s </h1>
+<br />
+<% form_for(@pagocompra) do |f| %>
+  <%= f.error_messages %>
+<table align="left">
+ <tr>
+  <td>
+<Fieldset class="form" >
+<LEGEND ALIGN="left" class="formlegend">Modificar forma de pago</LEGEND>
+<table>
+ <tr>
+  <td>
+   <table> 
+ <tr height="50">
+  <td colspan="6">
+    Total comprobante/s: <b> <%= params[:total].to_d %>
+  </td>
+  
+ </tr>
+ <tr>
+   <td>
+    Efectivo:
+   </td>
+   <td>
+    <%= f.text_field :pcpr_efectivo, :size => 10,  :onkeypress => "return IsNumberdecimal(event);", :onChange => "tot(this.form)", :onBlur => "tot(this.form)", :class => "textosbox" %> 
+   </td>
+   </tr>
+   <tr>
+   <td>
+    Cheque:
+   </td>
+   <td>
+     <%= f.text_field :pcpr_cheque, :size => 10, :onkeypress => "return IsNumberdecimal(event);", :onChange => "tot(this.form)", :onBlur => "tot(this.form)", :class => "textosbox" %> 
+   </td>
+    
+    </tr>
+   <tr>
+      <td>
+    Deposito o transferencia:
+   </td>
+   <td>
+     <%= f.text_field :pcpr_depotransf, :onkeypress => "return IsNumberdecimal(event);", :size => 10, :onChange => "tot(this.form)", :onBlur => "tot(this.form)", :class => "textosbox" %> 
+   </td>
+  </tr>
+   <tr>
+   <td>
+    Otra forma:
+   </td>
+   <td>
+     <%= f.text_field :pcpr_otro, :onkeypress => "return IsNumberdecimal(event);", :size => 10, :onChange => "tot(this.form)", :onBlur => "tot(this.form)", :class => "textosbox" %> 
+   </td>
+  </tr>
+ <tr >
+   <td>
+    Total:
+   </td>
+   <td>
+    <input type="numeric" name="total" size="10" readonly="readonly" >
+   </td>
+ </tr>
+
+<!--</table>
+ <td>
+  <table>
+   <tr rowspan="4">  -->
+   <tr>
+   <td>
+       Observaci&oacute;n:
+    </td>
+     <td colspan="2">
+       <%= f.text_area :pcpr_observacion, :size => '25x5', :class => "textosbox" %>
+     </td>
+  </tr>
+</table>
+</td>
+</tr>
+</table>
+  <input type="hidden" name="nrope" value="<%= params[:nrope].to_i %>" >
+  <input type="hidden" name="idpeid" value="<%= params[:idpe][0] %>" >
+  <input type="hidden" name="total" value="<%= params[:total].to_f %>" >
+
+ 
+ 
+</table>
+</Fieldset >
+</td>
+</tr>
+</table>
+ <table>
+  <tr height="80" >
+   <td width="250">
+      <%= image_tag "cancel.png" %> 
+      <span style="vertical-align: top">  
+        <%= link_to 'Cancelar', :controller => 'cabplaegresos', :action => 'verformapago', :id => 1, :idpe => params[:idpe], :nroplanillaegreso => params[:nrope].to_i %>
+      </span>
+   </td>
+   <td >
+   <!-- <input type="image" src="/images/form_add.png" name="SubmitType" value="new"> -->
+     <%= f.submit 'Guardar', :disable_with => "Cargando pagos...", :confirm => 'Quiere guardar la forma de pago?', :class => "textosbox" %>
+</td>
+  </tr>
+</table>
+<% end %>
+

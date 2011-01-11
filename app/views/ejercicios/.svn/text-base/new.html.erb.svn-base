@@ -1,0 +1,54 @@
+<h1>Abriendo ejercicio</h1>
+<table>
+<tr>
+
+ <td class="boton" width="120" align="center">
+   <%= image_tag "volver.png" %>
+   <span style="vertical-align: top">  
+   <%= link_to 'Volver', ejercicios_path %>
+   </span>
+ </td>
+
+
+</tr>
+</table>
+<br />
+
+<% form_for(@ejercicio) do |f| %>
+  <%= f.error_messages %>
+<table>
+  <tr>
+  <td>
+    <%= f.label "Fecha Inicial:" %>
+  </td>
+  <td>
+    <%= f.date_select :ejer_desde %>
+  </td>
+  </tr><tr>
+  <td>
+    <%= f.label "Fecha Final:" %>
+  </td>
+  <td>
+    <%= f.date_select :ejer_hasta %>
+  </td>
+  </tr><tr>
+  <td>
+    <%= f.label "Nombre ejercicio" %>
+  </td>
+  <td>
+    <%= f.text_field :ejer_descripcion %>
+  </td>
+  </tr><tr>
+   <td>
+   Ejercicio cerrado 
+   </td>
+   <td>
+    <%= f.select( :ejer_cerrado , options_for_select( %w{ No Si } ) )  %>
+  </td>
+  </tr><tr>
+  
+   <td>
+    <%= f.submit 'Crear' %>
+  </td></tr>
+<% end %>
+

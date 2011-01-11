@@ -1,0 +1,37 @@
+<h1>Editando alicuota iva</h1>
+
+<% form_for(@alicuotaiva) do |f| %>
+  <%= f.error_messages %>
+
+  <p class="textbox">
+    <%= f.label :id %><br />
+    <%= f.text_field :id %>
+  </p>
+  <p class="textboxad">
+    <%= f.label :aiva_alicuota %><br />
+    <%= f.text_field :aiva_alicuota %>
+  </p>
+  <p class="textbox">
+    <%= f.label :aiva_inicio %><br />
+    <%= f.text_field :aiva_inicio %>
+  </p>
+  <p class="textboxad">
+    <%= f.label :aiva_final %><br />
+    <%= f.text_field :aiva_final %>
+  </p>
+  <p class="textbox">
+    <%= f.label :aiva_usuario %><br />
+    <%= f.text_field :aiva_usuario %>
+  </p>
+  <p class="textboxad">
+    <%= f.label :aiva_ultmod %><br />
+    <%= f.date_select :aiva_ultmod %>
+  </p>
+  <p class="botoncrud">
+    <%= f.submit 'Modificar' %>
+  </p>
+<% end %>
+<div  class="botonnuevo" style="align:center;">
+<%= link_to 'Mostrar', @alicuotaiva %> |
+<%= link_to 'Volver', alicuotaivas_path %>
+</div>

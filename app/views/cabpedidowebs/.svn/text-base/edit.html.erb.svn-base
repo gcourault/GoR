@@ -1,0 +1,11 @@
+<h1>Editando pedidoweb</h1>
+
+<% form_for(@cabpedidoweb) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.submit 'Modificar' %>
+  </p>
+<% end %>
+
+<%= link_to 'Volver', cabpedidowebs_path %>

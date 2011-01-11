@@ -1,0 +1,55 @@
+
+<table>
+ <tr>
+  <td>
+<Fieldset class="form"  width="200" >
+<legend ALIGN="left" class="formlegend">Ingresar retenci&oacute;n de ganancia</legend>
+<table>
+
+<% @retencionganancia = Retencionganancia.new %>
+<% form_for(@retencionganancia) do |f| %>
+  <%= f.error_messages %>
+<tr>
+  <td>
+    <%= f.label "Nro. de orden:" %> 
+  </td>
+  <td>
+    <%= f.text_field :rtga_nroorden, :size => 10, :class => "textosbox" %>
+  </td>
+ </tr>
+ <tr>
+  <td>
+    <%= f.label "Importe:" %>
+  </td>
+  <td>
+    <%= f.text_field :rtga_importe, :size => 10, :onkeypress => "return IsNumberdecimal(event);", :class => "textosbox" %>
+    <%= f.hidden_field :rtga_plaegresoid, :value => params[:idpe][0].to_s.to_i %>
+  </td>
+  
+</tr>
+ <% if @comprobanteretgens.nil? %>
+ <% else %>
+ <% @comprobanteretgens.each do |compretgan| %>
+  <input type="hidden" name="fecha" value="<%= compretgan.cpeg_fecha %>" >
+  <input type="hidden" name="provid" value="<%= compretgan.proveedor_id %>" >
+  <input type="hidden" name="conceptoegresoid" value="<%= compretgan.conceptoegresoid %>" >
+ <% end %>
+ <% end %>
+<tr>
+ <td>
+  <%= image_tag "cancel.png" %>
+  <span style="vertical-align: top">
+    <%= link_to 'Cancelar', :controller => 'cabplaegresos', :action => 'retganancia', :id => 1, :idpe => params[:idpe], :fecha => params[:fecha] %> 
+  </span>
+ </td>
+ <td align="center" height="70">
+    <%= f.submit 'Crear', :class => "textosbox" %>
+ </td>
+</tr>
+<% end %>
+</table>
+</Fieldset>
+</td>
+</tr>
+</table>
+

@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/gescom-onrails/!svn/ver/583/app/views/chequeterceros
+END
+edit.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/gescom-onrails/!svn/ver/435/app/views/chequeterceros/edit.html.erb
+END
+_xls.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/gescom-onrails/!svn/ver/236/app/views/chequeterceros/_xls.html.erb
+END
+corrigecheque.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/gescom-onrails/!svn/ver/556/app/views/chequeterceros/corrigecheque.html.erb
+END
+index.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/gescom-onrails/!svn/ver/583/app/views/chequeterceros/index.html.erb
+END
+_informecomprobxls.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/gescom-onrails/!svn/ver/299/app/views/chequeterceros/_informecomprobxls.html.erb
+END
+new.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/gescom-onrails/!svn/ver/431/app/views/chequeterceros/new.html.erb
+END
+cheque.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/gescom-onrails/!svn/ver/432/app/views/chequeterceros/cheque.html.erb
+END
+index.pdf.prawn
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/gescom-onrails/!svn/ver/457/app/views/chequeterceros/index.pdf.prawn
+END
+show.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/gescom-onrails/!svn/ver/116/app/views/chequeterceros/show.html.erb
+END
+informecomprob.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/gescom-onrails/!svn/ver/379/app/views/chequeterceros/informecomprob.html.erb
+END

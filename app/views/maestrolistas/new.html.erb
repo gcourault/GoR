@@ -1,0 +1,42 @@
+<h1>Crear nueva lista de precios</h1>
+<br />
+<table  > <tr>
+<td class="boton" width="100" align="center">
+ <%= image_tag "volver.png" %>
+ <span style="vertical-align: top">  
+ <%= link_to 'Volver', maestrolistas_path %> 
+ </span>
+</td> </tr>
+</table>
+<br />
+<% form_for(@maestrolista) do |f| %>
+  <%= f.error_messages %>
+<table>
+ <tr>
+  <td>
+    <%= f.label "Nro lista origen:" %>
+   <!-- <%= f.text_field :mlis_nrolistaorigen %> -->
+  </td>
+  <td>
+    <%= @maestrolistas = Maestrolista.find(:all, :order=>'mlis_nrolista DESC') 
+   f.select(:mlis_nrolistaorigen, options_for_select(@maestrolistas.collect {|u| [u.mlis_nrolista]} )) %>
+  </td>
+ </tr>
+ <tr>
+  <td>
+    <%= f.label "Nombre lista:" %>
+  </td>
+  <td>
+    <%= f.text_field :mlis_nombre %>
+  </td>
+ </tr>
+ <tr>
+  <td colspan="2" align="center" height="70">
+    <%= f.submit 'Crear', :disable_with => "Creando lista..." %>
+  </td>
+ </tr>
+</table>
+<% end %>
+   
+   
+

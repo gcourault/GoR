@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/gescom-onrails/!svn/ver/574/app/views/rencompras
+END
+edit.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/gescom-onrails/!svn/ver/314/app/views/rencompras/edit.html.erb
+END
+_rencompra.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/gescom-onrails/!svn/ver/574/app/views/rencompras/_rencompra.html.erb
+END
+index.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/gescom-onrails/!svn/ver/314/app/views/rencompras/index.html.erb
+END
+_new.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/gescom-onrails/!svn/ver/322/app/views/rencompras/_new.html.erb
+END
+new.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/gescom-onrails/!svn/ver/314/app/views/rencompras/new.html.erb
+END
+show.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/gescom-onrails/!svn/ver/314/app/views/rencompras/show.html.erb
+END
+_edit.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/gescom-onrails/!svn/ver/322/app/views/rencompras/_edit.html.erb
+END

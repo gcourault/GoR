@@ -1,0 +1,20 @@
+<h1>Asientos ejercicio</h1>
+
+<%= option_select_ejercicio %>
+
+<table>
+  <tr>
+  </tr>
+
+<% @cabasientos.each do |cabasiento| %>
+  <tr>
+    <td><%= link_to 'Show', cabasiento %></td>
+    <td><%= link_to 'Edit', edit_cabasiento_path(cabasiento) %></td>
+    <td><%= link_to 'Destroy', cabasiento, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New cabasiento', new_cabasiento_path %>

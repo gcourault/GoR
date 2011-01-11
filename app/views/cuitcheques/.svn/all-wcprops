@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/gescom-onrails/!svn/ver/411/app/views/cuitcheques
+END
+edit.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/gescom-onrails/!svn/ver/411/app/views/cuitcheques/edit.html.erb
+END
+index.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/gescom-onrails/!svn/ver/411/app/views/cuitcheques/index.html.erb
+END
+new.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/gescom-onrails/!svn/ver/411/app/views/cuitcheques/new.html.erb
+END
+show.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/gescom-onrails/!svn/ver/150/app/views/cuitcheques/show.html.erb
+END

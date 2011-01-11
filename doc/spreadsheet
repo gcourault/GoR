@@ -1,0 +1,16 @@
+Ejemplo con la gem spreadsheet-excel:
+
+En el ordenador de desarrollo, donde puedes instalar lo que quieras, instalas la gema con
+
+$ sudo gem install spreadsheet-excel
+
+la "desempaquetas" en vendor con
+
+$ cd vendor 
+$ gem unpack spreadsheet-excel
+
+luego añades
+
+config.load_paths += %W( #{RAILS_ROOT}/vendor/spreadsheet-excel-0.3.5.1/lib )
+
+en el environment.rb para que coja el directorio de la gema

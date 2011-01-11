@@ -1,0 +1,29 @@
+<h1>Nuebo rubro</h1>
+<br />
+<table>
+  <tr>
+    <td class="boton" width="120" align="center">
+      <%= image_tag "volver.png" %> 
+      <span style="vertical-align: top">  
+      <%= link_to 'Volver', :controller => 'rubros', :action => 'index' %>
+      </span>
+    </td>
+  </tr>
+</table>
+
+
+<% form_for(@rubro) do |f| %>
+  <%= f.error_messages %>
+
+  <%= render :partial => "datosrubro" , :locals => { :f => f } %>
+
+  <table>
+    <tr height="70">
+      <td colspan="2" align="center">
+      <%= f.submit 'Guardar', :class => "textosbox" %>
+      </td>
+    </tr>
+  </table>
+
+<% end %>
+

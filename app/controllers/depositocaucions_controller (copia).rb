@@ -1,0 +1,132 @@
+class DepositocaucionsController < ApplicationController
+  # GET /depositocaucions
+  # GET /depositocaucions.xml
+   before_filter :login_required
+   access_control  [:list, :new, :create, :update, :edit, :show, :index] => '(rol 4 | rol 5 | rol 6 )'
+  def fechas
+    if params[:fechadesde].blank?
+    else
+      params[:fechadesde] = Date.civil params[:fechadesde]["year"].to_i, params[:fechadesde]["month"].to_i, params[:fechadesde]["day"].to_i
+    end
+    if params[:fechahasta].blank?
+    else
+     params[:fechahasta] = Date.civil params[:fechahasta]["year"].to_i, params[:fechahasta]["month"].to_i, params[:fechahasta]["day"].to_i
+    end
+  end
+
+  def index
+    fechas()
+    @depositocaucions = Depositocaucion.busqueda(params[:fechadesde], params[:fechahasta])
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @depositocaucions }
+    end
+  end
+
+  # actualiza deposito de caucion cuando se acreditan los cheches (actualizacion multiple)
+  def updater
+       if params[:fechaacred].blank?
+       else
+        params[:fechaacred] = Date.civil params[:fechaacred]["year"].to_i, params[:fechaacred]["month"].to_i, params[:fechaacred]["day"].to_i
+       end
+    #   depid = params[:depid].split('_')
+
+       if depid.blank?
+         else
+       	  params[:depositocaucion_ids].each { |item_id|
+      	  item = Depositocaucion.find(item_id.to_i)
+      	  item.update_attribute(:dcau_fechadeposito, params[:fechaacred] )
+       	  item.update_attribute(:conceptocaucion_id, params[:conceptocaucion])
+      	  item.update_attribute(:dcau_nroboletadeposito, params[:dcau_nroboletadeposito].to_s)
+          }
+      end
+      redirect_to :action => 'index'
+     # render(:update) { |page| page.call 'location.reload' }
+  end
+
+  def suma
+    importe = 0
+   if params[:depositocaucion_ids].blank? 
+    else 
+      params[:depositocaucion_ids].each { |item_id|
+      item = Depositocaucion.find(item_id.to_i)
+      params[:idcheque] = item.chequetercero_id
+      @buscaimportes = Depositocaucion.buscaimporte(params[:idcheque])
+      imp = 0
+      @buscaimportes.each {|i| imp = imp + i.importe.to_d }
+      importe = importe + imp
+      }
+    end 
+     params[:importe] = importe 
+     render :partial => "suma"
+  end
+
+  # GET /depositocaucions/1
+  # GET /depositocaucions/1.xml
+  def show
+    @depositocaucion = Depositocaucion.find(params[:id])
+    respond_to do |format|
+      format.html # show.html.erb
+      format.xml  { render :xml => @depositocaucion }
+    end
+  end
+
+  # GET /depositocaucions/new
+  # GET /depositocaucions/new.xml
+  def new
+    @depositocaucion = Depositocaucion.new
+    respond_to do |format|
+      format.html # new.html.erb
+      format.xml  { render :xml => @depositocaucion }
+    end
+  end
+
+  # GET /depositocaucions/1/edit
+  def edit
+    @depositocaucion = Depositocaucion.find(params[:id])
+  end
+
+  # POST /depositocaucions
+  # POST /depositocaucions.xml
+  def create
+    @depositocaucion = Depositocaucion.new(params[:depositocaucion])
+    respond_to do |format|
+      if @depositocaucion.save
+        flash[:notice] = 'Depositocaucion was successfully created.'
+        format.html { redirect_to(@depositocaucion) }
+        format.xml  { render :xml => @depositocaucion, :status => :created, :location => @depositocaucion }
+      else
+        format.html { render :action => "new" }
+        format.xml  { render :xml => @depositocaucion.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+
+  # PUT /depositocaucions/1
+  # PUT /depositocaucions/1.xml
+  def update
+    @depositocaucion = Depositocaucion.find(params[:id])
+    respond_to do |format|
+      if @depositocaucion.update_attributes(params[:depositocaucion])
+        flash[:notice] = 'Depositocaucion was successfully updated.'
+        format.html { redirect_to(@depositocaucion) }
+        format.xml  { head :ok }
+      else      
+        format.html { render :action => "edit" }
+        format.xml  { render :xml => @depositocaucion.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+
+  # DELETE /depositocaucions/1
+  # DELETE /depositocaucions/1.xml
+  def destroy
+    @depositocaucion = Depositocaucion.find(params[:id])
+    @depositocaucion.destroy
+    respond_to do |format|
+      format.html { redirect_to(depositocaucions_url) }
+      format.xml  { head :ok }
+    end
+  end
+
+end

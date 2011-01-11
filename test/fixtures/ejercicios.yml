@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  ejer_desde: 2010-11-10
+  ejer_hasta: 2010-11-10
+  ejer_descripcion: MyString
+  ejer_cerrado: MyString
+
+two:
+  ejer_desde: 2010-11-10
+  ejer_hasta: 2010-11-10
+  ejer_descripcion: MyString
+  ejer_cerrado: MyString

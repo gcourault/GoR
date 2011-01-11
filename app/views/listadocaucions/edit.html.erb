@@ -1,0 +1,28 @@
+<h1>Agregar importe y fecha de listado caución del banco</h1>
+<br />
+<table>
+<tr>
+<td class="boton"  align="center">
+<%= link_to 'Mostrar', @listadocaucion %> </td>
+<td> | </td>
+<td class="boton"  align="center">
+<%= link_to 'Volver', listadocaucions_path %>
+</td>
+</tr>
+</table>
+<br />
+<% form_for(@listadocaucion) do |f| %>
+  <%= f.error_messages %>
+ <p>
+    <%= f.label "Fecha del banco:" %>
+    <%= f.date_select :lcau_fechaimportebanco  %>
+  </p>
+  <p>
+    <%= f.label "Importe del banco:" %>
+    <%= f.text_field :lcau_importebanco %>
+  </p>
+  <p>
+    <%= f.submit 'Modificar' %>
+  </p>
+<% end %>
+

@@ -1,0 +1,171 @@
+<h1>Informe de ventas por vendedores </h1>
+
+<% if params[:fechadesde].blank? %>
+<% from_time =  Date.today - 31.days  %>
+<% else %>
+<% from_time = params[:fechadesde].to_date %>
+<% end %>
+<% if params[:fechahasta].blank? %>
+<% to_time =  Date.today   %>
+<% else %>
+<% to_time = params[:fechahasta].to_date %>
+<% end %>
+<% if params[:id].blank? %>
+<% params[:id] = 1  %>
+<% end %>
+<Fieldset class="filtro">
+<legend ALIGN="left" class="formlegend">Seleccione entre que fechas</legend>
+<table align="left">
+<% form_tag vendedors_path, :method => 'get' do %>  
+   <!-- <tr height="70">
+  <td>
+       Seleccione un vendedor: 
+     </td>
+     <td>
+      <%= @vendedors = Vendedor.find(:all) 
+      select_tag(:id, options_for_select(@vendedors.collect {|u| [u.vend_nombre,u.id]}, params[:id].to_i)) %>
+     </td>
+    
+   </tr>  -->
+   <tr>
+     <td >
+       Fecha desde:
+     </td>
+     <td>
+       <%=  select_date from_time , {:prefix => "fechadesde"}, {:class => "textosbox"} %> 
+     </td>
+     <td>
+       Fecha hasta: 
+     </td>
+     <td>
+      <%= select_date to_time, {:prefix=>"fechahasta"}, {:class => "textosbox"}  %>
+     </td> 
+      <td   align="right">
+      <%= submit_tag "Consultar", :class => "textosbox" %>
+     </td>
+ </tr>
+<% end %>
+</table>
+</Fieldset>
+<br />
+<Fieldset class="form">
+<legend ALIGN="left" class="formlegend">Total de ventas por vendedores y revendedores</legend>
+<table align="left" border="1" >
+<tr>
+<!--<td>
+<% if @vendedor.blank? %> 
+<% else %>
+
+<table align="left" >
+
+<tr>
+<td> <b> Nombre:</td><td> <%= @vendedor.vend_nombre %> <% nombre = @vendedor.vend_nombre %> </td>
+</tr>
+<tr>
+<td> <b> Sucursal:</td><td> <%= @vendedor.sucursal.sucu_nombre %> </td>
+</tr>
+<tr>
+<td> <b> Código: </td> <td> <%= @vendedor.vend_codigo %> </td>
+</tr>
+</table>
+<% end %>
+</td> -->
+
+<td>
+<% if @totalvendedors.blank? %> 
+<% else %> 
+<% totalvendedores = 0 %>
+<% totalpropio = 0 %>
+<% totalrevendedores = 0 %>
+<% idvend = 1 %>
+<% totalrev = 0 %>
+<% totalvend = 0 %>
+<% totalcomision = 0 %>
+<table align="left" >
+  <tr class="headerStyle">
+    <th width="150px">Nombre vendedor</th>
+    <th width="100px">Sucursal</th>
+    <th width="120px">Comisi&oacute;n rev. </th>
+    <th width="130px">Monto facturado</th>
+    <th width="130px">Monto propio</th>
+    <th width="130px">Monto por revendedores</th> 
+   </tr>
+ <% @totalvendedors.each do |totalvendedor| %>
+  <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+    <td><%=h totalvendedor.nombre %></td>
+    <td><%=h totalvendedor.sucunombre %></td>
+      <td> 
+       <% @comisions.each do |comision| %>
+        <% if totalvendedor.idv.to_i  == comision.idv.to_i %>
+          <%=h number_to_currency(comision.totalcomis , :precision => 2, :separator => ",", :delimiter => ".")  %> <% totalcomision = (totalcomision + comision.totalcomis.to_d) %>
+        <% end %>
+      <% end %>
+     </td>
+    <td><%=h number_to_currency(totalvendedor.totalvendedor , :precision => 2, :separator => ",", :delimiter => ".") %> <% totalvendedores = totalvendedores + totalvendedor.totalvendedor.to_d %></td>
+        <% idvend = totalvendedor.idv.to_i %>
+        <% nombrevend = totalvendedor.nombre.to_s %>
+        <% band = 0 %>
+       <% @totalpropios.each do |totalpropio| %> 
+        <% rev = 0 %>
+          <% if totalvendedor.idv.to_i  == totalpropio.idv.to_i %>
+            <% band = 1 %>
+            <% totalprop = 0 %>
+           
+            <% totalprop = totalpropio.totalpropio %> 
+            <td> <%= number_to_currency(totalprop , :precision => 2, :separator => ",", :delimiter => ".") %> <% totalvend = totalvend + totalprop.to_d %></td>
+            
+            <% rev = (totalvendedor.totalvendedor.to_d -  totalpropio.totalpropio.to_d) %>
+             
+              <td> <%= number_to_currency(rev , :precision => 2, :separator => ",", :delimiter => ".") %></td>  <% totalrev = totalrev + rev %>
+           
+         
+          <% end %>
+ <% end %>
+ <% if band == 0 %>
+ <td> </td> <td> <%=h number_to_currency(totalvendedor.totalvendedor , :precision => 2, :separator => ",", :delimiter => ".") %> <% totalrev = totalrev + totalvendedor.totalvendedor.to_d %></td>
+ <% end %>
+            <td><%= link_to_remote 'Detalle Revendedores', :update => 'detallerevendedores', :url => {:controller => 'vendedors', :action => 'detallerevendedores', :id =>  idvend, :fechadesde => from_time, :fechahasta => to_time, :nombrevend => nombrevend } %></td>
+ 
+</tr>
+<% end %>
+
+<tr>
+<td colspan="2" align="right"> <b> Total comisiones:  </td><td><b> <%= number_to_currency(totalcomision , :precision => 2, :separator => ",", :delimiter => ".")  %> </td><td></td><td></td>
+</tr>
+<tr>
+<td colspan="3" align="right"> <b> Total vendido:  </td><td><b> <%= number_to_currency(totalvendedores , :precision => 2, :separator => ",", :delimiter => ".")  %> </td><td></td><td></td>
+</tr>
+<td colspan="4" align="right"> <b> Total vendido por vendedores:  </td><td> <b> <%= number_to_currency(totalvend , :precision => 2, :separator => ",", :delimiter => ".") %> </td><td> </td> </tr>
+<td colspan="5" align="right"> <b> Total vendido por revendedores:  </td><td> <b> <%=  number_to_currency(totalrev , :precision => 2, :separator => ",", :delimiter => ".") %> </td> </tr>
+</table>
+<% end %>
+</td>
+<td>
+   <div id="detallerevendedores">
+	<% if @revendedors.blank? %> 
+	<% else %> 
+	<% totalvend = 0 %>
+	   <h2> Revendedores del venderor <%= nombre %> </h2>
+           <table align="left" >
+		<tr class="headerStyle">
+		<th width="250px">Nombre</th>
+		<th width="80px">Sucursal</th>
+		<th width="80px">Monto facturado</th>
+		</tr>
+		<% @revendedors.each do |revendedor| %>
+		   <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+		   <td><%=h revendedor.nombre %></td>
+		   <td><%=h revendedor.sucunombre %></td>
+		   <td><%=h revendedor.total %> <% totalvend = totalvend +  revendedor.total.to_d %></td> 
+		</tr>
+		<% end %>
+		<tr>
+		   <td colspan="2" align="right"> <b> Total vendido por revendedores:  </td><td> <b> <%= totalvend %> </td>
+		</tr>
+	 </table>
+       <% end %>
+  </div>
+</td>
+</tr>
+</table>
+</Fieldset>

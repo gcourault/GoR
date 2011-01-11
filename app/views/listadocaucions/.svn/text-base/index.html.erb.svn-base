@@ -1,0 +1,39 @@
+<h1>Listado de Cauci&oacute;n</h1>
+
+<div class="tablaContainer">
+ <table class="tabladentrocont">
+  <tr class="headerStyle">
+    <th>Nro. listado</th>
+    <th>Sucursal</th>
+    <th>Nro. caja</th>
+    <th>Fecha</th>
+    <th>Cuenta</th>
+    <th>Importe</th>
+    <th>Cerrada</th>
+    <th>Importe del banco</th>
+    <th>Fecha banco</th>
+</tr>
+
+<% @listadocaucions.each do |listadocaucion| %>
+   <tr class="<%= cycle('rowStyle','rowStyle1') %>" >
+    <td><%=h listadocaucion.id %></td>
+    <td><%=h listadocaucion.sucursal.sucu_nombre %></td>
+    <td><%=h listadocaucion.lcau_nrocaja %></td>
+    <td><%=h listadocaucion.lcau_fecha %></td>
+    <td><%=h listadocaucion.lcau_cuenta %></td>
+    <td><%=h listadocaucion.lcau_importetotal %></td>
+    <td><%=h listadocaucion.lcau_cerrada %></td>
+    <td><%=h listadocaucion.importebanco %></td>
+    <td><%=h listadocaucion.fechabanco %></td>
+    <% if listadocaucion.fechabanco.blank?  %>
+      <td><%= link_to 'Agregar importe banco', :controller => 'listadobancos', :action => 'new', :listadoid => listadocaucion.id, :page => params[:page] %></td>
+    <% else %>
+      <td><%= link_to 'Editar importe banco', :controller => 'listadobancos', :action => 'edit', :id => listadocaucion.id, :listadoid => listadocaucion.id, :page => params[:page] %> </td>
+    <% end %>
+  </tr>
+<% end %>
+ </table>
+<%=will_paginate @listadocaucions %>
+</div>
+
+

@@ -1,0 +1,128 @@
+Use this README file to introduce your application and point to useful places in the API for learning more.
+Run "rake doc:app" to generate API documentation for your models, controllers, helpers, and libraries.
+
+<!-- menu original -->
+<% if session[:user].nil? %>
+<% else %>
+
+
+<ul class="cssMenu cssMenum">
+        <% if session[:user].usur_rol.to_i >= 1 %>
+
+        <li class="cssMenui"><a class="  cssMenui" href="#"><span>Venta</span><![if gt IE 6]></a><![endif]><!--[if lte IE 6]><table><tr><td><![endif]-->
+	<ul class="cssMenum">
+     		<li class="cssMenui"><a class="cssMenui" onclick="javascript:mostrar_div('output')"  href = '<%= url_for :controller => 'listaprecios', :action => 'listaprecio', :id => '1' %>'> Lista de precios </a></li>
+          <% if session[:user].usur_rol.to_i >= 6 %>
+              <li class="cssMenui"><a class="cssMenui" onclick="javascript:mostrar_div('output')"  href = '<%= url_for :controller => 'descrevendedors', :action => 'index' %>'> Desc revendedores </a></li>
+         <% end %>
+        </ul>
+	</li>
+
+      
+        <% end %>
+        <% if session[:user].usur_rol.to_i >= 2 %>
+	  <li class=" cssMenui"><a class="  cssMenui" href="#" ><span>Gestión Comercial</span><![if gt IE 6]></a><![endif]><!--[if lte IE 6]><table><tr><td><![endif]-->
+             <ul class="cssMenum">
+		   <li class="cssMenui"><a class="cssMenui"  onClick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'reclamos', :action => 'index' %>' > Reclamos</a></li>
+
+	           <li class="cssMenui"><a class="cssMenui" onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'chequeterceros', :action => 'index' %>' > Cheques en Cartera </a></li>
+	   </ul>
+        </li>
+        <% end %>
+        <% if session[:user].usur_rol.to_i >= 3 %>
+          <li class=" cssMenui"><a class="  cssMenui" href="#"><span>Gestión Contable</span><![if gt IE 6]></a><![endif]>
+		<ul class=" cssMenum">
+			<li class=" cssMenui"><a class="  cssMenui" href="#"><span>Caución</span><![if gt IE 6]></a><![endif]>
+			<ul class=" cssMenum">
+<li class=" cssMenui"><a class="cssMenui" onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'depositocaucions', :action => 'index' %>'>Deposito Caución</a></li>
+				<li class=" cssMenui"><a class="cssMenui" onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'listadocaucions', :action => 'estadocaucion', :id => '1' %>'>Estado Caución</a></li>
+				<li class=" cssMenui"><a class="cssMenui" onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'devueltocaucions', :action => 'index' %>'>Reingreso/Ajuste Caución</a></li>
+				<li class=" cssMenui"><a class="cssMenui" onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'listadocaucions', :action => 'index' %>'>Cargar importe banco</a></li>
+			</ul>
+		        </li>
+       
+		</ul>
+		</li>
+
+
+        <% end %>
+        <% if session[:user].usur_rol.to_i >= 4 %>
+	<li class=" cssMenui"><a class="  cssMenui" href="#"><span>Gestión Administrativa</span><![if gt IE 6]></a><![endif]><!--[if lte IE 6]><table><tr><td><![endif]-->
+	<ul class=" cssMenum">
+		<li class=" cssMenui"><a class="  cssMenui" onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'articulos', :action => 'index' %>' > Articulos </a></li>
+		<li class=" cssMenui"><a class="  cssMenui" onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'maestrolistas', :action => 'index' %>'> Generar lista de precios  </a></li><!-- <a class="  cssMenui" href="#"><span>Otro items</span><![if gt IE 6]></a><![endif]>
+		<ul class=" cssMenum">
+			<li class=" cssMenui"><a class="  cssMenui" href="#">1. Otro item</a></li>
+			<li class=" cssMenui"><a class="  cssMenui" href="#">2. Otro item</a></li>
+			<li class=" cssMenui"><a class="  cssMenui" href="#">3. Otro item</a></li>
+		</ul>
+		</li>
+		<li class=" cssMenui"><a class="  cssMenui" href="#"><span>Otro items 2</span><![if gt IE 6]></a><![endif]>
+		<ul class=" cssMenum">
+			<li class=" cssMenui"><a class="  cssMenui" href="#"><span>Otro items 2.1</span><![if gt IE 6]></a><![endif]>
+			<ul class=" cssMenum">
+				<li class=" cssMenui"><a class="  cssMenui" href="#">items 2.1.1</a></li>
+				<li class=" cssMenui"><a class="  cssMenui" href="#">items 2.1.2</a></li>
+				
+			</ul>
+		        </li>
+			<li class=" cssMenui"><a class="  cssMenui" href="#"><span>Otro items 2.2</span><![if gt IE 6]></a><![endif]>
+			<ul class=" cssMenum">
+				<li class=" cssMenui"><a class="  cssMenui" href="#">items 2.2.1</a></li>
+				<li class=" cssMenui"><a class="  cssMenui" href="#">items 2.2.2</a></li>
+				<li class=" cssMenui"><a class="  cssMenui" href="#">items 2.2.3</a></li>
+			</ul>
+			</li>
+			<li class=" cssMenui"><a class="  cssMenui" href="#"><span>Otro items 2.3</span><![if gt IE 6]></a><![endif]>
+			<ul class=" cssMenum">
+				<li class=" cssMenui"><a class="  cssMenui" href="#">items 2.3.1</a></li>
+				
+			</ul>
+			</li>
+		</ul>
+		</li> -->
+	</ul>
+	</li>
+        <% end %>
+        <% if session[:user].usur_rol.to_i >= 5 %>
+	<li class=" cssMenui"><a class="  cssMenui" href="#"><span>Informes</span><![if gt IE 6]></a><![endif]><!--[if lte IE 6]><table><tr><td><![endif]-->
+	<ul class=" cssMenum">
+		<li class=" cssMenui"><a class="  cssMenui" onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'vendedors', :action => 'index' %>' > Vendedores </a></li>
+		<!-- <li class=" cssMenui"><a class="  cssMenui" href="#">Template 2</a></li>
+		<li class=" cssMenui"><a class="  cssMenui" href="#">Template 3</a></li>
+		<li class=" cssMenui"><a class="  cssMenui" href="#">Template 4</a></li>
+		<li class=" cssMenui"><a class="  cssMenui" href="#">Template 5</a></li>
+		<li class=" cssMenui"><a class="  cssMenui" href="#">Template 6</a></li> -->
+	</ul> 
+	</li>
+        <% end %>
+        <% if session[:user].usur_rol.to_i >= 5 %>
+	 <li class=" cssMenui"><a class="  cssMenui" href="#"><span>Informes estadisticos</span><![if gt IE 6]></a><![endif]>
+		<ul class=" cssMenum">
+			<li class=" cssMenui"><a class="  cssMenui" href="#"><span>Ventas Pirelli</span><![if gt IE 6]></a><![endif]>
+			<ul class=" cssMenum">
+				<li class=" cssMenui"><a class="cssMenui" onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'estadisticas', :action => 'index' %>'>Ventas</a></li>
+				<li class=" cssMenui"><a class="cssMenui" onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'estadisticas', :action => 'index', :tipo => 3 %>'>Ventas 03</a></li>
+	<li class=" cssMenui"><a class="cssMenui" onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'estadisticas', :action => 'index', :tipo => 2 %>'>Ventas Totales</a></li>
+				
+			</ul>
+		        </li>
+                      <li class="cssMenui"><a class="cssMenui" onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'estadisticas', :action => 'comprasucu' %>' > Compras Pirelli </a></li>
+
+       <li class="cssMenui"><a class="cssMenui" onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'estadisticas', :action => 'ventasmonto' %>' > Ventas </a></li>
+             <li class="cssMenui"><a class="cssMenui" onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'estadisticas', :action => 'ventastipo' %>' > Tipo pago ventas </a></li>
+                   <li class="cssMenui"><a class="cssMenui" onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'estadisticas', :action => 'tarjeta' %>' > tipos de tarjetas </a></li>
+       
+		</ul>
+		</li>
+
+        <% end %>
+       
+</ul>                        
+<% end %>
+     <!-- hasta aca menu black -->                                 
+			<!--	<div align="right" class="smallgraytext" style="padding:9px;">
+					<a style="position:absolute; top:155px; left:280px;" href="#"></a>  <a style="position:absolute; 						top:155px; left:440px;" href="#"></a>  <a style="position:absolute; top:155px; left:600px;" 						href="#"></a>  <a style="position:absolute; top:155px; left:760px;" href="#"></a>  <a 					style="position:absolute; top:155px; left:920px;" href="#"></a>  <a style="position:absolute; top:155px; 					left:1090px;" href="#"></a>
+				</div> -->
+                        
+			

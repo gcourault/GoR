@@ -1,0 +1,39 @@
+
+<div id="rencompra"  height="70">
+<% rencompra = @rencompra %>
+<% fields_for "rencompras[]", rencompra do |fi| %>
+ <table>
+  <tr>
+   <td class="textosbox">
+      Alicuota IVA:
+    </td>
+    <td>
+    
+    <%= collection_select('rencompras', 'aiva_alicuota[]', @alicuotaivas, :aiva_alicuota, :aiva_alicuota,{}, {:onchange => "calculate(this.form)", :onBlur => "total(this.form)", :class => "textosbox"}) %> 
+         <input type="hidden" name="rencompras[alicuota][]" size="8" > 
+      
+    </td>
+    <td class="textosbox">
+      Neto gravado:
+   <!--  <%= fi.text_field :rcom_netorenglon, :size => 10 %> -->
+  <input class="textosbox" type="numeric" name="rencompras[rcom_netorenglon][]" size="8" onkeypress = "return IsNumberdecimal(event);" onchange = "calculate(this.form)" onBlur = "total(this.form)" >
+   </td>
+   <td class="textosbox">
+      IVA:
+    <!-- <%= fi.text_field :rcom_ivarenglon, :size => 10 %> -->
+    <input  class="textosbox" type="numeric" name="rencompras[rcom_ivarenglon][]" size="8" onchange = "calculaiva(this.form)" onkeypress = "return IsNumberdecimal(event);" onchange = "calculate(this.form)" onBlur = "total(this.form)" > 
+   </td>
+   <td class="textosbox">
+      Total de rengl&oacute;n:
+    <!-- <%= fi.text_field :rcom_totalrenglon, :size => 10 %> -->
+     <input class="textosbox" type="numeric" name="rencompras[rcom_totalrenglon][]" size="8" onkeypress = "return IsNumberdecimal(event);" onchange = "calculate(this.form)" readonly="readonly" >
+   </td>
+  </tr>
+ </table>
+  <% unless rencompra.new_record? %>
+      <%= fi.hidden_field :id, :index => nil %>
+  <% end  %>
+<% end %>
+
+</div>
+

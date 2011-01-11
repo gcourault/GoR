@@ -1,0 +1,23 @@
+<p>
+  <b>Marc codigo:</b>
+  <%=h @marca.marc_codigo %>
+</p>
+
+<p>
+  <b>Marc descripcion:</b>
+  <%=h @marca.marc_descripcion %>
+</p>
+
+<p>
+  <b>Marc usario:</b>
+  <%=h @marca.marc_usuario %>
+</p>
+
+<p>
+  <b>Marc ultmod:</b>
+  <%=h @marca.marc_ultmod %>
+</p>
+
+
+<%= link_to 'Edit', edit_marca_path(@marca) %> |
+<%= link_to 'Back', marcas_path %>

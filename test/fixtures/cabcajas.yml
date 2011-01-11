@@ -1,0 +1,23 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  sucursal_id: 
+  cabcaja_id: 
+  vendedor_id: 
+  ccaj_nrocaja: 
+  ccaj_fecha: 
+  ccaj_cerrada: 
+  ccaj_importada: 
+  ccaj_usuario: 
+  ccaj_ultmod: 2009-10-23
+
+two:
+  sucursal_id: 
+  cabcaja_id: 
+  vendedor_id: 
+  ccaj_nrocaja: 
+  ccaj_fecha: 
+  ccaj_cerrada: 
+  ccaj_importada: 
+  ccaj_usuario: 
+  ccaj_ultmod: 2009-10-23

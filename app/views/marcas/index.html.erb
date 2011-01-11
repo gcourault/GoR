@@ -1,0 +1,25 @@
+<h1>Listado de marcas</h1>
+<br />
+<table>
+  <tr>
+    <th>Marc codigo</th>
+    <th>Marc descripcion</th>
+    <th>Marc usuario</th>
+    <th>Marc ultmod</th>
+  </tr>
+
+<% @marcas.each do |marca| %>
+  <tr>
+    <td><%=h marca.marc_codigo %></td>
+    <td><%=h marca.marc_descripcion %></td>
+    <td><%=h marca.marc_usuario %></td>
+    <td><%=h marca.marc_ultmod %></td>
+    <td><%= link_to 'Mostrar', marca %></td>
+    <td><%= link_to 'Editar', edit_marca_path(marca) %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New marca', new_marca_path %>

@@ -1,0 +1,47 @@
+
+<br />
+<% @alicuotaivas = Alicuotaiva.find(:all) %>
+<table>
+<% @rencompra = Rencompra.new %>
+<% form_for(@rencompra) do |f| %>
+  <%= f.error_messages %>
+<tr>
+ </td>
+   <td align="center">
+     <%= f.hidden_field (:cabcompra_id, :value => params[:id][0] , :readonly => true) %>
+  </td>
+</tr> 
+
+<tr>
+  <td>
+    <%= f.label "Alicuota IVA:" %>
+    <%= f.collection_select(:alicuotaiva_id, @alicuotaivas, :id, :aiva_alicuota) %>
+  </td>
+  <td>
+    <%= f.label "Neto gravado:" %>
+    <%= f.text_field :rcom_netorenglon, :size => 10 %>
+ </td>
+  <td>
+    <%= f.label "IVA:" %>
+    <%= f.text_field :rcom_ivarenglon, :size => 10 %>
+   </td>
+    <td>
+    <%= f.label "Total:" %>
+    <%= f.text_field :rcom_totalrenglon, :size => 10 %>
+   </td>
+  <td>
+    <%= f.submit 'Crear' %>
+</td>
+<tr>
+<td>
+<img  src="/images/cancel.png" width="20px" height="20px" border="0"> 
+<span style="vertical-align: top">
+<%= link_to 'Cancelar', :controller => 'cabcompras', :action => 'new', :id => params[:id] %> 
+</span>
+</td>
+</tr>
+</tr>
+<% end %>
+</table>
+
+

@@ -1,0 +1,138 @@
+<h1>Compras de art&iacute;culos Pirelli por sucursal valuadas por el costo de la lista de precio</h1>
+
+<% if params[:fechadesde].blank? %>
+<% from_time =  Date.today - 31.days   %>
+<% else %>
+<% from_time = params[:fechadesde] %>
+<% end %>
+<% if params[:fechahasta].blank? %>
+<% to_time =  Date.today   %>
+<% else %>
+<% to_time = params[:fechahasta] %>
+<% end %>
+<Fieldset class="filtro">
+<legend ALIGN="left" class="formlegend">Seleccione entre que fechas y lista de precio</legend>
+<table align="left" class="tablafiltro">
+
+<% form_tag :controller => 'estadisticas', :action => 'comprasucuval' do %> 
+<tr>
+<td>  <%= hidden_field_tag :tipo, params[:tipo] %>
+ </td>
+    <td >
+      Fecha desde:
+    </td>
+    <td>
+      <%=  select_date from_time , {:prefix => "fechadesde"}, {:class => "textosbox"} %> 
+    </td>
+    <td>
+      Fecha hasta: 
+    </td>
+     <td>
+      <%= select_date to_time, {:prefix=>"fechahasta"}, {:class => "textosbox"} %>
+    </td>
+       <td>
+      Nro. de lista:  
+    </td>
+    <td>
+      <%= @maestrolistas = Maestrolista.find(:all, :order => ['id DESC']) 
+      select_tag(:nrolista, options_for_select(@maestrolistas.collect {|u| [u.mlis_nrolista]}, params[:nrolista].to_i )) %>
+    </td> 
+    <td colspan="2">
+     <%= submit_tag "Consultar", :class => "textosbox", :onclick=>"javascript:mostrar_div('output')" %>
+    </td>
+<% end %>
+</tr>
+</table>
+</Fieldset>
+<br />
+<% if @comprasucuvals.size > 0 %>
+<% @sucursals = Sucursal.find(:all) %>
+
+<div class="tablaContainer">
+ <table class="tabladentrocont">
+  <tr class="headerStyle">
+    <th>Sucursal</th>
+    <th>Articulo</th>
+    <th>Cantidad</th>
+    <th>Costo</th>
+  </tr>
+<% totaltodas = 0 %>
+<% costotodas = 0 %>
+<% for sucu in @sucursals %>
+<% total = 0 %>
+<% costo = 0 %>
+
+<% @comprasucuvals.each do |comprasucu| %>
+ <% if comprasucu.sucursal == sucu.sucu_abreviatura %>
+  <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+    <td><%=h comprasucu.sucursal %></td>
+    <td><%=h comprasucu.arti %></td>
+    <td><%=h comprasucu.cantidad %></td>
+    <td><%=h number_to_currency(comprasucu.costo , :precision => 2, :separator => ",", :delimiter => ".") %></td>
+    <% total = total + comprasucu.cantidad.to_i %>
+    <% costo = costo + comprasucu.costo.to_d %>
+   </tr>
+<% end %>
+<% end %> <!--end if -->
+
+<% if (total > 0) %>
+ <tr> 
+    <td> Total por sucursal: </td>
+    <td colspan= "2" align="right"> <%=h total %> </td>
+    <td align="right"> <%=h number_to_currency(costo , :precision => 2, :separator => ",", :delimiter => ".") %> </td>
+ </tr>
+<% end %>
+<% totaltodas = totaltodas + total %>
+<% costotodas = costotodas + costo %>
+<% end %>
+ <tr> 
+    <td> Total todas sucursales: </td>
+    <td colspan= "2" align="right"> <%=h totaltodas %> </td>
+    <td  align="right"> <%=h number_to_currency(costotodas , :precision => 2, :separator => ",", :delimiter => ".")  %> </td>
+ </tr>
+</table>
+
+</div>
+<br>
+<% totalrub = 0 %>
+<% costorub = 0 %>
+<table>
+ <tr>
+    <th>Rubro</th>
+    <th>Cantidad</th>
+    <th>Costo</th>
+ </tr>
+
+<% totalrub = 0 %>
+<% costorub = 0 %>
+<% @comprasucusagrupvals.each do |comprasucuagrup| %>
+  <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+    <td><%=h comprasucuagrup.rubro %></td>
+    <td><%=h comprasucuagrup.cantidad %></td>
+    <td><%=h number_to_currency(comprasucuagrup.costo , :precision => 2, :separator => ",", :delimiter => ".") %></td>
+   <% totalrub = totalrub + comprasucuagrup.cantidad.to_i %>
+   <% costorub = costorub + comprasucuagrup.costo.to_d %>
+  </tr>
+<% end %>
+
+<tr><td><b> TOTAL </td>  <td align="center"><b> <%=h totalrub %> </td> <td align="center"><b> <%=h number_to_currency(costorub , :precision => 2, :separator => ",", :delimiter => ".") %></td></tr>
+<tr>
+<td class="boton"  align="center"> 
+
+</td>
+</tr>
+</table>
+
+<br />
+<table>
+ <tr>
+  <td class="boton" width="140px"  align="center" vertical-align="center" >
+   <img  src="/images/excel.png" width="20px" height="20px" border="0">
+     <span  style="vertical-align: top"> <%= link_to_remote 'Exportar a Excel', {:url => {:controller => "estadisticas", :action => "xlscostocompra", :fechadesde => params[:fechadesde], :fechahasta => params[:fechahasta], :nrolista => params[:nrolista]}, :disable_with => "Por favor espere...", :before=>"this.style.display='none'", :complete =>  "Element.show ('addxls');"} %> </span>
+     <div id="addxls" style="display:none">
+        <%= render :partial => 'estadisticas/xlscostocompra' %>
+     </div>
+  </td>
+ </tr>
+</table>
+<% end %>

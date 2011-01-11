@@ -1,0 +1,38 @@
+<p>
+  <b>Rubr codigo:</b>
+  <%=h @rubro.rubr_codigo %>
+</p>
+
+<p>
+  <b>Rubr descripcion:</b>
+  <%=h @rubro.rubr_descripcion %>
+</p>
+
+<p>
+  <b>Rubr servicio:</b>
+  <%=h @rubro.rubr_servicio %>
+</p>
+
+<p>
+  <b>Rubr topeminimo:</b>
+  <%=h @rubro.rubr_topeminimo %>
+</p>
+
+<p>
+  <b>Rubr topemaximo:</b>
+  <%=h @rubro.rubr_topemaximo %>
+</p>
+
+<p>
+  <b>Rubr usuario:</b>
+  <%=h @rubro.rubr_usuario %>
+</p>
+
+<p>
+  <b>Rubr ultmod:</b>
+  <%=h @rubro.rubr_ultmod %>
+</p>
+
+
+<%= link_to 'Edit', edit_rubro_path(@rubro) %> |
+<%= link_to 'Back', rubros_path %>

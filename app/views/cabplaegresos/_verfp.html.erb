@@ -1,0 +1,64 @@
+<div id="verpago">
+<% if @pagocompra.nil? %>
+<% else %>
+
+
+
+<table align="center" border="1">
+  <tr>
+    <td colspan="2" align="center" >
+      <h4>Forma de pago </h4>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Efectivo:
+    </td>
+    <td>
+     <b>
+     <%=h @pagocompra.pcpr_efectivo %>
+    </td>
+ </tr>
+ <tr>
+    <td>
+      Cheque:
+    </td>
+    <td>
+      <b>
+      <%=h @pagocompra.pcpr_cheque %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Dep. o transf:
+    </td>
+    <td>
+     <b>
+     <%=h @pagocompra.pcpr_depotransf %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Otro:
+    </td>
+    <td>
+      <b>
+      <%=h @pagocompra.pcpr_otro %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Observaci&oacute;n
+    </td>
+     <td>
+       <%=h @pagocompra.pcpr_observacion %>
+    </td>
+  </tr>
+  <tr>
+   <td class="boton" with="100" colspan="2" align="center">
+      <%= image_tag "cerrar.png" %>
+      <%= link_to 'Cerrar',:controller => 'cabplaegresos', :action => 'verformapago', :id => 1, :idpe => params[:idpe], :nroplanillaegreso => params[:nrope] %>
+   </td>
+  </tr>
+<% end %>
+</div>

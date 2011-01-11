@@ -1,0 +1,66 @@
+<h1>Editando valor reingresado o ajuste</h1>
+
+<table>
+<tr>
+<td class="boton"  align="center">
+<%= link_to 'Mostrar',  :controller => 'devueltocaucions', :action => 'show', :id => @devueltocaucion.id, :page => params[:page] %> </td>
+<td> | </td> 
+<td class="boton"  align="center">
+<%= link_to 'Volver', :controller => 'devueltocaucions', :action => '', :page => params[:page] %>
+</td>
+</tr>
+</table>
+<br />
+<% form_for(@devueltocaucion) do |f| %>
+  <%= f.error_messages %>
+<table>
+ <tr>
+  <td>
+     <%= f.label "Sucursal:" %>
+  </td>
+  <td>
+     <%= @sucursales = Sucursal.find(:all)
+     f.collection_select(:sucursal_id, @sucursales, :id, :sucu_nombre, {}, {:class => "textosbox"}) %>
+  </td>
+ </tr>
+ <tr>
+  <td>
+    <%= f.label "Detalle:" %>
+   </td>
+  <td>
+    <%= f.text_field :devc_detalle, :class => "textosbox" %>
+  </td>
+</tr>
+<tr>
+  <td>
+    <%= f.label "Fecha:" %>
+  </td>
+  <td>
+    <%= f.date_select(:devc_fecha, {}, :class => "textosbox") %>
+  </td>
+ </tr>
+<tr>
+  <td>
+    <%= f.label "Importe:" %>
+   </td>
+  <td>
+    <%= f.text_field :devc_importe, :class => "textosbox" %>
+  </td>
+</tr>
+<tr>
+  <td>
+    <%= f.label "Tipo:" %>
+  </td>
+  <td>
+    <%= f.select (:devc_tipo , options_for_select([['Reingreso', 'R'],['Ajuste', 'A'],['Ajuste Dep Gestion', 'G']], @devueltocaucion.devc_tipo.to_s), {}, :class => "textosbox") %>   
+  </td>
+</tr>
+<%= hidden_field(:valor, :page, :value => params[:page]) %> 
+<tr>
+ <td colspan="2" align="center" height="70">
+    <%= f.submit 'Modificar', :class => "textosbox" %>
+  </td>
+</tr>
+</table>
+<% end %>
+

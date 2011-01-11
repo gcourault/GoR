@@ -1,0 +1,20 @@
+<p>
+  <b>Id:</b>
+  <%=h @banco.id %>
+</p>
+
+<p>
+  <b>Codigo:</b>
+  <%=h @banco.banc_codigo %>
+</p>
+
+<p>
+  <b>Nombre:</b>
+  <%=h @banco.banc_nombre %>
+</p>
+
+
+
+
+<%= link_to 'Edit', edit_banco_path(@banco) %> |
+<%= link_to 'Back', bancos_path %>

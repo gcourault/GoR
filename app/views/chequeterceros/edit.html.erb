@@ -1,0 +1,77 @@
+<h1>Modificar datos del cheque </h1>
+<br/>
+<table>
+<tr>
+ <td class="boton" width="120" align="center">
+   <!-- <img  src="/images/volver.png" width="20px" height="20px" border="0">  -->
+   <%= image_tag "volver.png" %> 
+   <span style="vertical-align: top">  
+    <%= link_to 'Volver', :controller => 'chequeterceros', :action=> 'corrigecheque', :id => 1, :nrocheque=> @chequetercero.cter_nrocheque, :page => params[:page] %>
+   </span>
+ </td>
+</tr>
+</table>
+<br />
+
+<% form_for(@chequetercero) do |f| %>
+  <%= f.error_messages %>
+
+
+ <table> 
+ 	   <tr> 
+ 	     <td> 
+ 	     Banco       
+ 	     </td> 
+ 	     <td> 
+	 	     <%= f.collection_select( :banco_id , @bancos , :id , :banc_codigo, {}, {:class => "textosbox"} ) %> 
+ 	     </td> 
+ 	   </tr> 
+ 	   <tr> 
+ 	     <td> 
+ 	     Sucursal Banco       
+ 	     </td> 
+	     <td> 
+  	     <%= f.text_field :cter_sucursalbanco, :class => "textosbox" %> 
+ 	     </td> 
+ 	   </tr> 
+ 	   <tr> 
+ 	     <td> 
+	 	     C&oacute;digo Postal       
+	 	     </td> 
+	 	     <td> 
+	 	     <%= f.text_field :cter_codigopostal, :class => "textosbox" %> 
+	 	     </td> 
+	 	   </tr> 
+	 	   <tr> 
+	 	     <td> 
+	 	     Nro. de Cheque       
+	 	     </td> 
+	 	     <td> 
+	 	     <%= f.text_field :cter_nrocheque, :class => "textosbox" %> 
+ 	     </td> 
+	 	   </tr> 
+	 	   <tr> 
+	 	     <td> 
+	 	     C.U.I.T.       
+	 	     </td> 
+	 	     <td> 
+	 	     <%= f.text_field :cter_cuitlibrador, :class => "textosbox" %> 
+	 	     </td> 
+ 	   </tr> 
+ 	   <tr> 
+ 	     <td> 
+ 	     Fecha de Vencimiento       
+	 	     </td> 
+	 	     <td> 
+	 	     <%= f.date_select(:cter_vencimiento, {}, {:class => "textosbox"}) %> 
+	 	     </td> 
+	 	   </tr> 
+  	
+ 		  <tr height="70"> 
+ 		    <td colspan="2" align="center"> 
+	      <%= f.submit 'Modificar', :class => "textosbox", :confirm => 'Esta seguro que desea modificar los datos de este cheque?' %> 
+	 	     </td> 
+	 	   </tr> 
+	 
+	  </table> 
+<% end %> 

@@ -1,0 +1,39 @@
+<h1>Administraci&oacute;n de usuarios</h1>
+<br/>
+<table>
+<tr>
+<td>
+   <%= image_tag "add.png" %>
+   <span style="vertical-align: top">
+   <%= link_to "Agregar usuario", new_usuario_path %>
+   </span>
+</td>
+</tr>
+</table>
+<br/>
+
+<div class="tablaContainer">
+ <table>
+    <tr class="headerStyle">
+      <th>Usuario</th>
+      <th>Nombre</th>
+      <th>Rol</th>
+      <th>Nivel</th>
+      <th>e-mail</th>
+    </tr>
+ <% @usuario.each do |usuario| %>
+  <tr class="<%= cycle('rowStyle','rowStyle1') %>" >
+   <td><%=h usuario.usur_usuario %></td>
+   <td><%=h usuario.usur_nombre %></td>
+   <td><%=h usuario.usur_rol %></td>
+   <td><%=h usuario.usur_nivelmenu %></td>
+   <td><%=h usuario.usur_email %></td>
+   <td><%= link_to 'Mostrar', :controller => 'usuarios', :action => 'show', :id => usuario.id, :page => params[:page]%></td>
+   <td><%= link_to 'Editar', :controller => 'usuarios', :action => 'edit', :id => usuario.id, :page => params[:page] %></td>
+  </tr>
+ <% end %>     
+ </table>
+<%= will_paginate @usuario %>
+</div>
+
+

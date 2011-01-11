@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  marc_codigo: 
+  marc_descripcion: 
+  marc_usario: 
+  marc_ultmod: 2009-10-26
+
+two:
+  marc_codigo: 
+  marc_descripcion: 
+  marc_usario: 
+  marc_ultmod: 2009-10-26

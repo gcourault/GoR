@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/gescom-onrails/!svn/ver/173/vendor/spreadsheet-excel-0.3.5.1/lib/spreadsheet
+END
+workbook.rb
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/gescom-onrails/!svn/ver/173/vendor/spreadsheet-excel-0.3.5.1/lib/spreadsheet/workbook.rb
+END
+excel.rb
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/gescom-onrails/!svn/ver/173/vendor/spreadsheet-excel-0.3.5.1/lib/spreadsheet/excel.rb
+END
+biffwriter.rb
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/gescom-onrails/!svn/ver/173/vendor/spreadsheet-excel-0.3.5.1/lib/spreadsheet/biffwriter.rb
+END
+format.rb
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/gescom-onrails/!svn/ver/173/vendor/spreadsheet-excel-0.3.5.1/lib/spreadsheet/format.rb
+END
+worksheet.rb
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/gescom-onrails/!svn/ver/173/vendor/spreadsheet-excel-0.3.5.1/lib/spreadsheet/worksheet.rb
+END
+olewriter.rb
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/gescom-onrails/!svn/ver/173/vendor/spreadsheet-excel-0.3.5.1/lib/spreadsheet/olewriter.rb
+END

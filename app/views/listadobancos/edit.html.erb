@@ -1,0 +1,42 @@
+<h1>Editar fecha e importe del banco al listado</h1>
+<% if @listadobanco.blank? %>
+<h2>El listado no tiene importe para editar. Elija la opción agregar importe del banco </h2>
+<% else %>
+<table>
+<tr>
+   <td class="boton"  align="center">
+     <%= link_to 'Mostrar', :controller => 'listadobancos', :action => 'show', :id => @listadobanco.id, :page => params[:page]  %> |
+     <%= link_to 'Volver', :controller => 'listadocaucions', :action => '', :page => params[:page] %>
+   </td>
+</tr>
+</table>
+<br />
+<% form_for(@listadobanco) do |f| %>
+  <%= f.error_messages %>
+<table>
+ <tr>
+  <td>
+    <%= f.label "Fecha del banco:" %>
+  </td>
+  <td>
+    <%= f.date_select(:lisb_fecha, {}, :class => "textosbox")  %>
+  </td>
+ </tr>
+ <tr>
+  <td>
+    <%= f.label "Importe del banco:" %>
+  </td>
+  <td>
+    <%= f.text_field :lisb_importe, :class => "textosbox" %>
+  </td>
+ </tr>
+<%= hidden_field(:valor, :page, :value => params[:page]) %> 
+ <tr>
+  <td colspan="2" align="center" height="70">
+    <%= f.submit 'Modificar', :class => "textosbox" %>
+  </td>
+ </tr>
+</table>
+<% end %>
+
+<% end %>

@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/gescom-onrails/!svn/ver/432/app/views/maestrolistas
+END
+edit.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/gescom-onrails/!svn/ver/260/app/views/maestrolistas/edit.html.erb
+END
+index.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/gescom-onrails/!svn/ver/432/app/views/maestrolistas/index.html.erb
+END
+new.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/gescom-onrails/!svn/ver/432/app/views/maestrolistas/new.html.erb
+END
+comentarioweb.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/gescom-onrails/!svn/ver/432/app/views/maestrolistas/comentarioweb.html.erb
+END
+show.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/gescom-onrails/!svn/ver/260/app/views/maestrolistas/show.html.erb
+END

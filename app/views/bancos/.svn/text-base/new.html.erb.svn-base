@@ -1,0 +1,20 @@
+<h1>Nuevo banco</h1>
+<% form_for(@banco) do |f| %>
+  <%= f.error_messages %>
+
+<p class="textbox">
+    <%= f.label :Codigo %><br />
+    <%= f.text_field :banc_codigo %>
+  </p>
+  <p class="textboxad">
+    <%= f.label :Nombre %><br />
+    <%= f.text_field :banc_nombre %>
+  </p>
+
+  <p class="botoncrud">
+    <%= f.submit 'Crear' %>
+  </p>
+<% end %>
+<div  class="botonnuevo" style="align:center;">
+<%= link_to 'Volver', bancos_path %>
+</div>

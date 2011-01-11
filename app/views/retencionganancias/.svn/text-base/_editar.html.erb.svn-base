@@ -1,0 +1,50 @@
+
+</br >
+<% form_for(@retencionganancia) do |f| %>
+  <%= f.error_messages %>
+<table>
+ <tr>
+  <td>
+<Fieldset class="form"  width="200" >
+<legend ALIGN="left" class="formlegend">Modificar retenci&oacute;n de ganancia</legend>
+<table>
+<tr>
+  <td>
+    <%= f.label "Nro. de orden:" %> 
+  </td>
+  <td>
+    <%= f.text_field :rtga_nroorden, :size => 10, :class => "textosbox"%>
+  </td>
+ </tr>
+ <tr>
+  <td>
+    <%= f.label "Importe:" %>
+  </td>
+  <td>
+    <%= f.text_field :rtga_importe, :onkeypress => "return IsNumberdecimal(event);", :size => 10, :class => "textosbox" %>
+    
+ </td>
+ </tr>
+</table>
+
+<table>
+<tr>
+  <td align="left" height="70">
+   <%= image_tag "cancel.png" %> 
+  <span style="vertical-align: top">
+    <%= link_to 'Cancelar', :controller => 'retencionganancias', :action => 'retgan', :id => 1, :idpe => params[:idpe] %> 
+  </span>
+ </td>
+ <td align="right">
+    <%= f.submit 'Modificar', :class => "textosbox" %>
+ </td>
+</tr>
+</table>
+
+</Fieldset>
+</td>
+</tr>
+</table>
+<% end %>
+
+

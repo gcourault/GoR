@@ -1,0 +1,149 @@
+<h1>Editar coeficiente</h1>
+<br/>
+<table>
+<tr>
+ <td class="boton" width="120" align="center">
+   <%= image_tag "volver.png" %> 
+   <span style="vertical-align: top">  
+  <%= link_to 'Volver', :controller => 'coeficientes', :action => 'index', :page => params[:page] %>
+   </span>
+ </td>
+</tr>
+</table>
+<% form_for(@coeficiente) do |f| %>
+  <%= f.error_messages %>
+
+<table>
+ <tr>
+  <td>
+<Fieldset class="form"  width="200" >
+<LEGEND ALIGN="left" class="formlegend">Modificar datos</LEGEND>
+  <table>
+
+  <tr>
+     <td>
+       Descripci&oacute;n:     
+     </td>
+     <td colspan="3">
+       <%= f.text_field :coef_descripcion, :class => "textosbox" %>
+   
+     </td>
+     <td>
+        Ejercicio:
+      </td>
+      <td colspan="2">
+         <%= f.collection_select(:ejercicio_id, @ejercicios, :id, :ejer_descripcion, {}, {:class => "textosbox"}) %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Coef inicial:
+      </td>
+      <td>
+        <%= f.text_field :coef_inicial, :size => 10, :class => "textosbox" %>
+      </td>
+       <td>
+        Coef mes1:
+      </td>
+      <td>
+        <%= f.text_field :coef_mes1, :size => 10, :class => "textosbox" %>
+      </td>
+ 
+      <td>
+        Coef mes2:
+      </td>
+      <td>
+        <%= f.text_field :coef_mes2, :size => 10, :class => "textosbox" %>
+      </td>
+   </tr>
+    <tr>
+       <td>
+        Coef mes3:
+      </td>
+      <td>
+        <%= f.text_field :coef_mes3, :size => 10, :class => "textosbox" %>
+      </td>
+   
+      <td>
+        Coef mes4:
+      </td>
+      <td>
+        <%= f.text_field :coef_mes4, :size => 10, :class => "textosbox" %>
+      </td>
+       <td>
+        Coef mes5:
+      </td>
+
+      <td>
+        <%= f.text_field :coef_mes5, :size => 10, :class => "textosbox" %>
+      </td>
+ </tr>
+    <tr>
+  
+      <td>
+        Coef mes6:
+      </td>
+      <td>
+        <%= f.text_field :coef_mes6, :size => 10, :class => "textosbox" %>
+      </td>
+       <td>
+        Coef mes7:
+      </td>
+      <td>
+        <%= f.text_field :coef_mes7, :size => 10, :class => "textosbox" %>
+      </td>
+  
+      <td>
+        Coef mes8:
+      </td>
+      <td>
+        <%= f.text_field :coef_mes8, :size => 10, :class => "textosbox" %>
+      </td>
+  </tr>
+    <tr>
+       <td>
+        Coef mes9:
+      </td>
+      <td>
+        <%= f.text_field :coef_mes9, :size => 10, :class => "textosbox" %>
+      </td>
+  
+      <td>
+        Coef mes10:
+      </td>
+      <td>
+        <%= f.text_field :coef_mes10, :size => 10, :class => "textosbox" %>
+      </td>
+       <td>
+        Coef mes11:
+      </td>
+      <td>
+        <%= f.text_field :coef_mes11, :size => 10, :class => "textosbox" %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Coef mes12:
+      </td>
+      <td>
+        <%= f.text_field :coef_mes12, :size => 10, :class => "textosbox" %>
+      </td>
+       
+    </tr>
+   <%= hidden_field(:valor, :page, :value => params[:page]) %> 
+</table>
+</Fieldset>
+</td>
+</tr>
+</table>
+<table>
+  <tr height="70">
+     <td colspan="2" align="center">
+
+    <%= f.submit 'Modificar', :class => "textosbox" %>
+    </td>
+ </tr>
+</table>
+<% end %>
+
+

@@ -1,0 +1,37 @@
+<h1>Listado de valores reingresados</h1>
+<table>
+<tr>
+<td class="boton"  align="center">
+ <%= image_tag "add.png" %> 
+ <span style="vertical-align: top">
+ <%= link_to 'Nuevo Reingreso', new_devueltocaucion_path %>
+ </span>
+</td>
+</tr>
+</table>
+<br />
+<div class="tablaContainer"  >
+ <table class="tabladentrocont">
+    <tr class="headerStyle">
+      <th>Detalle</th>
+      <th>Fecha</th>
+      <th> Tipo </th>
+      <th>Importe</th>
+  </tr>
+
+<% @devueltocaucions.each do |devueltocaucion| %>
+  <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+    <td><%=h devueltocaucion.devc_detalle %></td>
+    <td><%=h devueltocaucion.devc_fecha %></td>
+     <td><%=h devueltocaucion.devc_tipo %></td>
+    <td><%=h devueltocaucion.devc_importe %></td>
+    <td><%= link_to 'Mostrar', :controller => 'devueltocaucions', :action => 'show' , :id => devueltocaucion.id, :page => params[:page]  %></td>
+    <td><%= link_to 'Editar', :controller => 'devueltocaucions', :action => 'edit' , :id => devueltocaucion.id, :page => params[:page] %></td>
+    <td><%= link_to 'Borrar', devueltocaucion, :confirm => 'Esta seguro que quiere borrar el valor reingresado?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+<%=will_paginate @devueltocaucions, :prev_label => '&laquo; Anterior', :next_label => 'Siguiente &raquo;' %>
+</div>
+<br />
+

@@ -1,0 +1,47 @@
+<h1>Nuevo items de la grilla</h1>
+<br />
+<br />
+<% @listaprecio = Listaprecio.find(params[:listaprecioid]) %>
+<% @maestrolista = Maestrolista.find_by_id(@listaprecio.maestrolista_id) %>
+<table>
+<% form_for(@grillalista) do |f| %>
+  <%= f.error_messages %>
+<tr>
+  <td colspan="3" align="center">
+    <%= f.label "Nombre de la lista:" %>
+    <% if @maestrolista.nil? %> <% else %> <%=h @maestrolista.mlis_nombre %> <% end %>
+  
+  </td>
+ </td>
+   <td align="center">
+     <%= f.hidden_field (:maestrolista_id, :value => @maestrolista.id , :readonly => true) %> 
+  </td>
+   <td align="center">
+     <%= f.hidden_field (:listaprecio_id, :value => @listaprecio.id , :readonly => true) %> 
+  </td>
+</tr> 
+
+<tr>
+  <td>
+    <%= f.label "Nro. de grilla:" %>
+    <%= f.text_field :glis_nrogrilla, :size => 10 %>
+  </td>
+  <td>
+    <%= f.label "Nro. de columna:" %>
+    <%= f.text_field :glis_nrocolumna, :size => 10 %>
+ </td>
+  <td>
+    <%= f.label "Porcentaje:" %>
+    <%= f.text_field :glis_porcentaje, :size => 10 %>
+   </td>
+</tr>
+<tr>
+  <td colspan="3" align="center" height="70">
+    <%= f.submit 'Crear' %>
+</td>
+</tr>
+<% end %>
+</table>
+<br />
+<br />
+<%= link_to 'Volver', :controller => 'listaprecios', :action => 'edit', :id => params[:listaprecioid] %> 

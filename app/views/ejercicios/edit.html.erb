@@ -1,0 +1,28 @@
+<h1>Editing ejercicio</h1>
+
+<% form_for(@ejercicio) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :ejer_desde %><br />
+    <%= f.date_select :ejer_desde %>
+  </p>
+  <p>
+    <%= f.label :ejer_hasta %><br />
+    <%= f.date_select :ejer_hasta %>
+  </p>
+  <p>
+    <%= f.label :ejer_descripcion %><br />
+    <%= f.text_field :ejer_descripcion %>
+  </p>
+  <p>
+    <%= f.label :ejer_cerrado %><br />
+    <%= f.text_field :ejer_cerrado %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @ejercicio %> |
+<%= link_to 'Back', ejercicios_path %>

@@ -1,0 +1,100 @@
+<div id="cabecera">
+<tr>
+<td width="150" align ="left" >
+      Tipo comprobante:
+    </td>
+    <td colspan="3" align ="left">
+    <% if @edita.nil? %>
+   
+     <%= @iva.tcom_nombre.to_s %>
+     <%= f.hidden_field (:tipocomprobante_id, :value => @iva.id, :readonly => true) %> 
+     <% else %>
+      <%= f.collection_select(:tipocomprobante_id, @tipocomprobantes, :id, :tcom_nombre, {}, {:class => "textosbox"})  %>
+    <% end %> </td>
+</tr>
+  <tr>
+    <td align ="left">
+      Fecha comprobante:
+    </td>
+    <td colspan="3" align ="left">
+     <% if @edita %>
+      <%= f.date_select (:ccom_fecha,  {:class => "textosbox"}) %>
+     <% else %>
+     <%= f.date_select (:ccom_fecha, {:default => @cabplaegreso.cpeg_fecha}, {:class => "textosbox"}) %>
+     <% end %>
+    </td>
+   <!-- <td>
+      Gasto o compra:
+    </td>
+    <td colspan="3" align ="left">
+      <%= f.select(:ccom_gastocompra , options_for_select([['Gasto', 'GASTO'],['Compra', 'COMPRA']]), {}, :class => "textosbox") %> 
+    </td> -->
+    
+  </tr>
+  <tr>
+    <td align ="left">
+      Punto de venta:
+    </td>
+    <td colspan="3" align ="left">
+      <%= f.text_field :ccom_puntosventa, :size => 10, :class => "textosbox" %>
+    </td>
+    
+  </tr>
+ <tr>
+<td align ="left">
+      Nro comprobante:
+    </td>
+    <td colspan="3" align ="left">
+      <%= f.text_field :ccom_desdecompro, :size => 10, :class => "textosbox" %>
+    </td>
+</tr>
+<tr>
+    <td align ="left">
+      Nro comprobante hasta:
+    </td>
+    <td colspan="3" align ="left">
+      <%= f.text_field :ccom_hastacompro, :size => 10, :class => "textosbox" %>
+    </td>
+</tr>
+  <tr>
+    <td align ="left">
+      Forma de pago:
+    </td>
+    <td colspan="3" align ="left">
+     <%= f.select(:ccom_ctcc , options_for_select([['Contado', 'Contado'],['Cta/Cte', 'Cta/Cte']]), {}, :class => "textosbox") %> 
+    </td>
+  
+  
+  </tr>
+  <tr>
+    <td align ="left">
+      Jurisdicci&oacute;n:
+    </td>
+    <td colspan="3" align ="left">
+      <%= f.collection_select(:jurisdiccion_id, @jurisdiccions, :id, :juri_nombre, {}, {:class => "textosbox"}) %>
+    </td>
+
+
+
+<tr>
+  <% if @edita.nil? %>
+  <td align ="left">
+      Proveedor por cuit:
+    </td>
+    <td colspan="3" align ="left">
+       <%= text_field_with_auto_complete :proveedor, :prov_cuit, :size => 40, :class => "textosbox" %> 
+    </td>
+   <% end %>
+</tr>
+
+
+    <td align ="left">
+      Concepto egreso:
+    </td>
+    <td colspan="3" align ="left">
+       <%= f.collection_select(:conceptoegreso_id, @conceptoegresos, :id, :cegr_detalle, {}, {:class => "textosbox"}) %> 
+    </td>
+  </tr>
+  
+</div>
+

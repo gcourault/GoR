@@ -1,0 +1,12 @@
+<h1>Editing estadocheter</h1>
+
+<% form_for(@estadocheter) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @estadocheter %> |
+<%= link_to 'Back', estadocheters_path %>

@@ -1,0 +1,3 @@
+
+<%= link_to 'Edit', edit_cabpedidoweb_path(@cabpedidoweb) %> |
+<%= link_to 'Back', cabpedidowebs_path %>

@@ -1,0 +1,51 @@
+<h1>Proveedores</h1>
+<% form_tag proveedors_path, :method => 'get' do %>  
+ <Fieldset class="filtro">
+      Buscar Raz&oacute;n social:
+      <%= text_field_tag :razonsocial, params[:razonsocial], :class => "textosbox" %>
+      <input type="checkbox" name="cuitc" value="" /> 
+      Buscar CUIT:
+      <%= text_field_tag :cuit, params[:cuit], :class => "textosbox" %>
+      <%= submit_tag "Buscar", :class => "textosbox" %>
+</Fieldset>
+<% end %> 
+<br />
+<table> 
+ <tr>
+  <td class="boton" width="200" align="center">
+   <%= image_tag("add.png") %>
+   <span style="vertical-align: top"> 
+    <%= link_to 'Nuevo Proveedor', new_proveedor_path %>
+   </span>
+  </td>
+</tr>
+</table>
+<br />
+<div class="tablaContainer">
+<table class="tabladentrocont" border="0" cellpadding="0" cellspacing="0">
+  <tr class="headerStyle">
+    <th>C&oacute;digo</th>
+    <th>Raz&oacute;n social</th>
+    <th>Direcci&oacute;n</th>
+    <th>Tel&eacute;fono</th>
+    <th>CUIT</th>
+    <th>Observaciones</th>
+  </tr>
+
+<% @proveedors.each do |proveedor| %>
+  <tr class="<%= cycle('rowStyle', 'rowStyle1' ) %>" >
+    <td align="center"><%=h proveedor.prov_codigo %></td>
+    <td><%=h proveedor.prov_nombre %></td>
+    <td><%=h proveedor.prov_calle %>&nbsp;<%=h proveedor.prov_puerta %>&nbsp;<%=h proveedor.localidad.loca_nombre %></td>
+    <td><%=h proveedor.prov_telefono %></td>
+    <td><%=h proveedor.prov_cuit %></td>
+    <td><%=h proveedor.prov_observaciones %></td>
+    <td><%= link_to 'Editar', :controller => 'proveedors', :action => 'edit' , :id => [proveedor.id[0].to_s+","+proveedor.id[1].to_s], :page => params[:page]%></td>
+  </tr>
+
+<% end %>
+</table>
+<%=will_paginate @proveedors, :prev_label => '&laquo; Anterior', :next_label => 'Siguiente &raquo;' %>
+</div>
+<br />
+

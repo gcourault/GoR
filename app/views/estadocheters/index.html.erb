@@ -1,0 +1,18 @@
+<h1>Listing estadocheters</h1>
+
+<table>
+  <tr>
+  </tr>
+
+<% @estadocheters.each do |estadocheter| %>
+  <tr>
+    <td><%= link_to 'Show', estadocheter %></td>
+    <td><%= link_to 'Edit', edit_estadocheter_path(estadocheter) %></td>
+    <td><%= link_to 'Destroy', estadocheter, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New estadocheter', new_estadocheter_path %>

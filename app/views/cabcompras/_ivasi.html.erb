@@ -1,0 +1,133 @@
+
+  <tr>
+    <td align ="left">
+      Ret IVA:
+    </td>
+    <td width="80">
+  <% if @edita.nil? %>
+      <%= f.text_field :ccom_retencioniva, :size => 10, :onkeypress => "return IsNumberdecimal(event);", :onBlur => "total(this.form)", :class => "textosbox" %>
+<% else %>
+   <%= f.text_field :ccom_retencioniva, :size => 10, :readonly => true , :class => "textosbox" %>
+<% end %>
+    </td>
+    <td align="right" width="120">
+      Perc IVA:
+    </td>
+    <td align ="left">
+  <% if @edita.nil? %>
+      <%= f.text_field :ccom_percepcioniva, :size => 10, :onkeypress => "return IsNumberdecimal(event);", :onBlur => "total(this.form)", :class => "textosbox" %>
+<% else %>
+      <%= f.text_field :ccom_percepcioniva, :size => 10, :readonly => true, :class => "textosbox" %>
+<% end %>
+    </td>
+ </tr>
+<tr>
+    <td align ="left">
+      Ret ganancia:
+    </td>
+    <td width="80">
+  <% if @edita.nil? %>
+      <%= f.text_field :ccom_retencionganancia, :size => 10, :onkeypress => "return IsNumberdecimal(event);", :onBlur => "total(this.form)", :class => "textosbox" %>
+  <% else %>
+    <%= f.text_field :ccom_retencionganancia, :size => 10, :readonly => true, :class => "textosbox" %>
+  <% end %>
+    </td>
+    <td align="right" width="120">
+      Ret ib:
+    </td>
+    <td align ="left">
+  <% if @edita.nil? %>
+      <%= f.text_field :ccom_retencionib, :size => 10, :onkeypress => "return IsNumberdecimal(event);", :onBlur => "total(this.form)", :class => "textosbox" %>
+<% else %>
+<%= f.text_field :ccom_retencionib, :size => 10, :readonly => true, :class => "textosbox" %>
+<% end %>
+    </td>
+  </tr>
+  <tr>
+    <td align ="left">
+      Perc ib:
+    </td>
+    <td width="80">
+  <% if @edita.nil? %>
+      <%= f.text_field :ccom_percepcionib, :size => 10, :onkeypress => "return IsNumberdecimal(event);", :onBlur => "total(this.form)", :class => "textosbox" %>
+<% else %>
+    <%= f.text_field :ccom_percepcionib,  :readonly => true, :size => 10, :class => "textosbox" %>
+<% end %>
+    </td>
+
+    <td align="right" width="120">
+      No grav:
+    </td>
+    <td align ="left">
+  <% if @edita.nil? %>
+      <%= f.text_field :ccom_nogravado, :size => 10, :onkeypress => "return IsNumberdecimal(event);", :onBlur => "total(this.form)", :class => "textosbox" %>
+<% else %>
+  <%= f.text_field :ccom_nogravado, :size => 10,  :readonly => true, :class => "textosbox" %>
+<% end %>
+    </td>
+     </tr>
+  <tr>
+    <td align ="left">
+      Ret Municipal:
+    </td>
+    <td width="80">
+  <% if @edita.nil? %>
+      <%= f.text_field :ccom_retencionmunicipal, :onkeypress => "return IsNumberdecimal(event);", :size => 10, :onBlur => "total(this.form)", :class => "textosbox" %>
+<% else %>
+ <%= f.text_field :ccom_retencionmunicipal, :readonly => true, :class => "textosbox" %>
+<% end %>
+    </td>
+    <td align="right" width="120">
+      Imp interno:
+    </td>
+    <td align ="left">
+  <% if @edita.nil? %>
+      <%= f.text_field :ccom_impuestointerno, :onkeypress => "return IsNumberdecimal(event);", :size => 10, :onBlur => "total(this.form)", :class => "textosbox" %>
+<% else %>
+ <%= f.text_field :ccom_impuestointerno,:readonly => true, :class => "textosbox" %>
+<% end %>
+    </td>
+ </tr>
+<% if @iva.tcom_cabecera.to_s == "N" %>
+ <tr>
+    <td align ="left">
+      Exento:
+    </td>
+    <td width="80">
+      <%= f.text_field :ccom_exento, :size => 10, :readonly => true, :class => "textosbox" %> 
+     <!-- <input type="numeric" readonly="readonly"  name="ccom_exento" size="10"  > -->
+    </td>
+    <td align="right" width="120">
+      Neto grav:
+    </td>
+    <td align ="left">
+        <%= f.text_field :ccom_netogravado, :size => 10, :readonly => true, :class => "textosbox" %> 
+     <!-- <input type="numeric" readonly="readonly" name="ccom_netogravado" size="10" > -->
+    </td>
+  </tr>
+  <tr>
+    <td align ="left">
+      IVA:
+    </td>
+    <td width="80">
+      <%= f.text_field :ccom_iva, :size => 10, :readonly => true, :class => "textosbox" %> 
+      <!-- <input type="numeric" readonly="readonly"  name="ccom_iva" size="10" > -->
+    </td>
+ 
+ </tr>
+ <% else %>
+   <tr>
+    <td align="left">
+      Total:
+    </td>
+    <td align ="left" colspan= "3">
+      <!-- <input type="numeric" readonly="readonly" name="ccom_total" size="10" > -->
+      <%= f.text_field :ccom_total, :readonly => true, :size => 10, :class => "textosbox" %> 
+    </td> 
+   </tr>
+ <% end %>
+   <%= f.hidden_field (:ccom_nroplaegreso, :value => params[:nrope].to_i, :readonly => true) %> 
+   <%= f.hidden_field (:cabplaegreso_id, :value => params[:idpe].to_i, :readonly => true) %> 
+
+
+

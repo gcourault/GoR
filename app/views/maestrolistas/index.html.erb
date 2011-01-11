@@ -1,0 +1,46 @@
+<h1>Listas de precio maestro</h1>
+<table>
+<tr>
+<td class="boton"  align="center">
+  <%= image_tag "add.png" %>
+ <span style="vertical-align: top"> 
+ <%= link_to 'Nueva lista', new_maestrolista_path %>
+ </span>
+</td>
+</tr>
+</table>
+
+<div class="tablaContainer">
+ <table class="tabladentrocont">
+  <tr class="headerStyle">
+    <th>Nro lista</th>
+    <th>Nombre</th>
+    <th>Nro lista origen</th>
+    <th>Fecha creaci&oacute;n</th>
+    <th>Vigencia</th>
+    <th>Tipo de lista</th>
+     <th>Observaciones</th>
+  </tr>
+
+<% @maestrolistas.each do |maestrolista| %>
+  <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+    <td><%=h maestrolista.mlis_nrolista %></td>
+    <td><%=h maestrolista.mlis_nombre %></td>
+    <td><%=h maestrolista.mlis_nrolistaorigen %></td>
+    <td><%=h maestrolista.mlis_creacion %></td>
+    <td><%=h maestrolista.mlis_vigencia %></td>
+    <td><%=h maestrolista.mlis_internapublica %></td>
+    <td><%=h maestrolista.mlis_observaciones %></td>
+    <td><%= link_to 'Modificar lista', :controller => 'listaprecios', :action => 'index', :maestrolistaid => maestrolista.id %></td>  
+    <td><%= link_to 'Comentario web' , :controller => 'maestrolistas', :action => 'comentarioweb' , :id => maestrolista.id %></td>
+    <% if maestrolista.mlis_vigencia %>
+       <% else %> 
+       <td><%= link_to 'Observaciones', :action => 'edit', :id => maestrolista.id , :obs => 1 %></td>
+       <td><%= link_to 'Publicar', edit_maestrolista_path(maestrolista) %></td>
+    <% end %>
+  </tr>
+<% end %>
+</table>
+<%=will_paginate @maestrolistas, :prev_label => '&laquo; Anterior', :next_label => 'Siguiente &raquo;' %>
+</div>
+

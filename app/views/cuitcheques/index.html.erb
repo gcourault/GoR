@@ -1,0 +1,46 @@
+<h1>Listado de cuit de cheques</h1>
+<br />
+<% restrict_to "(rol 4 | rol 5 | rol 6 | rol 7) & !blacklist" do %>
+<table>
+<tr>
+<td class="boton" width="150px" align="center">
+  <%= image_tag "add.png" %> 
+ <span style="vertical-align: top"> 
+ <%= link_to 'Nuevo cuit', new_cuitcheque_path %>
+ </span>
+</td>
+<td class="boton" width="150px" align="center">
+  <%= image_tag "volver.png" %> 
+ <span style="vertical-align: top"> 
+ <%= link_to 'Volver', :controller => 'chequeterceros', :action => '' %>
+ </span>
+</td>
+</tr>
+</table>
+<% end %>
+<br />
+<div class="tablaContainer" >
+ <table class="tabladentrocont" border="0" cellpadding="0" cellspacing="0">
+  <tr class="headerStyle">
+   <th>Cuit</th>
+   <th>Razon social</th>
+   <th>Localidad</th>
+   <th>Provincia</th>
+  </tr>
+
+<% @cuitcheques.each do |cuitcheque| %>
+<tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+    <td><%=h cuitcheque.ccheq_cuit %></td>
+    <td><%=h cuitcheque.ccheq_razonsocial %></td>
+    <td><%=h cuitcheque.ccheq_localidad %></td>
+    <td><%=h cuitcheque.ccheq_provincia %></td>
+    <% restrict_to "(rol 4 | rol 5 | rol 6 | rol 7) & !blacklist" do %>
+    <td><%= link_to 'Mostrar', cuitcheque %></td>
+    <td><%= link_to 'Editar', edit_cuitcheque_path(cuitcheque) %></td>
+    <td><%= link_to 'Eliminar', cuitcheque, :confirm => 'Esta seguro?', :method => :delete %></td>
+    <% end %>
+  </tr>
+<% end %>
+</table>
+</div>
+

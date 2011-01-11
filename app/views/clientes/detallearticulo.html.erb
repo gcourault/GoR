@@ -1,0 +1,49 @@
+<h1>Detalle de las compras del art&iacute;culo</h1>
+<%= image_tag "volver.png" %> 
+<a href="javascript:history.back()">Volver</a>
+<br />
+ <% @articuloclientes = Cliente.articulocliente(params[:cliente], params[:fechadesde], params[:fechahasta], params[:articulo], params[:sucursal]) %>
+ <% if !@articuloclientes.nil? %>
+ <br />
+<table border="1">
+  	
+          <% totalunidades = 0 
+             totalimporte = 0 %>
+	  <tr>
+	    <td>
+            
+	     <Fieldset class="filtro">
+	     <legend ALIGN="left" class="formlegend"> Sucursal: <%= params[:sucunombre] %> </legend>
+	         <table class="tabladentrocont" border="0" cellpadding="0" cellspacing="0">
+    		  <tr class="headerStyle">
+      			<th width="100">Fecha</th>
+      			<th width="120">Comprobante</th>
+     			<th>Art&iacute;culo</th>
+      			<th>Cantidad ud.</th>
+                        <th>Precio unitario</th>
+      			<th>Importe</th>
+      
+    		 </tr>
+   		 <% @articuloclientes.each do |arti| %>
+    		 <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+     			<td><%=h arti.fecha %></td>
+     			<td><%=h arti.comprobante %>-<%=h arti.ptoventa %>-<%= arti.nrocompro %></td>
+                        <td><%=h arti.articulo %></td>
+                        <td align="center"><%=h arti.cantidad %></td> <% totalunidades = totalunidades + arti.cantidad.to_i %>
+ 			<td><%=h number_to_currency(arti.preciounitario, :precision => 2, :separator => ",", :delimiter => ".") %></td>
+     			<td><%=h number_to_currency(arti.monto, :precision => 2, :separator => ",", :delimiter => ".") %> </td> <% totalimporte = totalimporte + arti.monto.to_d %>
+     			
+                </tr>
+            <% end %>
+        <tr>
+            <td class="h6" colspan="3" align="right"><b> Total unidades: </td><td class="h6" align="center"> <b><%= totalunidades %> </td> 
+        </tr>
+        <tr>
+            <td class="h6" colspan="5" align="right"><b> Total importe: </td><td class="h6" > <b><%=  number_to_currency(totalimporte, :precision => 2, :separator => ",", :delimiter => ".") %> </td> 
+        </tr>
+     </table>
+   </Fieldset>
+   </td>
+    </tr>
+ <% end %>
+ </table>

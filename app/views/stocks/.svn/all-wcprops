@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/gescom-onrails/!svn/ver/578/app/views/stocks
+END
+mostrar.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/gescom-onrails/!svn/ver/578/app/views/stocks/mostrar.html.erb
+END
+consultastock.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/gescom-onrails/!svn/ver/578/app/views/stocks/consultastock.html.erb
+END
+_stock.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/gescom-onrails/!svn/ver/578/app/views/stocks/_stock.html.erb
+END
+stock.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/gescom-onrails/!svn/ver/578/app/views/stocks/stock.html.erb
+END

@@ -1,0 +1,18 @@
+<h1>Listing retencionganancias</h1>
+
+<table>
+  <tr>
+  </tr>
+
+<% @retencionganancias.each do |retencionganancia| %>
+  <tr>
+    <td><%= link_to 'Show', retencionganancia %></td>
+    <td><%= link_to 'Edit', edit_retencionganancia_path(retencionganancia) %></td>
+    <td><%= link_to 'Destroy', retencionganancia, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New retencionganancia', new_retencionganancia_path %>

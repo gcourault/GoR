@@ -1,0 +1,49 @@
+<h1>Asiento contable</h1>
+<%= image_tag "volver.png" %> 
+<a href="javascript:history.back()">Volver</a>
+
+
+  
+<table align="center">
+ <tr>
+  <td>
+ <Fieldset class="form">
+ <legend ALIGN="left" class="formlegend" >Detalle del asiento </legend>
+
+
+<table class="tabladentrocont">
+   <tr class="cablibro"> 
+     <td> Nro. </td>
+     <td> Cuenta </td>
+     <td> Debe </td>
+     <td> Haber </td>
+   </tr>
+
+ <tr> <td colspan="4"><hr> </td> </tr>
+      <tr><td class="cabasiento" colspan="4"> Asiento: <%=h @asiento.id %>  <%=h @asiento.casi_fecha %>   <%=h @asiento.casi_descripcion %></td>  </tr>
+    <% totaldebe = 0 %>
+    <% totalhaber = 0 %>
+     <% @renglon.each do |reng| %>
+        <tr>
+         <td> <%=h reng.cabasiento.id %></td>
+	 <td> <%=h reng.plandecuenta.codigo_nombre if reng.plandecuenta %></td>
+ 	 <td> <%=h number_to_currency(reng.rasi_importe, :precision => 2, :separator => ",", :delimiter => ".") if reng.rasi_importe.to_s.to_d > 0 %> <% totaldebe = reng.rasi_importe.to_s.to_d > 0 ? totaldebe + reng.rasi_importe.to_s.to_d : totaldebe %></td>
+         <td> <%=h number_to_currency(reng.rasi_importe, :precision => 2, :separator => ",", :delimiter => ".")  if reng.rasi_importe.to_s.to_d < 0 %> <% totalhaber = reng.rasi_importe.to_s.to_d < 0 ? totalhaber + reng.rasi_importe.to_s.to_d : totalhaber %> </td>
+        </tr>
+   <% end %>
+    <tr> <td colspan="4"> <hr> </td> </tr>
+    <tr> <td colspan="2"> </td> <td> <%=h number_to_currency(totaldebe, :precision => 2, :separator => ",", :delimiter => ".") %> </td><td> <%=h number_to_currency(totaldebe, :precision => 2, :separator => ",", :delimiter => ".") %>  </td> </tr>
+    <tr> <td colspan="4"> <hr> </td> </tr>
+
+</table>
+
+
+
+
+</Fieldset>
+</td>
+</tr>
+</table>
+</tr>
+
+</table>

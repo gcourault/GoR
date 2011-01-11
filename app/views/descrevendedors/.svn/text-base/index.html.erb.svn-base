@@ -1,0 +1,40 @@
+<h1>Listado de descuentos a revendedores</h1>
+<br />
+<table>
+<tr>
+<td class="boton"  align="center">
+ <%= image_tag "add.png" %> 
+ <span style="vertical-align: top"> 
+ <%= link_to 'Nuevo descuento', new_descrevendedor_path %>
+ </span>
+</td>
+</tr>
+</table>
+<br />
+
+ <table class="tabladentrocont" border="0" cellpadding="0" cellspacing="0">
+  <tr class="headerStyle">
+    <th>Marca</th>
+    <th>Rubro</th>
+    <th>Descuento 1</th>
+    <th>Descuento 2</th>
+    <th>Descuento 3</th>
+  </tr>
+
+<% @descrevendedors.each do |descrevendedor| %>
+ <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+    <td><%=h descrevendedor.marca.marc_descripcion %></td>
+    <td><%=h descrevendedor.rubro.rubr_descripcion %></td>
+    <td><%=h descrevendedor.drev_descuento1 %></td>
+    <td><%=h descrevendedor.drev_descuento2 %></td>
+    <td><%=h descrevendedor.drev_descuento3 %></td>
+    <td><%= link_to 'Mostrar',  :controller => 'descrevendedors', :action => 'show' , :id => descrevendedor.id, :page => params[:page]  %></td>
+    <td><%= link_to 'Editar', :controller => 'descrevendedors', :action => 'edit' , :id => descrevendedor.id, :page => params[:page]  %></td>
+    <td><%= link_to 'Borrar', descrevendedor, :confirm => 'Esta seguro que desea eliminar el registro?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+</div>
+<%=will_paginate @descrevendedors, :prev_label => '&laquo; Anterior', :next_label => 'Siguiente &raquo;' %>
+<br />
+

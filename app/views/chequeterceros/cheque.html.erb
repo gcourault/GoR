@@ -1,0 +1,117 @@
+<h1>Listado de cheques por CUIT</h1>
+
+<h2> Raz&oacute;n social: <%= "#{params[:rsocial].to_s}" %>  </h2>
+<% form_tag :action => 'cheque', :method => 'get' do %>  
+<br />
+<table>
+ <tr>
+  <td width="150px"  align="center">
+   <%= image_tag "volver.png" %> 
+   <span style="vertical-align: top"> 
+   <%= link_to 'Volver', :controller => 'chequeterceros', :action => '', :monto => params[:monto], :page => params[:page], :cuit => params[:cuit], :bcuit => params[:bcuit] %>
+   </span>
+  </td>
+   <%  central_url = "http://200.70.35.102/cenries/cr010000.asp?error=0" %>
+   <td  width="350px"  align="center"> 
+   <%= image_tag "banco2.png" %><%= link_to 'Consultar por CUIT en el banco central', central_url, :target => "_blank" %>
+   </td>
+<!--  <td width="350px"  align="center">
+   <a href="http://200.70.35.102/cenries/cr010000.asp?error=0" target="_blank"> <%= image_tag "banco2.png" %>Consultar por CUIT en el banco central</a> 
+  </td> -->
+    <%  arba_url = "http://orion.dsi.ec.gba.gov.ar/ConsultasGenerales/recuperarEstadoDeuda.do?action=recuperarEstadoDeuda&cuit="+ params[:cuit].to_s %>
+   <td> 
+   <%= image_tag "arba.png" %><%= link_to 'Consultar en ARBA', arba_url, :target => "_blank" %>
+   </td>
+ </tr>
+</table>
+
+<br />
+<br />
+<table class="tabladentrocont" border="0" cellpadding="0" cellspacing="0">
+  <tr class="headerStyle">
+   <th width="100">Cuit</th>
+   <th >Sucursal</th>
+   <th width="90">Feha</th>
+   <th width="90">Nro cheque</th>
+   <th width="90">Importe</th>
+   <th>Fecha vencimiento</th>
+   <th>Observaci&oacute;n</th>
+   <th>Factura</th>
+   <th>Cliente</th> 
+
+  </tr>
+
+<% @chequeterceros.each do |chequetercero| %>
+  <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+    <td><%=h chequetercero.cter_cuitlibrador %></td>
+    <td><%=h chequetercero.sucu_nombre %></td>
+    <td align="center"><%=h chequetercero.cter_ingreso %></td>
+    <td align="center"><%=h chequetercero.cter_nrocheque %></td>
+    <td><%=h number_to_currency(chequetercero.cter_importe, :precision => 2, :separator => ",", :delimiter => ".") %></td>
+    <td align="center"><%=h chequetercero.cter_vencimiento %></td>
+     <td><%=h chequetercero.cter_observaciones %></td>
+ <!-- muestro la factura o recibo asociado al cheque y el cliente de dicho comprobante-->
+   <% if chequetercero.id_cabfactura.to_i > 0 %>
+      <% factura = Cabfactura.find([chequetercero.id_cabfactura.to_i, chequetercero.id_sucursal.to_i]) if chequetercero.id_cabfactura.to_i > 0 %>
+     <% cliente = Cliente.find([chequetercero.id_cliente.to_i, chequetercero.id_sucursal.to_i]) if chequetercero.id_cliente.to_i > 0 %>
+       <td><%=h factura.tipocomprobante.tcom_abreviatura if factura  %> - <%= factura.cfac_puntosventa if factura %> - <%= factura.cfac_nrocomprobante if factura %></td>
+       <td><%=h cliente.clie_razonsocial if cliente %></td>
+    
+   <% else %>
+        <% recibo = Cabrecibo.find([chequetercero.id_cabrecibo.to_i, chequetercero.id_sucursal.to_i])  if chequetercero.id_cabrecibo.to_i > 0  %>
+      <% if recibo %>
+       <% cliente = Cliente.find([recibo.cliente_id.to_i, recibo.sucursal_id.to_i]) if recibo.cliente_id.to_i > 0 %>
+       <td><%=h recibo.tipocomprobante.tcom_abreviatura if recibo.tipocomprobante_id.to_i > 0 %> - <%= recibo.crec_puntosventa if recibo %> - <%= recibo.crec_nrocomprobante if recibo %></td>
+       <td><%=h cliente.clie_razonsocial if cliente %></td>
+     <% end %>
+ <% end %>
+    
+  </tr>
+<% end %>
+
+
+</table>
+
+<br />
+<br />
+<br />
+<h1>Cheques RECHAZADOS</h1>
+<% if @chequerechazados.empty? %> 
+<h2> No tiene cheques rechazados </h2>
+<% else %>
+ <table class="tabladentrocont" border="0" cellpadding="0" cellspacing="0">
+  <tr class="headerStyle">
+   <th>Cuit</th>
+   <th>Sucursal</th>
+   <th>Fecha</th>
+   <th>Nro cheque</th>
+   <th>Importe</th>
+   <th>Fecha vencimiento</th>
+   <th>Cancelado</th>
+  </tr>
+
+<% @chequerechazados.each do |chequerechazado| %>
+  <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+    <td><%=h chequerechazado.cter_cuitlibrador %></td>
+    <td><%=h chequerechazado.sucu_nombre %></td>
+    <td><%=h chequerechazado.cter_ingreso %></td>
+    <td><%=h chequerechazado.cter_nrocheque %></td>
+    <td><%=h number_to_currency(chequerechazado.cter_importe , :precision => 2, :separator => ",", :delimiter => ".") %></td>
+    <td><%=h chequerechazado.cter_vencimiento %></td>
+    <% @cancelacheq = Chequetercero.chequerechazadocancelado(chequerechazado.id_chequetercero, chequerechazado.id_sucursal.to_i)%>
+  <% @cancelacheq.each do |cancel| %>
+    <% if cancel.importe.nil? %>
+     <td> NO </td>
+    <% else %>  
+      <% if cancel.importe.to_d >= chequerechazado.cter_importe.to_d %>  <td> SI </td> <% end %>
+      <% if (cancel.importe.to_d < chequerechazado.cter_importe.to_d) %>  <td> PARCIAL (imp: <%= cancel.importe.to_d %> , interes: <%= cancel.intereses.to_d %>, gastos: <%= cancel.gastos.to_d %> , total: $<%= cancel.total.to_d %>) </td> <% end %>
+    <% end %>
+<% end %>
+  </tr>
+<% end %>
+</table>
+<% end %>
+
+<% end %>
+
+

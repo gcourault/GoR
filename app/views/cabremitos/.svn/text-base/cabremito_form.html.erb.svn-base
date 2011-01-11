@@ -1,0 +1,47 @@
+<% form_for(@cabremito) do |f| %>
+  <%= f.error_messages %>
+
+ <h3>Remito nº <%= @cabremito.crem_nrocomprobante %></h3>
+    
+<% unless @cabremito.new_record? %>
+<div class="<%= cycle('even', 'odd') %> pdf right">
+<%= link_to "PDF", cabremito_path(@cabremito) + ".pdf" %>
+</div>
+<% end %>
+
+<div class="<%= cycle('even', 'odd') %>">
+<label for="crem_fecha">Fecha:</label>
+<%= f.date_select :crem_fecha, :order => [:day, :month, :year] %>
+</div>
+
+    <div class="<%= cycle('even', 'odd') %>">
+      <label for="crem_puntosventa">Punto de venta:</label>
+      <%= f.text_field :crem_puntosventa, :class => "textfield percent" %> %
+      <%= error_for :invoice, :crem_puntosventa %>
+    </div>
+        
+    
+
+<div class="<%= cycle('even', 'odd') %>">
+<label>Cliente:</label>
+<%= f.select :cliente_id, @clientes.map {|cliente| [cliente.clie_razonsocial, cliente.id]}, {}, :class => "cliente" %>
+<%= observe_field :invoice_cliente_id, :url => select_clientes_path, :update => "cliente_info", :with => "id" %>
+</div>
+
+
+<div>
+<%= f.submit "Guardar", :class => "button" %>
+</div>
+</fieldset>
+<% end %>
+
+<% unless @cabremito.new_record? %>
+
+<!--<div id="cabremito_lines_form">
+<%= render :partial => "/invoice_lines/invoice_lines" %>
+</div> -->
+
+<div class="<%= cycle('even', 'odd')%> delete_cabremito">
+    <%= link_to "Borrar remito", cabremito_path(@cabremito), :method => :delete, :confirm => "¿Seguro?" %>
+</div>
+<% end %>

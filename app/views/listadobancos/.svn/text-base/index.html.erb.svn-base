@@ -1,0 +1,18 @@
+<h1>Listing listadobancos</h1>
+
+<table>
+  <tr>
+  </tr>
+
+<% @listadobancos.each do |listadobanco| %>
+  <tr>
+    <td><%= link_to 'Show', listadobanco %></td>
+    <td><%= link_to 'Edit', edit_listadobanco_path(listadobanco) %></td>
+    <td><%= link_to 'Destroy', listadobanco, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New listadobanco', new_listadobanco_path %>

@@ -1,0 +1,7 @@
+<% form_tag listaprecios_path, :method => 'get' do %>  
+  <p>
+  Buscar lista de precios N&uacute;mero:
+  <%= text_field_tag :search, params[:search] %>
+  <%= submit_tag "Buscar", :name => nil %>
+</p>
+<% end %> 

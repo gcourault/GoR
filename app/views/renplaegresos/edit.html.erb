@@ -1,0 +1,12 @@
+<h1>Editing renplaegreso</h1>
+
+<% form_for(@renplaegreso) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @renplaegreso %> |
+<%= link_to 'Back', renplaegresos_path %>

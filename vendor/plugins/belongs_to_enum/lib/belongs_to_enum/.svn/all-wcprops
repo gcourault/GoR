@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/gescom-onrails/!svn/ver/97/vendor/plugins/belongs_to_enum/lib/belongs_to_enum
+END
+belongs_to_enum.rb
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/gescom-onrails/!svn/ver/97/vendor/plugins/belongs_to_enum/lib/belongs_to_enum/belongs_to_enum.rb
+END
+field_wrapper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/gescom-onrails/!svn/ver/97/vendor/plugins/belongs_to_enum/lib/belongs_to_enum/field_wrapper.rb
+END
+acts_as_enum_field.rb
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/gescom-onrails/!svn/ver/97/vendor/plugins/belongs_to_enum/lib/belongs_to_enum/acts_as_enum_field.rb
+END
+object.rb
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/gescom-onrails/!svn/ver/97/vendor/plugins/belongs_to_enum/lib/belongs_to_enum/object.rb
+END
+enum_field.rb
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/gescom-onrails/!svn/ver/97/vendor/plugins/belongs_to_enum/lib/belongs_to_enum/enum_field.rb
+END

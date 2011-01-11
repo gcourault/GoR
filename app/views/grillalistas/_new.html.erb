@@ -1,0 +1,51 @@
+
+<br />
+<br />
+<% @listaprecio = Listaprecio.find(params[:id]) %>
+<% @maestrolista = Maestrolista.find_by_id(@listaprecio.maestrolista_id) %>
+<table>
+<% @grillalista = Grillalista.new %>
+<% form_for(@grillalista) do |f| %>
+  <%= f.error_messages %>
+<tr>
+ </td>
+   <td align="center">
+     <%= f.hidden_field (:maestrolista_id, :value => @maestrolista.id , :readonly => true) %> 
+  </td>
+   <td align="center">
+     <%= f.hidden_field (:listaprecio_id, :value => @listaprecio.id , :readonly => true) %> 
+  </td>
+</tr> 
+
+<tr>
+  <td>
+    <%= f.label "Nro. de grilla:" %>
+    <%= f.text_field :glis_nrogrilla, :size => 10 %>
+  </td>
+  <td>
+    <%= f.label "Nro. de columna:" %>
+    <%= f.text_field :glis_nrocolumna, :size => 10 %>
+ </td>
+  <td>
+    <%= f.label "Porcentaje:" %>
+    <%= f.text_field :glis_porcentaje, :size => 10 %>
+   </td>
+</tr>
+<tr>
+  <td colspan="3" align="center" height="70">
+    <%= f.submit 'Crear' %>
+</td>
+<tr>
+<td>
+<img  src="/images/cancel.png" width="20px" height="20px" border="0"> 
+<span style="vertical-align: top">
+<%= link_to 'Cancelar', :controller => 'listaprecios', :action => 'edit', :id => params[:id] %> 
+</span>
+</td>
+</tr>
+</tr>
+<% end %>
+</table>
+<br />
+<br />
+

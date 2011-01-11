@@ -1,0 +1,26 @@
+<h1>Listing cabfacturas</h1>
+
+<table>
+
+  <tr>
+<td><% @sucursals = Sucursal.all %>
+
+<%= select_collection (:sucursal_id, @sucursals, :id, :sucu_nombre) %>
+<%= text_field_with_auto_complete :event, @clientes, :clie_razonsocial , {
+ :url => formatted_clientes_path(:js), :method => :get,
+ :with =>"'search=' + element.value + '&sucursal_id=' + $('event_sucursal_id').value"  } %>
+</td>
+  </tr>
+
+<% @cabfacturas.each do |cabfactura| %>
+  <tr>
+    <td><%= link_to 'Show', cabfactura %></td>
+    <td><%= link_to 'Edit', edit_cabfactura_path(cabfactura) %></td>
+    <td><%= link_to 'Destroy', cabfactura, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New cabfactura', new_cabfactura_path %>

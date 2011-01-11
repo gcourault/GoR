@@ -1,0 +1,242 @@
+<h1>Datos del comprobante</h1>
+
+<table>
+<tr>
+ <td class="boton" width="120" align="center">
+   <%= image_tag "volver.png" %> 
+   <span style="vertical-align: top">  
+  <!-- <% if @cabcompra.cabplaegreso_id > 0 %>
+     <%= link_to 'Volver', :controller => 'cabcompras', :action => 'index', :nrope => @cabcompra.ccom_nroplaegreso, :idpe => @cabcompra.cabplaegreso_id %>
+   <% else %>
+     <%= link_to 'Volver', :controller => 'cabcompras', :action => 'comprobantes', :id => 0 %>
+   <% end %> -->
+    <a href="javascript:history.back()">Volver</a>
+   </span>
+ </td>
+</tr>
+</table>
+<br />
+
+<table align="center">
+ <tr>
+ <table>
+
+ <tr>
+  <td>
+<Fieldset class="form">
+<LEGEND ALIGN="left" class="formlegend">Datos del comprobante</LEGEND>
+    <table>
+  <tr>
+    <td>
+      Fecha comprobante:
+    </td>
+    <td colspan="3">
+     <b>
+     <%=h @cabcompra.ccom_fecha %>
+    </td>
+    <td>
+      Tipo comprobante:
+    </td>
+    <td colspan="1">
+      <b>
+      <%=h @cabcompra.tipocomprobante.tcom_nombre if @cabcompra.tipocomprobante %>
+    </td>
+    <td align="right">
+      Compra o Gasto:
+    </td>
+    <td colspan="3">
+     <b>
+     <%=h @cabcompra.ccom_gastocompra %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Punto de venta:
+    </td>
+    <td colspan="3">
+      <b>
+      <%=h @cabcompra.ccom_puntosventa %>
+    </td>
+    <td>
+     Nro comprobante:
+    </td>
+    <td>
+      <b>
+      <%=h @cabcompra.ccom_desdecompro %>
+    </td>
+     <td align="right">
+      Nro comprobante hasta:
+    </td>
+    <td>
+      <b>
+      <%=h @cabcompra.ccom_hastacompro %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Proveedor:
+    </td>
+    <td colspan="3">
+    
+     <b>
+     <%=h @cabcompra.proveedor.prov_nombre if @cabcompra.proveedor %>
+    </td>
+    <td>
+      Forma de pago:
+    </td>
+    <td colspan="3">
+      <b>
+      <%=h @cabcompra.ccom_ctcc %> 
+    </td>
+   </tr>
+   <tr>
+    <td>
+      Jurisdicci&oacute;n:
+    </td>
+    <td colspan="3">
+      <b>
+      <%=h @cabcompra.jurisdiccion.juri_nombre if @cabcompra.jurisdiccion %>
+    </td>
+    <td>
+      Concepto egreso:
+    </td>
+    <td colspan="3">
+      <b> 
+      <%=h @cabcompra.conceptoegreso.cegr_detalle if @cabcompra.conceptoegreso %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      Ret IVA:
+    </td>
+    <td>
+     <b> 
+     <%=h @cabcompra.ccom_retencioniva %>
+    </td>
+    <td align="right">
+      Perc IVA:
+    </td>
+    <td>
+      <b>
+      <%=h @cabcompra.ccom_percepcioniva %>
+    </td>
+    <td>
+      Ret ganancia:
+    </td>
+    <td>
+     <b> 
+     <%=h @cabcompra.ccom_retencionganancia %>
+    </td>
+    <td align="right">
+      Ret ib:
+    </td>
+    <td>
+      <b>
+      <%= @cabcompra.ccom_retencionib %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Perc ib:
+    </td>
+    <td>
+      <b>
+      <%= @cabcompra.ccom_percepcionib %>
+    </td>
+    <td align="right">
+      No grav:
+    </td>
+    <td>
+     <b> 
+     <%=h @cabcompra.ccom_nogravado %>
+    </td>
+    <td>
+      Ret Municipal:
+    </td>
+    <td>
+      <b>
+      <%=h @cabcompra.ccom_retencionmunicipal %>
+    </td>
+    <td align="right">
+      Imp interno:
+    </td>
+    <td>
+      <b>
+      <%=h @cabcompra.ccom_impuestointerno %>
+    </td>
+ </tr>
+ <tr>
+    <td>
+      Exento:
+    </td>
+    <td>
+      <b>
+      <%=h @cabcompra.ccom_exento %> 
+    </td>
+    <td align="right">
+      Neto grav:
+    </td>
+    <td>
+      <b> 
+      <%=h @cabcompra.ccom_netogravado %> 
+     <!-- <input type="numeric" readonly="readonly" name="ccom_netogravado" size="10" > -->
+    </td>
+    <td>
+      IVA:
+    </td>
+    <td>
+      <b>
+      <%=h @cabcompra.ccom_iva %> 
+    </td>
+    <td align="right">
+      Total:
+    </td>
+    <td>
+     <b>
+      <%=h @cabcompra.ccom_total %> 
+    </td> 
+ </tr>
+</table>
+</Fieldset>
+</td>
+</tr>
+</table>
+</tr>
+
+
+<% if @rencompras.empty? %> 
+<% else %>
+<tr>
+<table align="center">
+ <tr>
+  <td>
+ <Fieldset class="form">
+ <legend ALIGN="left" class="formlegend" >Detalle del comprobante</legend>
+
+
+<table align="center" border="1">
+  <tr>
+    <th>Alicuota IVA</th>
+    <th>Neto gravado</th>
+    <th>IVA</th>
+    <th>total</th>
+  </tr>
+
+<% @rencompras.each do |rencompra| %>
+  <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+    <td> <%=h rencompra.alicuotaiva.aiva_alicuota %> </td>
+    <td> <%=h rencompra.rcom_netorenglon %> </td>
+    <td> <%=h rencompra.rcom_ivarenglon %> </td>
+    <td> <%=h rencompra.rcom_totalrenglon %> </td>
+  </tr>
+<% end %>
+</table>
+</Fieldset>
+</td>
+</tr>
+</table>
+</tr>
+<% end %>
+</table>
+

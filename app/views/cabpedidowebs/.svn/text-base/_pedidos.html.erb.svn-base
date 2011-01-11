@@ -1,0 +1,42 @@
+<% if @renpedidowebs.blank? %> 
+  <h2>El pedido está en blanco </h2>
+<% else %> 
+   <% totalvend = 0 %>
+     <h2 align="center"> Detalle del pedido <%= params[:nropedido] %> </h2>
+           <table align="left"  border="1" >
+		<tr class="headerStyle">
+		 <th width="250px">Art&iacute;culo</th>
+		 <th width="80px">Cantidad</th>
+		</tr>
+		<% @renpedidowebs.each do |renpedidoweb| %>
+		   <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+		    <td><%=h renpedidoweb.articulo.arti_descripcion %></td>
+		    <td><%=h renpedidoweb.rweb_cantidad %></td>
+                    <% params[:idcabpedidoweb] = renpedidoweb.cabpedidoweb_id %>
+		   </tr>
+		<% end %>
+          </table>
+          <br />
+          <table align="right">
+	     <tr>
+                <% if @cabpedidoweb.pweb_estado.to_s == 'Abierto' %> 
+                  <!-- Buscar la sucursal y el cliente del pedido -->
+   		  <% if @cabpedidoweb.sucursal_id != 0 %>
+                    <% @sucursal = Sucursal.find(@cabpedidoweb.sucursal_id) %>
+              	    <% params[:sucuemail] = @sucursal.sucu_emailpedidoweb || "" %>
+                  <% end %>
+                  <% if @cabpedidoweb.cliente_id != 0 %>
+                    <% @cliente = Cliente.find(@cabpedidoweb.cliente_id) %>
+                    <% params[:clieemail] = @cliente.clie_email || "" %>
+                  <% end %>
+                  <td align="left"><%= link_to 'Editar Pedido', :controller => 'renpedidowebs', :idcabpedido => @cabpedidoweb.id, :page => params[:page] %></td>
+                  <td> | </td> 
+		  <td align="right">     <!-- TODO:pasarle a :sucursalemail=>'sucuemail' y a :clienteemail => 'clieemail' aca y en la index-->
+		    <%= link_to 'Enviar Pedido', :controller => 'cabpedidowebs', :action => 'send_email', :id => '1', :idcabpedidoweb => params[:idcabpedidoweb], :sucursalemail => params[:sucuemail] , :clienteemail => params[:clieemail], :cliente => @cliente.clie_razonsocial, :cuit => @cliente.clie_cuit, :clientecodigo => @cliente.clie_codigo, :disabled => true %> 
+		  </td>
+                <% else %>
+                   Su pedido ha sido: <%= @cabpedidoweb.pweb_estado.to_s %>
+                <% end %>
+	     </tr> 
+	 </table>
+<% end %>

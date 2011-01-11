@@ -1,0 +1,49 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  arti_codigo: 
+  arti_descripcion: 
+  marca_id: 
+  rubro_id: 
+  arti_modelo: 
+  arti_medida: 
+  arti_conosincamara: 
+  arti_telas: 
+  arti_clavesecundaria: 
+  alicuotaiva_id: 
+  arti_codigolista: 
+  arti_impnac: 
+  arti_ventactaord: 
+  arti_habilitado: 
+  arti_promopirelli: 
+  arti_controlastock: 
+  arti_liquidacomision: 
+  arti_fechabaja: 
+  proveedor_id: 
+  arti_artinuevo: 
+  arti_usuario: 
+  arti_ultmod: 2009-10-26
+
+two:
+  arti_codigo: 
+  arti_descripcion: 
+  marca_id: 
+  rubro_id: 
+  arti_modelo: 
+  arti_medida: 
+  arti_conosincamara: 
+  arti_telas: 
+  arti_clavesecundaria: 
+  alicuotaiva_id: 
+  arti_codigolista: 
+  arti_impnac: 
+  arti_ventactaord: 
+  arti_habilitado: 
+  arti_promopirelli: 
+  arti_controlastock: 
+  arti_liquidacomision: 
+  arti_fechabaja: 
+  proveedor_id: 
+  arti_artinuevo: 
+  arti_usuario: 
+  arti_ultmod: 2009-10-26

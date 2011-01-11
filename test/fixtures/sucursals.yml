@@ -1,0 +1,31 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  sucu_codigo: 
+  sucu_nombre: 
+  sucu_abreviatura: 
+  sucu_domicilio: 
+  sucu_impu_municipal: 
+  sucu_insc_municipal: 
+  sucu_provinciapib: 
+  sucu_inicioactividades: 
+  sucu_porcuentayorden: 
+  sucu_controlaservicio: 
+  sucu_email: 
+  sucu_usuario: 
+  sucu_ultmod: 2009-10-23
+
+two:
+  sucu_codigo: 
+  sucu_nombre: 
+  sucu_abreviatura: 
+  sucu_domicilio: 
+  sucu_impu_municipal: 
+  sucu_insc_municipal: 
+  sucu_provinciapib: 
+  sucu_inicioactividades: 
+  sucu_porcuentayorden: 
+  sucu_controlaservicio: 
+  sucu_email: 
+  sucu_usuario: 
+  sucu_ultmod: 2009-10-23

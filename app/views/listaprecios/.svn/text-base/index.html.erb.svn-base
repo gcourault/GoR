@@ -1,0 +1,158 @@
+
+<h1>Lista de precios</h1>
+<!-- restrigir la index por url -->
+<% restrict_to "(rol 4 | rol 6 | rol 7 ) & !blacklist" do %>
+   <% form_tag listaprecios_path, :method => 'get' do %>  
+     <Fieldset class="filtro">
+      <table class="tablafiltro">
+      <tr>
+       <td class="textosbox">  
+         <%= hidden_field_tag :maestrolistaid, params[:maestrolistaid] %>
+         Ingrese marca:
+         <%= text_field_tag :marcacod, params[:marcacod] %>
+
+       </td>
+       <td class="textosbox">
+        Ingrese rubro:
+        <%= text_field_tag :rubrocod, params[:rubrocod] %>
+       </td>
+      <td>
+      <%= submit_tag "Buscar", :name => nil, :class => "textosbox" %>
+      </td>
+     </tr>
+      <tr>
+      <td colspan="2" class="textosbox">
+   <input type="checkbox" name="mod" value="" />      
+      Modelo:
+      <%= text_field_tag :modelo, params[:modelo] %>
+     </td>
+   <td class="textosbox">
+   <input type="checkbox" name="todos" value="" />      
+      Incluye todos los articulos
+   </td>
+   </tr>
+   <% end %>
+  </table>
+ </Fieldset>
+
+<% end %>
+
+<% @maestrol = Maestrolista.find_by_id(params[:maestrolistaid]) %>
+<% if params[:marcacod].blank? %>
+   <% else %>
+     <% @marcas = Marca.find_by_marc_codigo(params[:marcacod].to_s.to_i) %>
+    
+<% end %>
+<% if params[:rubrocod].blank? %>
+   <% else %>
+     <% @rubros = Rubro.find_by_rubr_codigo(params[:rubrocod].to_s.to_i) %>
+     <% params[:nrolista] = @maestrol.mlis_nrolista %>
+<% end %>
+<br />
+<table >
+<tr>
+   <% restrict_to "(rol 4 | rol 7 ) & !blacklist" do %>
+     <% if (params[:maestrolistaid].to_i > 0) %> 
+        <td class="boton" width="150" align="center">
+         <%= image_tag "add.png"%> 
+        <span style="vertical-align: top">
+        <%= link_to 'Agregar art&iacute;culo', :controller => 'listaprecios', :action => 'new', :maestrolistaid => params[:maestrolistaid], :arg => params[:arg], :class => "textosbox" %>
+       </span>
+       </td>
+       <td class="boton" width="150" align="center">
+        
+         <%= image_tag "remarques.png"%>
+        <span style="vertical-align: top">
+        <%= link_to 'Remarques', :controller => 'listaprecios', :action => 'remarcar' , :id => params[:maestrolistaid], :class => "textosbox" %>
+        </span>
+      </td>
+<!-- para que  permita agregar articulos a la lista publicada -->
+   <% end %> 
+<% end %> 
+<% if @listaprecios.empty? %> 
+   <h2> Su consulta no arrojo ningun resultado. Asegurese de haber cargado correctamente la marca y el rubro o el modelo</h2>
+   <% else %>
+<td  class="boton" width="150"  align="center">
+  <%= image_tag "pdf.png"%>
+ <span style="vertical-align: top">
+<%= link_to 'Generar PDF', :controller => 'listaprecios/index', :action => 'index.pdf', :nrolista => params[:nrolista], :maestrolistaid => params[:maestrolistaid], :class => "textosbox" %> 
+ </span>
+</td> 
+</tr>
+</table>
+<br />
+
+<% form_tag :action => 'remarquecheckgraba', :method => 'put' do %>  
+<div class="tablaContainer"  >
+ <table class="tabladentrocont">
+       <% if (params[:mod]==nil) %>
+               <tr class="textgroup"> <td colspan = "3"> Marca:  <%=h @marcas.marc_descripcion %> </td> <td td colspan = "6"> Rubro:  <%=h @rubros.rubr_descripcion %> </td></tr>
+     <% end %> 
+               <tr class="headerStyle">
+               <th> </th>
+               <th> </th>
+               <th width="80">C&oacute;digo</th>
+  	       <th>Modelo</th>
+   	       <th>Medida</th>
+               <th> </th>
+               <th>Telas</th>
+  	       <th>Precio venta</th>
+  	       <th>Lista N</th>
+               <% restrict_to "(rol 4 | rol 7) & !blacklist" do %>
+                   <th> Precio de Lista </th>
+                   <th> Precio Costo </th>
+                  <th>Remarque</th>
+		  <th>Remarque 2</th>
+	 	  <th>Remarque 3</th>
+               <% end %>
+ 	       </tr>
+
+   <% @listaprecios.each do |listaprecio| %>
+   <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+    <% i= 0 %>
+    <% if !params[:listamod].nil? %>
+    <%  params[:listamod].each { |lista|
+      if listaprecio.id == lista.to_i %>
+      <td style="background-color: yellow;"><%= link_to 'Editar', edit_listaprecio_path(listaprecio) %></td>
+
+     <% i = 1 end   } %>
+    <% end %>
+   <% if listaprecio.id == params[:idmodificado].to_i %>
+    <td style="background-color: red;"><%= link_to 'Editar', edit_listaprecio_path(listaprecio) %></td>
+   <% elsif i == 0 %>
+    <td><%= link_to 'Editar', edit_listaprecio_path(listaprecio) %></td>
+    <% end %>
+    
+     <td>   <input type="checkbox", name = "listaprecio[idlista][]", value="<%= listaprecio.id %>"></td>
+    <td><%=h listaprecio.articulo.marca.marc_codigo %> - <%=h listaprecio.articulo.rubro.rubr_codigo %>  -  <%=h listaprecio.articulo.arti_codigo %> </td>
+    <td><%=h listaprecio.articulo.arti_modelo %></td>
+    <td><%=h listaprecio.articulo.arti_medida %></td>
+    <td><%=h listaprecio.articulo.arti_conosincamara %></td>
+    <td><%=h listaprecio.articulo.arti_telas %></td>
+    <td><%=h listaprecio.lpre_precioventa.round(0) %></td>
+    <td><%=h listaprecio.lpre_nrolista %></td> 
+    <% restrict_to "(rol 4 | rol 7) & !blacklist" do %>
+      <td><%=h listaprecio.lpre_preciolista %></td>
+      <td><%=h listaprecio.lpre_preciocosto %></td>
+      <td><%=h listaprecio.lpre_remarque %></td> 
+      <td><%=h listaprecio.lpre_remarque2 %></td> 
+      <td><%=h listaprecio.lpre_remarque3 %></td> 
+   <% end %>
+ 
+</tr>
+<% end %>
+<% end %>
+
+
+<tr height="70" >
+<td  align="left" colspan="6"><%= image_tag "addform.png" %><%= link_to_remote 'Ingresar valores para los art&iacute;culos seleccionados', :update => 'remarquecheck', :url => {:controller => 'listaprecios', :action =>'remarquecheck', :marcacod => params[:marcacod], :rubrocod => params[:rubrocod], :maestrolistaid => params[:maestrolistaid] } %> </td>
+</tr>
+
+</table>
+<div id="remarquecheck">
+</div>
+
+ 
+<% end %>
+
+

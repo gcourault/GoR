@@ -1,0 +1,41 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  prov_codigo: 
+  prov_nombre: 
+  prov_calle: 
+  prov_puerta: 
+  localidad_id: 
+  prov_telefono: 
+  situacionafip_id: 
+  tipodocumento_id: 
+  prov_cuit: 
+  prov_estado: 
+  prov_ingbrutos: 
+  prov_regimenretencion: 
+  prov_saldo: 
+  prov_observaciones: 
+  prov_consignatario: 
+  prov_baja: 
+  prov_usuario: 
+  prov_ultmod: 2009-10-26
+
+two:
+  prov_codigo: 
+  prov_nombre: 
+  prov_calle: 
+  prov_puerta: 
+  localidad_id: 
+  prov_telefono: 
+  situacionafip_id: 
+  tipodocumento_id: 
+  prov_cuit: 
+  prov_estado: 
+  prov_ingbrutos: 
+  prov_regimenretencion: 
+  prov_saldo: 
+  prov_observaciones: 
+  prov_consignatario: 
+  prov_baja: 
+  prov_usuario: 
+  prov_ultmod: 2009-10-26

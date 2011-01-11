@@ -1,0 +1,16 @@
+<h1>Estos comprobantes superan los $1000 ver la forma de pago</h1>
+<br />
+<table>
+ <tr>
+  <td class="boton" with="100" align="center">
+     <%= image_tag "volver.png" %> 
+    <span style="vertical-align: top"> 
+     <%= link_to 'Volver', :controller => 'cabplaegresos', :action => 'index' %>
+    </span>
+  </td>
+ </tr>
+</table>
+<div id="pagocompra">
+  <%= render :partial => '/cabplaegresos/pagocompra', :object => @planillaegreso %>
+</div>
+

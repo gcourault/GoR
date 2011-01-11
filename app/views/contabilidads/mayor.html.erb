@@ -1,0 +1,114 @@
+<h1>Mayor analitico</h1>
+<% if params[:fechadesde].blank? %>
+<% from_time =  Date.today - 1.months %>
+<% else %>
+<% from_time = params[:fechadesde] %>
+<% end %>
+<% if params[:fechahasta].blank? %>
+<% to_time =  Date.today   %>
+<% else %>
+<% to_time = params[:fechahasta] %>
+<% end %>
+<% params[:saldo] = "Sin saldo anterior" if params[:saldo].blank? %>
+<Fieldset class="filtro">
+<legend ALIGN="left" class="formlegend">Período y cuenta </legend>
+<table align="left" class="tablafiltro">
+
+<% form_tag  :controller => 'contabilidads', :action => 'mayor' do %> 
+ <tr>
+    <td class="textosbox">
+      Fecha desde:
+    </td>
+    <td >
+      <%=  select_date from_time , {:prefix => "fechadesde"}, {:class => "textosbox"} %> 
+    </td>
+    <td class="textosbox">
+      Fecha hasta: 
+    </td>
+    <td>
+      <%= select_date to_time, {:prefix=>"fechahasta"}, {:class => "textosbox"} %>
+    </td>
+  <td rowspan=2 > <Fieldset class="filtro">
+     <legend ALIGN="left" class="formlegend">Cuenta</legend>
+     <div align="left" class="textosbox">
+      <%= radio_button_tag('saldo', "Sin saldo anterior", checked = params[:saldo].to_s == "Sin saldo anterior") %> Sin saldo anterior
+      <br />
+      <%= radio_button_tag('saldo', "Con saldo anterior", checked = params[:saldo].to_s == "Con saldo anterior") %> Con saldo anterior 
+     </div>
+    </Fieldset> </td>
+    </tr>
+    <tr>
+      
+    <td class="textosbox">
+      Cuenta:
+    </td>
+     <td colspan="3" >
+     <%= select_tag(:plandecuenta, options_for_select(@plandecuentas.collect {|u| [u.nombre_codigo,u.id]}, params[:plandecuenta].to_i), {:class => "textosbox"}) %>
+     </td>
+    <td> </td>
+    <td align="rigth">
+      <%= submit_tag "Consultar", :class => "textosbox", :onclick=>"javascript:mostrar_div('output')" %>
+    </td>
+ </tr>
+<% end %>
+
+</table>
+</Fieldset>
+<br />
+<% if !@mayors.nil? && @mayors.size > 0 %>
+
+<% saldo = 0
+   sumdebe = 0
+   sumhaber = 0 %>
+<table >
+<tr>
+<td  class="boton" width="150px"  align="center">
+<%= image_tag "pdf.png" %> 
+<span  style="vertical-align: top"> <%= link_to 'Generar PDF', :controller => 'contabilidads/mayor/', :action => 'mayor.pdf', :from_time => from_time, :to_time => to_time, :cuenta => params[:plandecuenta], :saldo => params[:saldo] %> </span>
+</td>
+<td class="boton" width="150px"  align="center" vertical-align="center" >
+<%= image_tag "excel.png" %> 
+<span  style="vertical-align: top"> <%= link_to_remote 'Exportar a Excel', {:url => {:controller => "contabilidads", :action => "mayorxls", :saldo => params[:saldo], :from_time => from_time, :to_time => to_time, :cuenta => params[:plandecuenta] }, :disable_with => "Por favor espere...", :before=>"this.style.display='none'", :complete =>  "Element.show ('addxls');"},  {:href => url_for(:controller => "contabilidads", :action => "mayorxls", :saldo => params[:saldo], :from_time => from_time, :to_time => to_time, :cuenta => params[:plandecuenta])} %> </span>
+<div id="addxls" style="display:none">
+ <%= render :partial => 'contabilidads/mayorxls'  %>
+</div>
+</td>
+</tr>
+</table>
+<%  if params[:saldo].to_s == "Con saldo anterior"
+   @fechainiejer = Contabilidad.ejercicio(params[:fechadesde])
+   @saldoants = Contabilidad.saldoant(params[:plandecuenta], params[:fechadesde], @fechainiejer.ejer_desde)
+  end %>
+<% saldo = @saldoants.to_s.to_d if !@saldoants.nil? %>
+<hr>
+<table border="1" class="tabladentrocont">
+   <tr class="cablibro"> 
+     <td> Fecha </td>
+     <td> Detalle </td>
+     <td> Debe </td>
+     <td> Haber </td>
+     <td> Saldo </td>
+     <td> Asiento </td>
+   </tr>
+  <% if !@saldoants.nil? %> 
+   <tr><td></td> <td>Saldo anterior</td> <td></td> <td></td> <td><%=h number_to_currency(@saldoants, :precision => 2, :unit => " ", :separator => ",", :delimiter => ".") %> </td> </tr>
+  <% end %>
+<% @mayors.each do |mayor| %>
+  <tr>
+    <td> <%=h mayor.cabasiento.casi_fecha %> </td>
+    <td> <%=h mayor.cabasiento.casi_descripcion %> </td>
+    <td align="right"> <%=h number_to_currency(mayor.rasi_importe, :precision => 2, :unit => " ", :separator => ",", :delimiter => ".") if mayor.rasi_importe.to_s.to_d > 0 %> <% sumdebe = (sumdebe + mayor.rasi_importe.to_s.to_d) if mayor.rasi_importe.to_s.to_d > 0 %></td>
+<td align="right"> <%=h number_to_currency(mayor.rasi_importe.abs, :precision => 2, :unit => " ", :separator => ",", :delimiter => ".") if mayor.rasi_importe.to_s.to_d < 0 %> <% sumhaber = (sumhaber + mayor.rasi_importe.to_s.to_d) if mayor.rasi_importe.to_s.to_d < 0 %> </td>
+    <% saldo = saldo + mayor.rasi_importe.to_s.to_d %>
+    <td align="right"><%=h number_to_currency(saldo, :precision => 2, :unit => " ", :separator => ",", :delimiter => ".") %></td>
+    <td align="right"> <%=h mayor.cabasiento.id %> </td>      <td><%= link_to 'Ver asiento', :controller =>'contabilidads', :action => 'detalleasiento', :id => mayor.cabasiento.id %> </td>
+  </tr>
+<% end %>
+<tr><td colspan="2" align="center"> <b> TOTALES </td> <td align="right"><b><%=h number_to_currency(sumdebe, :precision => 2, :unit => " ", :separator => ",", :delimiter => ".") %>  </td> <td align="right"><b><%=h number_to_currency(sumhaber, :precision => 2, :unit => " ", :separator => ",", :delimiter => ".") %> </td><td align="right"><b><%=h number_to_currency(saldo, :precision => 2, :unit => " ", :separator => ",", :delimiter => ".") %> </td> </tr>
+</table>
+</table>
+<br />
+<table border="1">
+<% else %>
+ <h4> No realizo una busqueda o la misma es nula </h4>
+<% end %>

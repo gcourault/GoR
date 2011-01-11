@@ -1,0 +1,5 @@
+
+
+<%= text_field_with_auto_complete :cliente, :clie_razonsocial, :size => 30, :class => "textosbox" %> 
+
+

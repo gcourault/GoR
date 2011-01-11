@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/gescom-onrails/!svn/ver/581/app/views/depositocaucions
+END
+edit.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/gescom-onrails/!svn/ver/142/app/views/depositocaucions/edit.html.erb
+END
+index.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/gescom-onrails/!svn/ver/581/app/views/depositocaucions/index.html.erb
+END
+new.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/gescom-onrails/!svn/ver/137/app/views/depositocaucions/new.html.erb
+END
+_nuevo.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/gescom-onrails/!svn/ver/580/app/views/depositocaucions/_nuevo.html.erb
+END
+pendientelistado.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/gescom-onrails/!svn/ver/377/app/views/depositocaucions/pendientelistado.html.erb
+END
+show.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/gescom-onrails/!svn/ver/142/app/views/depositocaucions/show.html.erb
+END

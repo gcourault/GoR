@@ -1,0 +1,75 @@
+<h1>Editar cuenta de caja</h1>
+<br/>
+<table>
+<tr>
+ <td class="boton" width="120" align="center">
+   <%= image_tag "volver.png" %> 
+   <span style="vertical-align: top">  
+  <%= link_to 'Volver', :controller => 'cuentacajas', :action => 'index', :page => params[:page] %>
+   </span>
+ </td>
+</tr>
+</table>
+
+<% form_for(@cuentacaja) do |f| %>
+  <%= f.error_messages %>
+
+  
+ 
+<table>
+ <tr>
+  <td>
+<Fieldset class="form"  width="200" >
+<LEGEND ALIGN="left" class="formlegend">Modificar datos</LEGEND>
+  <table>
+     <tr>
+     <td>
+       Sucursal:     
+     </td>
+     <td>
+         <%= f.collection_select(:sucursal_id, @sucursals, :id, :sucu_nombre, {}, {:class => "textosbox"}) %>
+     </td>
+    </tr>
+  <tr>
+     <td>
+       Cuenta:     
+     </td>
+     <td>
+      <%= f.collection_select (:plandecuenta_id, @plandecuentas, :id, :codigo_nombre, {}, {:class => "textosbox"}) %>
+     </td>
+    </tr>
+      <tr>
+     <td>
+       Tipo de asiento:     
+     </td>
+     <td>
+       <%= f.select(:ccaj_tipoasiento , options_for_select([['Gastos Generales', 'Gastos Generales'],['Cheques a regularizar', 'Cheques a regularizar'], ['Ventas Contado', 'Ventas Contado'],['Deudores por Venta', 'Deudores por Venta'], ['Ventas Cuenta Corriente', 'Ventas Cuenta Corriente'],['Vales a reponer', 'Vales a reponer'], ['Recupero Gastos Cheque', 'Recupero Gastos Cheque'], ['Intereses Comerciales', 'Intereses Comerciales'], ['Cupones a regularizar', 'Cupones a regularizar']], @cuentacaja.ccaj_tipoasiento.to_s), {}, :class => "textosbox") %> 
+   
+     </td>
+    </tr>
+        <tr>
+     <td>
+       Con detalle:     
+     </td>
+     <td>
+      <%= f.select(:ccaj_detalle , options_for_select([['No', 'No'],['Si', 'Si']], @cuentacaja.ccaj_detalle.to_s), {}, :class => "textosbox") %>   
+   
+     </td>
+    </tr>
+
+   <%= hidden_field(:valor, :page, :value => params[:page]) %> 
+</table>
+</Fieldset>
+</td>
+</tr>
+</table>
+<table>
+  <tr height="70">
+     <td colspan="2" align="center">
+
+    <%= f.submit 'Modificar', :class => "textosbox" %>
+    </td>
+ </tr>
+</table>
+
+<% end %>

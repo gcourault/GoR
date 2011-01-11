@@ -1,0 +1,117 @@
+<h1>Comprobantes de la planilla de egreso Nro. <%= params[:nrope] %> </h1>
+<br />
+<table>
+<tr>
+<td>
+<table>
+ <tr>
+  <td  class="boton" width="100"   align="center">
+    <%= image_tag "volver.png" %> 
+   <span style="vertical-align: top"> 
+ <%= link_to 'Volver', :controller => 'cabplaegresos', :action => 'index' %>
+ </span>
+  </td>
+  </tr>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<table align="left">
+
+  <tr>
+ <% if @cabplaegreso.cpeg_cerrada.to_s.lstrip == 'N' %>
+  <td  class="boton" colspan="1"   align="center">
+     
+     <span style="vertical-align: top"> 
+    <% form_for(@cabcompra,  :url => { :action => 'new',  :nrope => params[:nrope] , :idpe => params[:idpe]}, :method => :post) do |f| %>
+     </td>
+     <td class="textosbox">
+      Comprobante a cargar: 
+     </td>
+     <td>
+      <%= f.collection_select(:tipocomprobante_id, @tipocomprobantes, :id, :numero_nombre, {}, {:class => "textosbox"}) %>
+    </td><td>  <%= f.submit "Cargar", :class => "textosbox" %>
+     </td>
+    <% end %>
+  </span>
+   </td>
+  <% end %>
+ 
+ </tr>
+ <tr height="70" >
+
+  <!--  <% suma = Cabcompra.sum(:ccom_total, :conditions => ['cabplaegreso_id = ? and sucursal_id = ?', params[:idpe], session[:sucursal]]) %> -->
+     <% @total = Cabplaegreso.totalpe(params[:idpe], session[:sucursal])
+      suma = 0
+        @total.each do |tot|
+        suma = tot.total 
+       end %>
+   <td colspan="2" align="left" class="textosbox"> 
+    Suma-comprobantes:
+  </td> 
+  <td colspan="1" align="left">
+    <%= text_field_tag :total, params[:total], :size => 12, :value => number_to_currency(suma, :precision => 2, :separator => ",", :delimiter => "."), :readonly => true %>
+    
+  </td>
+  <td class="boton" align="left"> 
+<%= image_tag "pdf.png"%>
+<span style="vertical-align: top"> <%= link_to 'Generar PDF', :controller => 'cabcompras/index', :action => 'index.pdf',:idpe => params[:idpe], :nrope => params[:nrope] %> </span>
+</td>
+ </tr>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<div class="tablaContainer">
+<table class="tabladentrocont">
+<tr>
+<td>
+<table align="left" >
+ <% if @cabcompras.size > 0 %>
+    <tr class="headerStyle">
+      <th>Nro. </th>
+      <th>Pto. venta</th>
+      <th>Nro comprobante</th>
+      <th>Fecha</th>
+      <th>Tipo</th>
+      <th>Proveedor</th>
+      <!--  <th>Jurisdicci&oacute;n</th> -->
+      <th>Concepto</th>
+      <th width="105">Total</th>
+    </tr>
+
+<% @cabcompras.each do |cabcompra| %>
+  <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+    <td><%=h cabcompra.id[0] %></td>
+    <td><%=h cabcompra.ccom_puntosventa %></td>
+    <td><%=h cabcompra.ccom_desdecompro %></td>
+    <td><%=h cabcompra.ccom_fecha %></td>
+    <td><%=h cabcompra.tipocomprobante.tcom_nombre %></td>
+    <td><%=h cabcompra.proveedor.prov_nombre if cabcompra.proveedor %></td>
+    <!-- <td><%=h cabcompra.jurisdiccion.juri_nombre %></td> -->
+    <td><%=h cabcompra.conceptoegreso.cegr_detalle %></td>
+    <td><%=h number_to_currency(cabcompra.ccom_total, :precision => 2, :separator => ",", :delimiter => ".") %></td>
+    <td><%= link_to 'Mostrar', cabcompra %></td>
+    <% if @cabplaegreso.cpeg_cerrada.to_s == 'N' %>
+       <td><%= link_to 'Borrar', cabcompra, :confirm => 'Seguro quiere eliminar el comprobante?', :method => :delete %></td>
+      <% restrict_to "(rol 5 | rol 6 | rol 7) & !blacklist" do %>
+       <td> <%= link_to 'Editar', :action => 'edit', :id => cabcompra, :idpe => params[:idpe], :nrope => params[:nrope] %> </td>
+<% end %>
+    <% end %>
+   <!-- <td><%= link_to_remote 'Renglones', :update => 'renglones', :url => {:controller => 'cabcompras', :action => 'renglones', :idcabcompra => cabcompra.id, } %></td> -->
+   
+  </tr>
+<% end %>
+
+<% else %>
+<h4> La planilla de egreso no tiene comprobantes cargados </h4>
+<% end %>
+</table>
+</table>
+</div>
+</td>
+</tr>
+</table>
+

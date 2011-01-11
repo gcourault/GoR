@@ -1,0 +1,71 @@
+<h1>Nuevo pedido para <%= session[:user].usur_nombre %></h1>
+
+<% form_for(@cabpedidoweb) do |f| %>
+  <%= f.error_messages %>
+<table align="center">
+<tr>
+<td>
+ <img  src="/images/find.png" width="20px" height="20px" border="0"> 
+ <span style="vertical-align: top"> 
+  <a href="#" onclick="find();">Buscar...</a>
+ </span>
+</td>
+</tr>
+</table>
+<% @marcas = Marca.find(:all) %>
+<% @rubros = Rubro.find(:all) %>
+<% params[:nrolista] = Listaprecio.maximum(:lpre_nrolista, :joins => [:maestrolista], :conditions => ["maestrolistas.mlis_internapublica = 'Publica'"]) %> 
+<div class="tablaContainer">
+ <table class="tabladentrocont">
+  <% for marca in @marcas %>
+         <% params[:marcaid] = marca.id %> 
+         <% for rubro in @rubros %>
+            <% params[:rubroid] = rubro.id %> 
+            <% @listaprecios = Listaprecio.search(params[:nrolista] , params[:modelo],  params[:marcaid],  params[:rubroid], params[:maestrolistaid]) %>
+            <% if @listaprecios.size > 0 %>
+               <tr class="textgroup"> <td colspan = "2"> Marca: <%=h marca.marc_descripcion %> </td> <td td colspan = "4"> Rubro:  <%=h rubro.rubr_descripcion %> </td></tr>
+               <tr class="headerStyle">
+               <th width="20px">Cantidad</th>
+               <th width="50px">C&oacute;digo</th>
+  	       <th width="250px">Modelo</th>
+   	       <th width="200px">Medida</th>
+               <th width="10px"> </th>
+               <th width="50px">Telas</th>
+	       </tr>
+   <% @listaprecios.each do |listaprecio| %>
+   <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+    <input type="hidden", name="pedido[idarticulo][]", value="<%= listaprecio.articulo.id %>" >
+    <td><input type="numtext" name="pedido[cantidad][]" value="0" size="10" onkeypress="return IsNumber(event);"></td>
+    <td><%=h listaprecio.articulo.marca.marc_codigo %> - <%=h listaprecio.articulo.rubro.rubr_codigo %> - <%=h listaprecio.articulo.arti_codigo %> </td>
+    <td><%=h listaprecio.articulo.arti_modelo %></td>
+    <td><%=h listaprecio.articulo.arti_medida %></td>
+    <td><%=h listaprecio.articulo.arti_conosincamara %></td>
+    <td><%=h listaprecio.articulo.arti_telas %></td>
+  </tr>
+<% end %>
+<% end %>
+<% end %>
+<% end %>
+
+</table>
+</div>
+<br />
+<table align="center">
+  <tr>
+    <td valign ="center">
+     <%= f.label "Si desea realizar alguna Observaci&oacute;n en su pedido escribala aqu&iacute;:" %> 
+    </td>
+    <td>  
+     <%= f.text_area(:pweb_observaciones, :rows => 3) %>  
+    </td>
+  </tr>
+</table>
+
+  <p>
+    <%= f.submit 'Crear Pedido', :disable_with => "Creando pedido..." %>
+  </p>
+<% end %>
+ <img  src="/images/volver.png" width="20px" height="20px" border="0"> 
+ <span style="vertical-align: top"> 
+ <%= link_to 'Volver', cabpedidowebs_path %>
+ </span>

@@ -1,0 +1,72 @@
+<h1>Listado de coeficientes de ajuste contable</h1>
+<% form_tag coeficientes_path, :method => 'get' do %>  
+ <Fieldset class="filtro">
+      Buscar coeficiente:
+      <%= text_field_tag :descrip, params[:descrip], :class => "textosbox", :size => 30 %>
+     
+      <%= submit_tag "Buscar", :class => "textosbox" %>
+</Fieldset>
+<% end %> 
+
+<br />
+<table>
+<tr>
+<td class="boton"  align="center">
+  <%= image_tag "add.png" %>
+ <span style="vertical-align: top"> 
+ <%= link_to 'Crear nuevo coeficiente', new_coeficiente_path  %>
+ </span>
+</td>
+</tr>
+</table>
+<br />
+<% if !@coeficientes.nil? && @coeficientes.size > 0 %>
+<div class="tablaContainer">
+ <table class="tabladentrocont">
+  <tr class="headerStyle">
+  <th> Descripci&oacute;n </th>
+  <th> Ejejercicio </th>
+  <th> inicial </th>
+  <th> Mes 1 </th>
+  <th> Mes 2 </th>
+  <th> Mes 3 </th>
+  <th> Mes 4 </th>
+  <th> Mes 5 </th>
+  <th> Mes 6 </th>
+  <th> Mes 7 </th>
+  <th> Mes 8 </th>
+  <th> Mes 9 </th>
+  <th> Mes 10 </th>
+  <th> Mes 11 </th>
+  <th> Mes 12 </th>
+</tr>
+
+<% @coeficientes.each do |coeficiente| %>
+ <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+   <td><%=h coeficiente.coef_descripcion %> </td>
+   <td><%=h coeficiente.ejercicio.ejer_descripcion %> </td>
+   <td><%=h coeficiente.coef_inicial %>% </td>
+   <td><%=h coeficiente.coef_mes1 %>% </td>
+   <td><%=h coeficiente.coef_mes2 %>% </td>
+   <td><%=h coeficiente.coef_mes3 %>% </td>
+   <td><%=h coeficiente.coef_mes4 %>% </td>
+   <td><%=h coeficiente.coef_mes5 %>% </td>
+   <td><%=h coeficiente.coef_mes6 %>% </td>
+   <td><%=h coeficiente.coef_mes7 %>% </td>
+   <td><%=h coeficiente.coef_mes8 %>% </td>
+   <td><%=h coeficiente.coef_mes9 %>% </td>
+   <td><%=h coeficiente.coef_mes10 %>% </td>
+   <td><%=h coeficiente.coef_mes11 %>% </td>
+   <td><%=h coeficiente.coef_mes12 %>% </td>
+   <td><%= link_to 'Editar', edit_coeficiente_path(coeficiente) %></td>
+   <td><%= link_to 'Borrar', coeficiente, :confirm => 'Seguro que quiere borrar el coeficiente?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+</div>
+<% else %>
+<h4> La busqueda no produjo resultados </h4>
+<% end %>
+
+
+

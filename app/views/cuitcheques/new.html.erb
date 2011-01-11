@@ -1,0 +1,61 @@
+<h1>Nuevo cuit cheque</h1>
+<br />
+<table>
+<tr>
+<td class="boton" align="center">
+ <img  src="/images/volver.png" width="20px" height="20px" border="0"> 
+ <span style="vertical-align: top"> 
+ <%= link_to 'Volver', :controller => 'chequeterceros', :action => '', :page => params[:page], :monto => params[:monto] %>
+ </span>
+</td>
+</tr>
+</table>
+
+<br />
+<% form_for(@cuitcheque) do |f| %>
+  <%= f.error_messages %>
+<table>
+  <tr>
+   <td>
+    <%= f.label "CUIT del librador:" %>
+    </td>
+    <td>
+    <%= f.text_field :ccheq_cuit, :class => "textosbox" %>
+    </td>
+  </tr>
+  <tr>
+   <td>
+    <%= f.label "Razón Social:" %>
+    </td>
+    <td>
+    <%= f.text_field :ccheq_razonsocial, :class => "textosbox" %>
+    </td>
+  </tr>
+<tr>
+  <td>
+    <%= f.label "Localidad:" %>
+   </td>
+    <td>
+    <%= f.text_field :ccheq_localidad, :class => "textosbox" %>
+   </td>
+  </tr>
+<tr>
+   <td>
+    <%= f.label "Provincia:" %>
+    </td>
+    <td>
+    <%= f.text_field :ccheq_provincia, :class => "textosbox" %>
+    </td>
+  </tr>
+  <%= hidden_field(:valor, :monto, :value => params[:monto]) %>
+  <%= hidden_field(:valor, :page, :value => params[:page]) %> 
+  <tr>
+    <td colspan="2" align="center">
+   
+    <%= f.submit 'Crear', :class => "textosbox" %>
+    </td>
+  </tr>
+</table>
+<% end %>
+<br />
+

@@ -1,0 +1,65 @@
+<h1>Nuevo punto de venta</h1>
+<br/>
+<table>
+<tr>
+ <td class="boton" width="120" align="center">
+   <%= image_tag "volver.png" %> 
+   <span style="vertical-align: top">  
+   <%= link_to 'Volver', puntosventas_path, :page => params[:page] %>
+   </span>
+ </td>
+</tr>
+</table>
+<br />
+<% form_for(@puntosventa) do |f| %>
+  <%= f.error_messages %>
+
+<table>
+ <tr>
+  <td>
+   <Fieldset class="form">
+<LEGEND ALIGN="left" class="formlegend">Ingrese los datos</LEGEND>
+   <table>
+    <tr>
+     <td>
+       Número de punto de venta:     
+     </td>
+     <td>
+    
+      <%= f.text_field(:pven_punto, :size => 10, :class => "textosbox") %>
+     </td>
+   </tr>
+     <tr>
+    <td>
+     Sucursal:     
+    </td>
+    <td>
+      <%= f.collection_select(:sucursal_id, @sucursales, :id, :sucu_nombre )  %>
+    </td>
+   </tr>
+   <tr>
+    <td>
+     Modo de impresión:     
+    </td>
+    <td>
+     <%= f.select(:pven_modoimpresion, options_for_select([['Autoimpresor', 'Autoimpresor'], ['Electronico', 'Electronico'], ['CFiscal', 'CFiscal'], ['Manual', 'Manual']]), {}, :class => "textosbox") %>   
+     </td>
+   </tr>
+
+</table>
+</Fieldset>
+
+</td>
+</tr>
+</table>
+<table>
+  <tr height="70">
+    <td colspan="2" align="center">
+      <%= f.submit 'Crear', :class => "textosbox" %>
+    </td>
+  </tr>
+</table>
+<% end %>
+
+
+

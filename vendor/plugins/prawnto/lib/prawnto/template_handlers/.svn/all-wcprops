@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/gescom-onrails/!svn/ver/33/vendor/plugins/prawnto/lib/prawnto/template_handlers
+END
+dsl.rb
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/gescom-onrails/!svn/ver/33/vendor/plugins/prawnto/lib/prawnto/template_handlers/dsl.rb
+END
+raw.rb
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/gescom-onrails/!svn/ver/33/vendor/plugins/prawnto/lib/prawnto/template_handlers/raw.rb
+END
+base.rb
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/gescom-onrails/!svn/ver/33/vendor/plugins/prawnto/lib/prawnto/template_handlers/base.rb
+END

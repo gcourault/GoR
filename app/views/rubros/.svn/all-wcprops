@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/gescom-onrails/!svn/ver/512/app/views/rubros
+END
+edit.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/gescom-onrails/!svn/ver/511/app/views/rubros/edit.html.erb
+END
+index.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/gescom-onrails/!svn/ver/511/app/views/rubros/index.html.erb
+END
+new.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/gescom-onrails/!svn/ver/511/app/views/rubros/new.html.erb
+END
+show.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/gescom-onrails/!svn/ver/28/app/views/rubros/show.html.erb
+END
+_datosrubro.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/gescom-onrails/!svn/ver/512/app/views/rubros/_datosrubro.html.erb
+END

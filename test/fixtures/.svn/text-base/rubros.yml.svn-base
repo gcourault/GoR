@@ -1,0 +1,19 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  rubr_codigo: 
+  rubr_descripcion: 
+  rubr_servicio: 
+  rubr_topeminimo: 
+  rubr_topemaximo: 
+  rubr_usuario: 
+  rubr_ultmod: 2009-10-26
+
+two:
+  rubr_codigo: 
+  rubr_descripcion: 
+  rubr_servicio: 
+  rubr_topeminimo: 
+  rubr_topemaximo: 
+  rubr_usuario: 
+  rubr_ultmod: 2009-10-26

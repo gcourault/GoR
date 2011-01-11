@@ -1,0 +1,12 @@
+<h1>Editing cabasiento</h1>
+
+<% form_for(@cabasiento) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @cabasiento %> |
+<%= link_to 'Back', cabasientos_path %>

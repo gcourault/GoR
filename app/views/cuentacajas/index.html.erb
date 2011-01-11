@@ -1,0 +1,44 @@
+<h1>Listado de cuentas de caja</h1>
+<% form_tag cuentacajas_path, :method => 'get' do %>  
+ <Fieldset class="filtro">
+      Buscar cuenta:
+      <%= text_field_tag :concepto, params[:concepto], :class => "textosbox", :size => 30 %>
+     
+      <%= submit_tag "Buscar", :class => "textosbox" %>
+</Fieldset>
+<% end %> 
+<br />
+<table>
+<tr>
+<td class="boton"  align="center">
+  <%= image_tag "add.png" %>
+ <span style="vertical-align: top"> 
+ <%= link_to 'Crear nueva cuenta de caja', new_cuentacaja_path %>
+ </span>
+</td>
+</tr>
+</table>
+
+<div class="tablaContainer">
+ <table class="tabladentrocont">
+  <tr class="headerStyle">
+    <th>Sucursal</th>
+    <th>Cuenta</th>
+    <th colspan="3">Descripci&oacute;n</th>
+  </tr>
+
+<% @cuentacajas.each do |cuentacaja| %>
+  <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+    <td><%=h cuentacaja.sucursal.sucu_nombre if cuentacaja.sucursal %></td>
+    <td><%=h cuentacaja.plandecuenta.pcue_cuenta if cuentacaja.plandecuenta %></td>
+    <td><%=h cuentacaja.plandecuenta.pcue_descripcion if cuentacaja.plandecuenta %></td>
+   
+    <td><%= link_to 'Editar', edit_cuentacaja_path(cuentacaja, :page => params[:page]) %></td>
+    <td><%= link_to 'Borrar', cuentacaja, :confirm => 'Esta seguro de borrar la cuenta?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+<%= will_paginate @cuentacajas, :prev_label => '&laquo; Anterior', :next_label => 'Siguiente &raquo;' %>
+</div>
+
+

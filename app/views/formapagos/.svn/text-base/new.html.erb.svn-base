@@ -1,0 +1,82 @@
+<h1>Crear forma de pago</h1>
+<br/>
+<table>
+<tr>
+ <td class="boton" width="120" align="center">
+   <%= image_tag "volver.png" %> 
+   <span style="vertical-align: top">  
+  <%= link_to 'Volver', :controller => 'formapagos', :action => 'index', :page => params[:page] %>
+   </span>
+ </td>
+</tr>
+</table>
+
+<% form_for(@formapago) do |f| %>
+  <%= f.error_messages %>
+<table>
+ <tr>
+  <td>
+<Fieldset class="form"  width="200" >
+<LEGEND ALIGN="left" class="formlegend">Ingresar datos</LEGEND>
+  <table>
+     <tr>
+     <td>
+       C&oacute;digo:     
+     </td>
+     <td>
+       <%= f.text_field :fpag_codigo, :value => @codigonuevo.to_i, :readonly => true, :size => 10 %>
+     </td>
+    </tr>
+  <tr>
+     <td>
+       Nombre:     
+     </td>
+     <td>
+       <%= f.text_field :fpag_nombre, :class => "textosbox" %>
+   
+     </td>
+    </tr>
+      <tr>
+     <td>
+       Detalle en la caja:     
+     </td>
+     <td>
+       <%= f.select(:fpag_detalleenlacaja , options_for_select([['No', 'No'],['Si', 'Si']]), {}, :class => "textosbox") %> 
+   
+     </td>
+    </tr>
+        <tr>
+     <td>
+       Permite repo cheque:     
+     </td>
+     <td>
+      <%= f.select(:fpag_permiterepocheque , options_for_select([['No', 'No'],['Si', 'Si']]), {}, :class => "textosbox") %>   
+   
+     </td>
+    </tr>
+    <tr>
+   
+     <td>
+       Cuenta contable:     
+     </td>
+     <td>
+       <%= f.collection_select (:plandecuenta_id, @plandecuenta, :id, :codigo_nombre, {}, {:class => "textosbox"}) %>   
+     </td>
+   </tr>
+   <%= hidden_field(:valor, :page, :value => params[:page]) %> 
+</table>
+</Fieldset>
+</td>
+</tr>
+</table>
+<table>
+  <tr height="70">
+     <td colspan="2" align="center">
+
+    <%= f.submit 'Crear', :class => "textosbox" %>
+    </td>
+ </tr>
+</table>
+
+<% end %>
+

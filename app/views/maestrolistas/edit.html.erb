@@ -1,0 +1,65 @@
+<h1>Publicar lista de precio</h1>
+<br />
+<table>
+<tr>
+<td class="boton"  align="center">
+<%= link_to 'Mostrar', @maestrolista %> </td>
+<td> | </td> 
+<td class="boton"  align="center">
+<%= link_to 'Volver', maestrolistas_path %>
+</td>
+</tr>
+</table>
+<% observ = params[:obs].to_i %>
+<% form_for(@maestrolista) do |f| %>
+ <table>
+  <%= f.error_messages %>
+  <% if observ == 1 %>
+  <% else %>
+ <tr>
+   <td>
+    <%= f.label "Nro. de lista:" %>
+   </td>
+   <td>
+  <!-- se calcula -->
+   <% nrolista = Maestrolista.maximum(:mlis_nrolista) %>
+   <%= f.text_field :mlis_nrolista, :value => (nrolista + 1), :readonly => true, :size => 10 %>
+  </td>
+ </tr>
+ <tr>
+  <td>
+    <%= f.label "Fecha de Vigencia de la lista:" %>
+  </td>
+  <td>
+    <%= f.date_select :mlis_vigencia %>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   <%= f.label "Tipo de lista:" %>
+  </td>
+  <td>
+   <%= f.select (:mlis_internapublica, options_for_select([['Publica','Publica'],['Interna', 'Interna']])) %>
+  </td>
+ </tr>
+<% end %>
+ <tr>
+  <td valign ="center">
+   <%= f.label "Observaciones:" %> 
+  </td>
+  <td>
+   <%= f.text_area(:mlis_observaciones, :rows => 2) %> </p> 
+  </td>
+ </tr>
+  <p>
+ <!-- <%  :mlis_nombre %> poner este campo en blanco o no? -->
+  </p>
+ <tr>
+  <td colspan="2" align="center" height="70">
+    <%= f.submit 'Modificar', :disable_with => "Publicando lista..." %>
+  </td>
+ </tr>
+</table>
+<% end %>
+
+

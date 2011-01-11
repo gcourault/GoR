@@ -1,0 +1,61 @@
+<h1>Comprobantes Carga de Cheques de Terceros</h1>
+<br />
+<table>
+  <tr>
+    <td class="boton" width="120" align="center">
+      <%= image_tag "volver.png" %> 
+      <span style="vertical-align: top">  
+      <%= link_to 'Volver', :controller => 'login', :action => 'iniciarsession' %>
+      </span>
+    </td>
+    <td class="boton" with="100" align="center">
+      <img  src="/images/add.png" width="20px" height="20px" border="0"> 
+      <span style="vertical-align: top"> 
+        <%= link_to 'Crear nuevo comprobante', new_cabcargachequeter_path %>
+      </span>
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td>
+      <table class="tabladentrocont">
+        <tr class="headerStyle">
+          <th width="50"> Nro.</th>
+          <th width="90"> Fecha </th>
+          <th width="105"> Importe </th>
+          <th> Cerrada </th>
+        </tr>
+ 
+        <% @cabcargachequeters.each do |cabcargachequeter| %>
+        <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+          <td><%=h cabcargachequeter.id %> </td>
+          <td><%=h cabcargachequeter.ccht_fecha %> </td>
+          <td><%=h number_to_currency(cabcargachequeter.ccht_total, :precision => 2, :separator => ",", :delimiter => ".") %> </td>
+          <td align="center"><%=h cabcargachequeter.ccht_cerrado %> </td>
+          <% restrict_to "(rol 2 | rol 3 ) & !blacklist" do %>
+          <% if cabcargachequeter.ccht_cerrado.to_s == "No" %> 
+          <td> <%= link_to 'Editar', edit_cabcargachequeter_path(cabcargachequeter) %> </td>  <td> | </td>
+          <% end %>
+        <% end %>
+        <% restrict_to "(rol 4 | rol 5 | rol 6 | rol 7 ) & !blacklist" do %>
+          <td ><%= link_to 'Editar', edit_cabcargachequeter_path(cabcargachequeter), :page => params[:page] %></td> <td> | </td>
+        <% end %>
+
+          <td ><%= link_to 'Cheques', :controller => 'rencargachequeters', :action => 'index', :idcomp => cabcargachequeter.id[0]  %></td> 
+        <% if cabcargachequeter.ccht_cerrado.to_s == "No" %> 
+       
+        <!--   <td><%= link_to 'Borrar', cabcargachequeter, :confirm => 'Are you sure?', :method => :delete %></td> -->
+        <% end %>
+   
+      </tr>
+<% end %>
+</table>
+<div align="center">
+<%=will_paginate @cabcargachequeters %>
+</div>
+</td>
+</tr>
+</table>
+

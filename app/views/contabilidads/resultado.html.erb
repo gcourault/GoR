@@ -1,0 +1,124 @@
+<h1>Estado de resultados</h1>
+<% if params[:fechadesde].blank? %>
+<% from_time =  Date.today - 1.months %>
+<% else %>
+<% from_time = params[:fechadesde] %>
+<% end %>
+<% if params[:fechahasta].blank? %>
+<% to_time =  Date.today   %>
+<% else %>
+<% to_time = params[:fechahasta] %>
+<% end %>
+<% params[:ejercicio] = 1 if params[:ejercicio].blank? %>
+<% params[:naturaleza] = "Resultados" %>
+<Fieldset class="filtro">
+<legend ALIGN="left" class="formlegend">Fecha del período </legend>
+<table align="left" class="tablafiltro">
+
+<% form_tag  :controller => 'contabilidads', :action => 'resultado', :naturaleza =>  params[:naturaleza] do %> 
+ <tr>
+   <td rowspan=2 class="textosbox" >
+    <Fieldset class="filtro">
+     <legend ALIGN="left" class="formlegend">Cuentas </legend>
+     <div class="form_row">
+       <%= radio_button_tag('todo', "Todas las cuentas", checked = params[:todo].to_s == "Todas las cuentas") %> Todas las cuentas
+       <br />
+       <%= radio_button_tag('todo', "Cuentas con movimientos", checked = params[:todo].to_s == "Cuentas con movimientos") %> Cuentas con movimientos 
+     </div>
+    </Fieldset>
+   </td>
+   <td class="textosbox" align="right">
+      Ejercicio:
+   </td>
+   <td>
+     <%= select_tag(:ejercicio, options_for_select(@ejercicios.collect {|u| [u.ejer_descripcion,u.id]}, params[:ejercicio].to_i), {:class => "textosbox"}) %> 
+   </td>
+    
+  </tr>
+  <tr>
+    <td class="textosbox">
+      Fecha desde:
+    </td>
+    <td >
+      <%=  select_date from_time , {:prefix => "fechadesde"}, {:class => "textosbox"} %> 
+    </td>
+    <td class="textosbox">
+      Fecha hasta: 
+    </td>
+    <td>
+      <%= select_date to_time, {:prefix=>"fechahasta"}, {:class => "textosbox"} %>
+    </td>
+    <td colspan="2">
+      <%= submit_tag "Consultar", :class => "textosbox", :onclick=>"javascript:mostrar_div('output')" %>
+    </td>
+ </tr>
+<% end %>
+
+</table>
+</Fieldset>
+<br />
+
+<% @ejerc = Ejercicio.find(params[:ejercicio].to_i) %>
+<% if (from_time >= @ejerc.ejer_desde) && (to_time <= @ejerc.ejer_hasta) %>
+<% acumcuenta = 0
+   acumtotal = 0 
+   cuentanivel1 = 100000000
+   cuentanivel2 = 1000000
+   cuentanivel3 = 10000
+   cuentanivel4 = 100  %>
+<table >
+<tr>
+<td  class="boton" width="150px"  align="center">
+<%= image_tag "pdf.png" %> 
+<span  style="vertical-align: top"> <%= link_to 'Generar PDF', :controller => 'contabilidads/resultado/', :action => 'resultado.pdf', :ejerciciodesc => @ejerc.ejer_descripcion, :from_time => from_time, :to_time => to_time, :cuentanivel1 => cuentanivel1, :cuentanivel2 => cuentanivel2, :cuentanivel3 => cuentanivel3, :cuentanivel4 => cuentanivel4, :todascuentas => params[:todo], :ejercicio => params[:ejercicio], :naturaleza => params[:naturaleza] %> </span>
+</td>
+<td class="boton" width="150px"  align="center" vertical-align="center" >
+<%= image_tag "excel.png" %> 
+<span  style="vertical-align: top"> <%= link_to_remote 'Exportar a Excel', {:url => {:controller => "contabilidads", :action => "resultadoxls", :cuentan1 => cuentanivel1, :cuentan2 => cuentanivel2, :cuentan3 => cuentanivel3, :cuentan4 => cuentanivel4, :todo => params[:todo], :from_time => from_time, :to_time => to_time, :naturaleza => params[:naturaleza] }, :disable_with => "Por favor espere...", :before=>"this.style.display='none'", :complete =>  "Element.show ('addxls');"},  {:href => url_for(:controller => "contabilidads", :action => "resultadoxls", :cuentan1 => cuentanivel1, :cuentan2 => cuentanivel2, :cuentan3 => cuentanivel3, :cuentan4 => cuentanivel4, :todo => params[:todo], :from_time => from_time, :to_time => to_time, :naturaleza => params[:naturaleza])} %> </span>
+<div id="addxls" style="display:none">
+ <%= render :partial => 'contabilidads/resultadoxls'  %>
+</div>
+</td>
+</tr>
+</table>
+<hr>
+<table class="tabladentrocont" rules="cols" border="1">
+
+   <tr border="1" class="cablibro"> 
+     <td> Cuenta </td>
+     <td> </td>
+     <td> </td>
+     <td> </td>
+     <td> </td>
+     <td align="center">  </td>
+  </tr>
+  <tr><td colspan="7"><hr> </td> </tr>
+       <% @plandecuentas.each do |pcuen| %>
+          <% for nivel in @niveles %>
+            <% if pcuen.pcue_nivel.to_s == nivel.to_s %>
+                    
+               <% col = " " %>
+               <% cuenta = 1 %>
+               <% for nivel in [5, 4, 3, 2, 1] %>
+                <% colfin = "<td></td>" * (nivel -1) %>
+                 <% if pcuen.pcue_nivel.to_s == nivel.to_s %>
+                   <% cuentanivel = "cuentanivel"+nivel.to_s %>
+                    <% fila = nivel == 1  ? '<tr class="rowcontab">' : '<tr>' %>
+                    <%= "#{fila}" %>
+                    <% @acumcuenta = Contabilidad.sumacuenta(pcuen.pcue_cuenta.to_i, (pcuen.pcue_cuenta.to_i + cuenta), from_time, to_time) %> <% acumtotal = acumtotal + @acumcuenta if nivel == 1  %>  <td> <%=h pcuen.codigo_nombre %> </td>
+                    <%= "#{col}" %>  <td align="right"> <%=h number_to_currency(@acumcuenta, :precision => 2, :unit => " ", :separator => ",", :delimiter => ".") %> </td> <%= "#{colfin}" %>  </tr>
+                <% end %> <!-- end if -->
+            <% col += "<td></td>" %>
+            <% cuenta = cuenta * 100 %>
+         <% end %> <!-- end for -->
+           <% end %>
+ 
+   <% end %> <!-- end cuentas -->
+ <% end %> <!-- end nivel -->
+
+ <tr class="rowcontab"> <td align="center" colspan="5"><b> TOTAL </b></td> <td align="right"><b> <%=h number_to_currency(acumtotal, :precision => 2, :unit => " ", :separator => ",", :delimiter => ".") %> </b></td>
+ 
+</table>
+<% else %>
+<h7>La fecha seleccionada no coincide con el ejercicio seleccionado </h7>
+<% end %>

@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/gescom-onrails/!svn/ver/162/app/views/sucursals
+END
+edit.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/gescom-onrails/!svn/ver/25/app/views/sucursals/edit.html.erb
+END
+index.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/gescom-onrails/!svn/ver/162/app/views/sucursals/index.html.erb
+END
+new.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/gescom-onrails/!svn/ver/25/app/views/sucursals/new.html.erb
+END
+show.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/gescom-onrails/!svn/ver/22/app/views/sucursals/show.html.erb
+END

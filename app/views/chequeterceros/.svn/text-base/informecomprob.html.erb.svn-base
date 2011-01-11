@@ -1,0 +1,66 @@
+<h1>Listado de comprobantes internos con fecha de cobro entre las fechas seleccionadas</h1>
+
+<% from_time = (params[:fechadesde].blank? ? Date.today - 31.days :  params[:fechadesde]) %>
+<% to_time = (params[:fechahasta].blank? ? Date.today : params[:fechahasta]) %>
+<Fieldset class="filtro">
+<legend ALIGN="left" class="formlegend">Seleccione entre que fechas</legend>
+<table align="center" class="tablafiltro">
+<% form_tag :controller => 'chequeterceros', :action => 'informecomprob' do %> 
+
+<tr>
+    <td >
+      Fecha desde:
+    </td>
+    <td>
+      <%=  select_date(from_time , {:prefix => "fechadesde"}, {:class => "textosbox"}) %> 
+    </td>
+    <td>
+      Fecha hasta: 
+    </td>
+     <td>
+      <%= select_date(to_time, {:prefix => "fechahasta"}, {:class => "textosbox"}) %>
+    </td>
+    <td colspan="2">
+     <%= submit_tag "Consultar", :class => "textosbox",  :onclick=>"javascript:mostrar_div('output')"  %>
+    </td>
+<% end %>
+</tr>
+</table>
+</Fieldset>
+<br />
+<% if @comprocheques.size > 0 %>
+
+<table>
+ <tr>
+  <td class="boton" width="140px"  align="center" vertical-align="center" >
+   <%= image_tag "excel.png" %> 
+   <span  style="vertical-align: top"> <%= link_to_remote 'Exportar a Excel', {:url => {:controller => "chequeterceros", :action => "informecomprobxls", :fechadesde => params[:fechadesde], :fechahasta => params[:fechahasta]}, :disable_with => "Por favor espere...", :before=>"this.style.display='none'", :complete =>  "Element.show ('addxls');"} %> </span>
+     <div id="addxls" style="display:none">
+        <%= render :partial => 'chequeterceros/informecomprobxls' %>
+     </div>
+  </td>
+ </tr>
+</table>
+
+<br />
+<br />
+<table class="tabladentrocont" border="0" cellpadding="0" cellspacing="0">
+  <tr class="headerStyle">
+   <th>Nro. Comprobante</th>
+   <th>Nro. Cheque</th>
+   <th>Fecha</th>
+   <th>Importe Cobrado</th>
+  </tr>
+
+<% @comprocheques.each do |comprocheque| %>
+  <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+    <td><%=h comprocheque.nrocomprobante %></td>
+    <td><%=h comprocheque.nrocheque %></td>
+    <td><%=h comprocheque.fecha %></td>
+    <td><%=h number_to_currency(comprocheque.importecobrado, :precision => 2, :separator => ",", :delimiter => ".") %></td>
+  </tr>
+<% end %>
+</table>
+
+<% end %>
+

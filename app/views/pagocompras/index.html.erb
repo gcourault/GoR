@@ -1,0 +1,18 @@
+<h1>Listing pagocompras</h1>
+
+<table>
+  <tr>
+  </tr>
+
+<% @pagocompras.each do |pagocompra| %>
+  <tr>
+    <td><%= link_to 'Show', pagocompra %></td>
+    <td><%= link_to 'Edit', edit_pagocompra_path(pagocompra) %></td>
+    <td><%= link_to 'Destroy', pagocompra, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New pagocompra', new_pagocompra_path %>

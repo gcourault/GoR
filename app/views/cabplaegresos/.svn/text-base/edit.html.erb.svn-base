@@ -1,0 +1,82 @@
+<h1>Editar planilla de egreso</h1>
+<br/>
+<table>
+<tr>
+ <td class="boton" width="120" align="center">
+   <%= image_tag "volver.png" %> 
+   <span style="vertical-align: top">  
+  <%= link_to 'Volver', :controller => 'cabplaegresos', :action => 'index', :page => params[:page] %>
+   </span>
+ </td>
+</tr>
+</table>
+<br />
+<% form_for(@cabplaegreso) do |f| %>
+  <%= f.error_messages %>
+<table>
+ <tr>
+  <td>
+<Fieldset class="form"  width="200" >
+<LEGEND ALIGN="left" class="formlegend">Modificar datos</LEGEND>
+<table>
+    <tr>
+     <td>
+       Número de planilla:     
+     </td>
+     <td>
+       <%= f.text_field(:cpeg_nroplanilla, :readonly => true, :size => 10, :class => "textosbox") %>
+     </td>
+   </tr>
+  <tr>
+     <td>
+       Fecha de la planilla:     
+     </td>
+     <td>
+       <%= f.date_select(:cpeg_fecha, {}, {:class => "textosbox"}) %>
+   
+     </td>
+  
+    <tr>
+     <td>
+       A cargo de:     
+     </td>
+     <td>
+       <%= f.select(:cpeg_acargode , options_for_select([['Central', 'C'],['Sucursal', 'S']],  @cabplaegreso.cpeg_acargode.to_s ), {}, :class => "textosbox") %>   
+     </td>
+   </tr>
+
+   <tr>
+     <td>
+       Planilla cerrada:     
+     </td>
+     <td>
+       <%= f.select(:cpeg_cerrada , options_for_select([['N', 'N'],['S', 'S']], @cabplaegreso.cpeg_cerrada.to_s), {}, :class => "textosbox") %>   
+     </td>
+   </tr>
+ <!--  <tr>
+     <td>
+       Importe:     
+     </td>
+     <td>
+       <%= f.text_field :cpeg_importe, :size => 10 %>
+     </td>
+   </tr> -->
+
+ 
+</table>
+</Fieldset>
+</td>
+</tr>
+</table>
+<table>
+  <tr height="70">
+     <td colspan="2" align="center">
+
+    <%= f.submit 'Modificar', :class => "textosbox" %>
+    </td>
+ </tr>
+</table>
+
+<% end %>
+
+

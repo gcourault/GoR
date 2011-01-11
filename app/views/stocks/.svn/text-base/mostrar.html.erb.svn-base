@@ -1,0 +1,34 @@
+<h4 align="left">Stock: <%= @articulo.arti_descripcion %></h4>
+
+<table align="left">
+<tr>
+ <td class="boton" width="120" align="center">
+   <%= image_tag "volver.png" %> 
+   <span style="vertical-align: top">  
+    <a href="javascript:history.back()">Volver</a>
+   </span>
+ </td>
+</tr>
+</table>
+<br />
+<% if !@stocks.nil? && @stocks.size > 0 %>
+<% total = 0 %>
+<table align="left">
+  <tr class="headerStyle">
+   <td>Sucursal </td>
+   <td>Unidades </td>
+  <tr>
+
+
+<% @stocks.each do |stock| %>
+  <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+   <td><%=h stock.nombresucu %></td>
+   <td><%=h stock.unidades %> </td> <% total = total + stock.unidades.to_i %>
+  </tr>
+
+<% end %>
+<tr><td><b>TOTAL:</b></td><td><b><%= total %></td> </tr>
+</table>
+<% else %>
+<h5 align="left">  NO hay unidades en stock </h5>
+<% end %>

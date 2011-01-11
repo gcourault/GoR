@@ -1,0 +1,115 @@
+<h1>Listado de comprobantes </h1>
+
+<% params[:nrope] = 0
+   params[:idpe] = 0 %>
+<% if params[:fechadesde].blank? %>
+<% from_time =  Date.today - 1.months %>
+<% else %>
+<% from_time = params[:fechadesde] %>
+<% end %>
+<% if params[:fechahasta].blank? %>
+<% to_time =  Date.today   %>
+<% else %>
+<% to_time = params[:fechahasta] %>
+<% end %>
+<Fieldset class="filtro">
+<legend ALIGN="left" class="formlegend"> Busqueda de comprobantes entre fechas </legend>
+<table align="left" class="tablafiltro">
+
+<% form_tag  :controller => 'cabcompras', :action => 'comprobantes' do %> 
+ <tr>
+   <td>
+      Fecha desde:
+    </td>
+    <td >
+      <%=  select_date from_time , {:prefix => "fechadesde"}, {:class => "textosbox"} %> 
+    </td>
+    <td>
+      Fecha hasta: 
+    </td>
+    <td>
+      <%= select_date to_time, {:prefix=>"fechahasta"}, {:class => "textosbox"} %>
+    </td>
+    <td colspan="2">
+      <%= submit_tag "Consultar", :class => "textosbox", :onclick=>"javascript:mostrar_div('output')" %>
+    </td>
+ </tr>
+<% end %>
+
+</table>
+</Fieldset>
+
+<table>
+ <tr>
+     <% suma = 0
+        @total.each do |tot|
+        suma = tot.total 
+       end %>
+   <td align="left" class="textosbox"> 
+    Suma-comprobantes:
+  </td> 
+  <td align="left">
+    <%= text_field_tag :total, params[:total], :size => 12, :value => number_to_currency(suma, :precision => 2, :separator => ",", :delimiter => "."), :readonly => true %>
+   <td  class="boton"   align="center">
+     <%= image_tag "add.png" %> 
+     <span style="vertical-align: top"> 
+    <% form_for(@cabcompra,  :url => { :action => 'new',  :nrope => params[:nrope] , :idpe => params[:idpe]}, :method => :post) do |f| %>
+     </td>
+     <td class="textosbox">
+      Seleccione el comprobante a cargar: 
+     </td>
+     <td>
+      <%= f.collection_select(:tipocomprobante_id, @tipocomprobantes, :id, :numero_nombre, {}, {:class => "textosbox"}) %>
+      <%= f.submit "Cargar", :class => "textosbox" %>
+     </td>
+    <% end %>
+  </span>
+  </td>
+ </tr>
+ <tr>
+   
+  </td>
+ </tr>
+</table>
+
+<div class="tablaContainer">
+<table class="tabladentrocont">
+<tr>
+<td>
+<table align="left" >
+ <% if @cabcompras.size > 0 %>
+    <tr class="headerStyle">
+      <th>Nro. </th>
+      <th>Pto. venta</th>
+      <th>Nro comprobante</th>
+      <th>Fecha</th>
+      <th>Tipo</th>
+      <th>Proveedor</th>
+      <!--  <th>Jurisdicci&oacute;n</th> -->
+      <th>Concepto</th>
+      <th width="105">Total</th>
+    </tr>
+
+<% @cabcompras.each do |cabcompra| %>
+  <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+    <td><%=h cabcompra.id[0] %></td>
+    <td><%=h cabcompra.ccom_puntosventa %></td>
+    <td><%=h cabcompra.ccom_desdecompro %></td>
+    <td><%=h cabcompra.ccom_fecha %></td>
+    <td><%=h cabcompra.tipocomprobante.tcom_nombre if cabcompra.tipocomprobante %></td>
+    <td><%=h cabcompra.proveedor.prov_nombre if cabcompra.proveedor%></td>
+    <!-- <td><%=h cabcompra.jurisdiccion.juri_nombre if  cabcompra.jurisdiccion %></td> -->
+    <td><%=h cabcompra.conceptoegreso.cegr_detalle  if cabcompra.conceptoegreso %></td>
+    <td><%=h number_to_currency(cabcompra.ccom_total, :precision => 2, :separator => ",", :delimiter => ".") %></td>
+    <td><%= link_to 'Mostrar', cabcompra %></td>
+    <td><%= link_to 'Borrar', cabcompra, :confirm => 'Seguro quiere eliminar el comprobante?', :method => :delete %></td>
+   
+   <!-- <td><%= link_to_remote 'Renglones', :update => 'renglones', :url => {:controller => 'cabcompras', :action => 'renglones', :idcabcompra => cabcompra.id, } %></td> -->
+   
+  </tr>
+<% end %>
+<% else %>
+  <h4>No hay comprobantes cargados </h4>
+<% end %>
+
+

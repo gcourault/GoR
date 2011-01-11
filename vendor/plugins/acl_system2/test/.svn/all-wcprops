@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/gescom-onrails/!svn/ver/97/vendor/plugins/acl_system2/test
+END
+test_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/gescom-onrails/!svn/ver/97/vendor/plugins/acl_system2/test/test_helper.rb
+END
+access_control_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/gescom-onrails/!svn/ver/97/vendor/plugins/acl_system2/test/access_control_test.rb
+END

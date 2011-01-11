@@ -1,0 +1,68 @@
+<p>
+  <b>Sucu codigo:</b>
+  <%=h @sucursal.sucu_codigo %>
+</p>
+
+<p>
+  <b>Sucu nombre:</b>
+  <%=h @sucursal.sucu_nombre %>
+</p>
+
+<p>
+  <b>Sucu abreviatura:</b>
+  <%=h @sucursal.sucu_abreviatura %>
+</p>
+
+<p>
+  <b>Sucu domicilio:</b>
+  <%=h @sucursal.sucu_domicilio %>
+</p>
+
+<p>
+  <b>Sucu impu municipal:</b>
+  <%=h @sucursal.sucu_impu_municipal %>
+</p>
+
+<p>
+  <b>Sucu insc municipal:</b>
+  <%=h @sucursal.sucu_insc_municipal %>
+</p>
+
+<p>
+  <b>Sucu provinciapib:</b>
+  <%=h @sucursal.sucu_provinciapib %>
+</p>
+
+<p>
+  <b>Sucu inicioactividades:</b>
+  <%=h @sucursal.sucu_inicioactividades %>
+</p>
+
+<p>
+  <b>Sucu porcuentayorden:</b>
+  <%=h @sucursal.sucu_porcuentayorden %>
+</p>
+
+<p>
+  <b>Sucu controlaservicio:</b>
+  <%=h @sucursal.sucu_controlaservicio %>
+</p>
+
+<p>
+  <b>Sucu email:</b>
+  <%=h @sucursal.sucu_email %>
+</p>
+
+<p>
+  <b>Sucu usuario:</b>
+  <%=h @sucursal.sucu_usuario %>
+</p>
+
+<p>
+  <b>Sucu ultmod:</b>
+  <%=h @sucursal.sucu_ultmod %>
+</p>
+
+
+<%= link_to 'Edit', edit_sucursal_path(@sucursal) %> |
+<%= link_to 'Back', sucursals_path %>

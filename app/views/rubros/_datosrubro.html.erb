@@ -1,0 +1,30 @@
+<!-- Partial p/cargar datos de un rubro -->
+
+<table>
+   <tr>
+     <td>
+     C&oacute;digo      
+     </td>
+     <td>
+     <%= f.text_field :rubr_codigo , :class => "textosbox" %> 
+     </td>
+   </tr>
+   <tr>
+     <td>
+     Detalle del rubro   
+     </td>
+     <td>
+     <%= f.text_field :rubr_descripcion , :class => "textosbox" %> 
+     </td>
+   </tr>
+   <tr>
+     <td>
+     Rubro de Servicio     
+     </td>
+     <td>
+     <%= f.select(:rubr_servicio , options_for_select([['N', 'N'],['S', 'S']],@rubro.rubr_servicio.to_s), {}, :class => "textosbox") %>   
+     </td>
+   </tr>
+
+</table>
+

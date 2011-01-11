@@ -1,0 +1,76 @@
+
+<div id="pagocompra">
+<table>
+<tr>
+<td>
+<table>
+  <tr class="headerStyle" >
+      <th>Pla egreso </th>
+      <th>Comprobante </th>
+      <th>Fecha</th>
+      <th>Tipo</th>
+      <th>Proveedor</th>
+      <th>Concepto</th>
+      <th>Total</th>
+ </tr>
+<% for totalproveedor in @totalproveedors %>
+ <% @comprobantepagos = Cabcompra.find(:all, :conditions =>['cabplaegreso_id = ? and proveedor_id = ? and conceptoegreso_id = ? and sucursal_id = ?', totalproveedor.cabplaegreso_id, totalproveedor.proveedor_id, totalproveedor.conceptoegreso_id, session[:sucursal]]) %>
+
+<%  @comprobantepagonulos = Cabplaegreso.comprobantepagonulo(totalproveedor.cabplaegreso_id, totalproveedor.proveedor_id, totalproveedor.conceptoegreso_id, session[:sucursal]) %>
+<% @comprobantepagos.each do |comprobantepago| %>
+ <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+    <td><%=h comprobantepago.cabplaegreso_id %></td>
+    <td><%=h comprobantepago.id[0] %></td>
+    <td><%=h comprobantepago.ccom_fecha %></td>
+    <td><%=h comprobantepago.tipocomprobante.tcom_nombre %></td>
+    <% proveedor = Proveedor.find_by_id(comprobantepago.proveedor_id, comprobantepago.sucursal_id) %>
+    <td><%=h proveedor.prov_nombre %></td>
+    <td><%=h comprobantepago.conceptoegreso.cegr_detalle %></td> 
+    <td><%=h comprobantepago.ccom_total %></td>
+
+  </tr>
+ <% end %>
+<tr>
+<% if @comprobantepagonulos.size > 0 %>
+<td colspan="4">
+  
+      <%= link_to "ingresar pago", :controller=> 'pagocompras', :action => 'new', :total => totalproveedor.total, :idpe => params[:idpe], :nrope => totalproveedor.ccom_nroplaegreso, :proveedor => totalproveedor.proveedor_id, :concepto => totalproveedor.conceptoegreso_id %> </td>
+ 
+ <% else %>
+    <td colspan="3">
+    La forma de pago ya fue ingresada <!-- <%= link_to "Ver", :controller => 'pagocompras', :action => 'show', :id => totalproveedor.pagocompra_id.to_s+","+session[:sucursal].to_s, :idpe => params[:idpe], :nrope => totalproveedor.ccom_nroplaegreso %> -->
+    <% if totalproveedor.pagocompra_id.to_i > 0 %>
+    <%= link_to_remote 'Ver', :update => 'verpago', :url => {:controller => 'cabplaegresos', :action => 'verfp', :id =>  totalproveedor.pagocompra_id.to_s+","+session[:sucursal].to_s, :idpe => params[:idpe], :nrope => totalproveedor.ccom_nroplaegreso} %>
+    <% end %>
+    </td>
+    <td>
+
+    
+      <% if ( @planillaegreso.nil? || (@planillaegreso.cpeg_cerrada.to_s == 'S')) %> 
+        <% else %>
+        <%= link_to "Editar", :controller => 'pagocompras', :action => 'edit', :id => totalproveedor.pagocompra_id.to_s+","+session[:sucursal].to_s, :idpe => params[:idpe], :nrope => totalproveedor.ccom_nroplaegreso, :total => totalproveedor.total %>
+       <% end %>
+     
+
+  </td>
+ <% end %>
+<td colspan="2">
+Total de los comprobantes:
+</td>
+<td>
+<%= number_to_currency(totalproveedor.total, :precision => 2, :separator => ",", :delimiter => ".")  %>
+</td>
+</tr>
+<% end %>
+</table>
+</td>
+<td>
+<div id="verpago">
+<%= render :partial => "cabplaegresos/verfp" %>
+</div>
+</td>
+</tr>
+</table>
+</div>
+
+

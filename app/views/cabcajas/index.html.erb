@@ -1,0 +1,33 @@
+<h1>Listado de cajas</h1>
+
+<div id="tablaContainer" >
+<table >
+  <tr class="headerStyle">
+    <th>Sucursal</th>
+   <!-- <th>Cabcaja</th>
+    <th>Vendedor</th> -->
+    <th>Nrocaja</th>
+    <th>Fecha</th>
+    <th>Cerrada</th>
+    <th>Importada</th>
+    
+  </tr>
+
+<% @cabcajas.each do |cabcaja| %>
+  <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+    <td><%=h cabcaja.sucursal.sucu_nombre %></td>
+    <!-- <td><%=h cabcaja.cabcaja_id %></td>
+    <td><%=h cabcaja.vendedor_id %></td> -->
+    <td><%=h cabcaja.ccaj_nrocaja %></td>
+    <td><%=h cabcaja.ccaj_fecha %></td>
+    <td><%=h cabcaja.ccaj_cerrada %></td>
+    <td><%=h cabcaja.ccaj_importar %></td>
+    <td><%= link_to 'Bajar caja' %></td>
+  </tr>
+<% end %>
+</table>
+</div>
+
+<div align="center">
+<%=will_paginate @cabcajas %>
+</div>

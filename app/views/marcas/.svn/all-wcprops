@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/gescom-onrails/!svn/ver/266/app/views/marcas
+END
+edit.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/gescom-onrails/!svn/ver/28/app/views/marcas/edit.html.erb
+END
+index.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/gescom-onrails/!svn/ver/266/app/views/marcas/index.html.erb
+END
+new.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/gescom-onrails/!svn/ver/28/app/views/marcas/new.html.erb
+END
+show.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/gescom-onrails/!svn/ver/28/app/views/marcas/show.html.erb
+END

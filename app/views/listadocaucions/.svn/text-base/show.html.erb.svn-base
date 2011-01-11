@@ -1,0 +1,57 @@
+<p>
+  <b>Nro. Listado caucu&oacute;n:
+  <%=h @listadocaucion.id %>
+</p>
+<p>
+  <b>Sucursal:
+  <%=h @listadocaucion.sucursal.sucu_nombre %>
+</p>
+<p>
+  <b>Nro. caja:
+  <%=h @listadocaucion.lcau_nrocaja %>
+</p>
+<p>
+  <b>Fecha:
+  <%=h @listadocaucion.lcau_fecha %>
+</p>
+<p>
+  <b>Banco:
+  <%=h @listadocaucion.banco.banc_nombre %>
+</p>
+<p>
+  <b>Cuenta:
+  <%=h @listadocaucion.lcau_cuenta %>
+</p>
+<p>
+  <b>Denominaci&oacute;n:
+  <%=h @listadocaucion.lcau_denominacion %>
+</p>
+<p>
+  <b>Importe:
+  <%=h @listadocaucion.lcau_importetotal %>
+</p>
+<p>
+  <b>Importe banco:
+  <%=h @listadocaucion.lcau_importebanco %>
+</p>
+<p>
+  <b>fecha banco:
+  <%=h @listadocaucion.lcau_fechaimportebanco %>
+</p>
+<p>
+  <b>Usuario:
+  <%=h @listadocaucion.lcau_usuario %>
+</p>
+<p>
+  <b>Ultima modificaci&oacute;n:
+  <%=h @listadocaucion.lcau_ultmod %>
+</p>
+<table>
+<tr>
+<td class="boton"  align="center">
+<%= link_to 'Editar', edit_listadocaucion_path(@listadocaucion) %> </td>
+<td class="boton"  align="center"> <%= link_to 'Volver', listadocaucions_path %> 
+</td>
+
+</tr>
+</table>

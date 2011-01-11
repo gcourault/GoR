@@ -1,0 +1,135 @@
+<table>
+<tr>
+<td class="boton"  align="center">
+<%= link_to 'Editar', edit_articulo_path(@articulo) %> </td>
+<td> | </td> 
+<td class="boton"  align="center">
+<%= link_to 'Volver',:controller => 'articulos', :action => 'index', :marcaid => @articulo.marca.marc_codigo,  :rubroid => @articulo.rubro.rubr_codigo %>
+</td>
+</tr>
+</table>
+<br />
+<p>
+  <b>C&oacute;digo:</b>
+  <%=h @articulo.arti_codigo %>
+</p>
+<p>
+  <b>C&oacute;digo lista:</b>
+  <%=h @articulo.arti_codigolista %>
+</p>
+<p>
+  <b>Descripci&oacute;n:</b>
+  <%=h @articulo.arti_descripcion %>
+</p>
+
+<p>
+  <b>Marca:</b>
+  <%=h @articulo.marca.marc_descripcion %>
+</p>
+
+<p>
+  <b>Rubro:</b>
+  <%=h @articulo.rubro.rubr_descripcion %>
+</p>
+
+<p>
+  <b>Modelo:</b>
+  <%=h @articulo.arti_modelo %>
+</p>
+
+<p>
+  <b>Medida:</b>
+  <%=h @articulo.arti_medida %>
+</p>
+
+<p>
+  <b>Con o sin camara:</b>
+  <%=h @articulo.arti_conosincamara %>
+</p>
+
+<p>
+  <b>Telas:</b>
+  <%=h @articulo.arti_telas %>
+</p>
+<p>
+  <b>Ancho:</b>
+  <%=h @articulo.arti_ancho %>
+</p>
+<p>
+  <b>Diametro:</b>
+  <%=h @articulo.arti_diametro %>
+</p>
+<p>
+  <b>Aro:</b>
+  <%=h @articulo.arti_aro %>
+</p>
+<p>
+  <b>Clave secundaria:</b>
+  <%=h @articulo.arti_clavesecundaria %>
+</p>
+
+<p>
+  <b>Alicuota iva:</b>
+  <%=h @articulo.alicuotaiva_id %>
+</p>
+
+<p>
+  <b>C&oacute;digo lista:</b>
+  <%=h @articulo.arti_codigolista %>
+</p>
+
+<p>
+  <b>Imp/nac:</b>
+  <%=h @articulo.arti_impnac %>
+</p>
+
+<p>
+  <b>Venta cta ord:</b>
+  <%=h @articulo.arti_ventactaord %>
+</p>
+<p>
+  <b>Consignatario:</b>
+  <%=h @articulo.consignatario.csgn_nombre if @articulo.consignatario %>
+</p>
+<p>
+  <b>Habilitado:</b>
+  <%=h @articulo.arti_habilitado %>
+</p>
+
+<p>
+  <b>Promo pirelli:</b>
+  <%=h @articulo.arti_promopirelli %>
+</p>
+
+<p>
+  <b>Controla stock:</b>
+  <%=h @articulo.arti_controlastock %>
+</p>
+
+<p>
+  <b>Liquida comisi&oacute;n:</b>
+  <%=h @articulo.arti_liquidacomision %>
+</p>
+
+<p>
+  <b>Fecha baja:</b>
+  <%=h @articulo.arti_fechabaja %>
+</p>
+
+
+<p>
+  <b>Nuevo:</b>
+  <%=h @articulo.arti_artinuevo %>
+</p>
+
+<p>
+  <b>Usuario:</b>
+  <%=h @articulo.arti_usuario %>
+</p>
+
+<p>
+  <b>Ultima modificaci&oacute;n:</b>
+  <%=h @articulo.arti_ultmod %>
+</p>
+
+

@@ -1,0 +1,48 @@
+<h1>Nueva caja</h1>
+
+<% form_for(@cabcaja) do |f| %>
+  <%= f.error_messages %>
+
+  <p class="textbox">
+    <%= f.label :sucursal_id %><br />
+    <%= f.text_field :sucursal_id %>
+  </p>
+  <p class="textboxad">
+    <%= f.label :cabcaja_id %><br />
+    <%= f.text_field :cabcaja_id %>
+  </p>
+  <p class="textbox">
+    <%= f.label :vendedor_id %><br />
+    <%= f.text_field :vendedor_id %>
+  </p>
+  <p class="textboxad">
+    <%= f.label :ccaj_nrocaja %><br />
+    <%= f.text_field :ccaj_nrocaja %>
+  </p>
+  <p class="textbox">
+    <%= f.label :ccaj_fecha %><br />
+    <%= f.text_field :ccaj_fecha %>
+  </p>
+  <p class="textboxad">
+    <%= f.label :ccaj_cerrada %><br />
+    <%= f.text_field :ccaj_cerrada %>
+  </p>
+  <p class="textbox">
+    <%= f.label :ccaj_importar %><br />
+    <%= f.text_field :ccaj_importar %>
+  </p>
+  <p class="textboxad">
+    <%= f.label :ccaj_usuario %><br />
+    <%= f.text_field :ccaj_usuario %>
+  </p>
+  <p class="textbox">
+    <%= f.label :ccaj_ultmod %><br />
+    <%= f.date_select :ccaj_ultmod %>
+  </p>
+  <p class="botoncrud">
+    <%= f.submit 'Crear' %>
+  </p>
+<% end %>
+<div  class="botonnuevo" style="align:center;">
+<%= link_to 'Volver', cabcajas_path %>
+</div>

@@ -1,0 +1,33 @@
+<% if @revendedors.blank? %> 
+<h2>No tiene revendedores </h2>
+<% else %> 
+<% totalvend = 0 %>
+<h5> Revendedores del venderor <%= params[:nombrevend].to_s %> </h5>
+<table align="left" >
+  <tr class="headerStyle">
+    <th width="250px">Nombre</th>
+    <th width="80px">Sucursal</th>
+    <th width="140px">Monto facturado</th>
+
+   </tr>
+ <% @revendedors.each do |revendedor| %>
+  <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+    <td><%=h revendedor.nombre %></td>
+    <td><%=h revendedor.sucunombre %></td>
+    <td><%=h number_to_currency(revendedor.total, :precision => 2, :separator => ",", :delimiter => ".") %> <% totalvend = totalvend +  revendedor.total.to_d %></td> 
+  </tr>
+ <% end %>
+<tr>
+<td colspan="2" align="right">  <h6>Total por revendedores:  </td><td> <b> <%= number_to_currency(totalvend, :precision => 2, :separator => ",", :delimiter => ".") %> </h6></td>
+</tr>
+
+</table>
+<% end %>
+<table>
+ <tr>
+   <td class="boton" align="center">
+      <%= image_tag "cerrar.png" %>
+      <%= link_to 'Cerrar',:controller => 'vendedors', :action => 'index',  :fechadesde => params[:fechadesde], :fechahasta => params[:fechahasta] %>
+   </td>
+  </tr>
+</table>

@@ -1,0 +1,136 @@
+<h1>Editando articulo de la lista precio</h1>
+<br />
+<table>
+<tr>
+<td class="boton" width="100" align="center">
+ <%= image_tag "volver.png"%>
+ <span style="vertical-align: top">  
+ <%= link_to 'Volver', :controller => 'listaprecios', :action => 'index', :maestrolistaid => @listaprecio.maestrolista.id, :marcacod => @listaprecio.articulo.marca.marc_codigo,  :rubrocod => @listaprecio.articulo.rubro.rubr_codigo,  :idmodificado => @listaprecio.id %>
+ </span>
+</td> 
+</tr>
+</table>
+<br />
+<table>
+<% form_for(@listaprecio) do |f| %>
+  <%= f.error_messages %>
+<tr>
+  <td colspan="6" align="center">
+    <%= f.label "Nombre de la lista:" %>
+  <% if @listaprecio.maestrolista_id? %>  <%=h @listaprecio.maestrolista.mlis_nombre %> <% end %>
+  </td>
+ </tr> 
+ <tr>
+  <td colspan="6" align="center">
+    <%= f.label "Codigo lista:" %>
+    <%= f.select (:lpre_codigolista, options_for_select(["C", "I", "T", "O"], @listaprecio.lpre_codigolista.to_s)) %> 
+  </td>  
+ </tr>
+ <tr>
+  <td colspan="6" align="center">
+    <%= f.label "Art&iacute;culo:"  %>
+    <%= @articulos = Articulo.find(:all, :order =>"arti_descripcion")
+    f.collection_select(:articulo_id,
+    @articulos, :id, :arti_descripcion, :prompt=>"Seleccione un articulo:") %>
+ </td>  
+ </tr>
+ <tr>
+ <td>
+    <%= f.label "Precio de lista:" %>
+  </td>
+  <td>
+    <%= f.text_field :lpre_preciolista, :size => 10 %>
+  </td>
+  <td colspan ="2" align="center">
+    + Grillas =>
+  </td>
+  <td>
+    <%= f.label "Precio de costo:" %>
+ </td>
+  <td>
+    <%= f.text_field :lpre_preciocosto, :size => 10 %>
+  </td>
+ </tr>
+ <tr>
+  <td>
+    <%= f.label "Remarque 1:" %>
+ </td>
+  <td>
+    <%= f.text_field :lpre_remarque, :size => 10 %>
+  </td>
+  <td>
+    <%= f.label "Remarque 2:" %>
+  </td>
+  <td>
+    <%= f.text_field :lpre_remarque2, :size => 10 %>
+  </td>
+  <td>
+    <%= f.label "Remarque 3:" %>
+  </td>
+  <td>
+    <%= f.text_field :lpre_remarque3, :size => 10 %>
+  </td>
+ </tr>
+ <tr colspan="6" align="right">
+  <td>
+    <%= f.label "Precio de venta:" %>
+  </td>
+  <td>
+    <%= f.text_field :lpre_precioventa, :size => 10 %>
+  </td>
+ </tr>
+ <tr>
+  <td colspan="6" align="center" height="70">
+    <%= f.submit 'Modificar' %>
+  </td>
+ </tr>
+<% end %>
+</table>
+
+
+<% @grillalistas = Grillalista.find_all_by_listaprecio_id(@listaprecio.id) %>
+<% if @grillalistas.empty? %> 
+<h2> El articulo no tiene grillas asociadas </h2>
+<% else %>
+
+<table border="1">
+  <tr>
+    <th>Nro. grilla</th>
+    <th>Nro. columna</th>
+    <th>Porcentaje</th>
+  </tr>
+
+<% @grillalistas.each do |grillalista| %>
+  <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+    <td> <%=h grillalista.glis_nrogrilla %> </td>
+    <td> <%=h grillalista.glis_nrocolumna %> </td>
+    <td> <%=h grillalista.glis_porcentaje %> </td>
+    <td> <%= link_to 'Modificar', edit_grillalista_path(grillalista , :grillaid => grillalista.id) %> </td>
+   <!-- <td><%= link_to_remote 'Modificar',{:url => {:controller => "grillalistas", :action => "edit", :id => grillalista.id, :grillaid => grillalista.id },  :complete =>  "Element.show   ('modgrilla');"},  {:href => url_for(:controller => "grillalistas", :action => "edit", :id => grillalista.id, :grillaid => grillalista.id )}  %>   </td>  -->
+    <td> <%= link_to ' Borrar ', grillalista, :confirm => 'Esta seguro que quiere borrar?', :method => :delete %> </td> 
+  </tr>
+<% end %>
+</table>
+<br />
+<% end %>
+<table>
+<tr>
+<td> 
+<%= image_tag "add.png" %>
+<span style="vertical-align: top">  
+<%= link_to_remote 'Agregar grilla',{:url => {:controller => "grillalistas", :action => "new", :listaprecioid => @listaprecio.id},  :complete =>  "Element.show   ('addgrilla');"},  {:href => url_for(:controller => "grillalistas", :action => "new", :listaprecioid => @listaprecio.id)}  %> 
+</span>
+</td>
+</tr>
+<tr>
+<td> <div id="addgrilla" style="display:none"> 
+  <%= render :partial => 'grillalistas/new'  %>
+</div> </td>
+</tr>
+<tr>
+<td> <div id="modgrilla" style="display:none"> 
+  <%= render :partial => 'grillalistas/edit'  %>
+</div> </td>
+</tr>
+<br />
+

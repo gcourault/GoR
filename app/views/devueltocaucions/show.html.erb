@@ -1,0 +1,39 @@
+<table>
+<tr>
+<td class="boton"  align="center">
+<%= link_to 'Editar',  :controller => 'devueltocaucions', :action => 'edit' , :id => @devueltocaucion.id, :page => params[:page] %> </td>
+<td> | </td> 
+<td class="boton"  align="center">
+<%= link_to 'Volver', :controller => 'devueltocaucions', :action => '',  :page => params[:page]  %>
+</td>
+</tr>
+</table>
+<p>
+  <b>Sucursal:
+  <%=h @devueltocaucion.sucursal.sucu_nombre %>
+</p>
+<p>
+  <b>Detalle:
+  <%=h @devueltocaucion.devc_detalle %>
+</p>
+<p>
+  <b>Fecha:
+  <%=h @devueltocaucion.devc_fecha %>
+</p>
+<p>
+  <b>Importe:
+  <%=h @devueltocaucion.devc_importe %>
+</p>
+<p>
+  <b>Tipo:
+  <%=h @devueltocaucion.devc_tipo %>
+</p>
+<p>
+  <b>Usuario:
+  <%=h @devueltocaucion.devc_usuario %>
+</p>
+<p>
+  <b>Ultima modificaci&oacute;n:
+  <%=h @devueltocaucion.devc_ultmod %>
+</p>
+

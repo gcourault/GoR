@@ -1,0 +1,57 @@
+<table  > <tr>
+<td class="boton" width="100" align="center">
+<%= link_to 'Volver', :controller => 'listaprecios', :action => 'edit', :id => @listaprecio.id %>  
+</td> </tr>
+</table>
+<p>
+  <b>C&oacute;digo lista:</b>
+  <%=h @listaprecio.lpre_codigolista %>
+</p>
+
+<p>
+  <b>Art&iacute;culo:</b>
+  <%=h @listaprecio.articulo.arti_descripcion %>
+</p>
+
+
+<p>
+  <b>Precio de costo:</b>
+  <%=h @listaprecio.lpre_preciocosto %>
+</p>
+
+<p>
+  <b>Precio de venta:</b>
+  <%=h @listaprecio.lpre_precioventa %>
+</p>
+
+<p>
+  <b>Remarque:</b>
+  <%=h @listaprecio.lpre_remarque %>
+</p>
+
+<p>
+  <b>Remarque 2:</b>
+  <%=h @listaprecio.lpre_remarque2 %>
+</p>
+
+<p>
+  <b>Remarque 3:</b>
+  <%=h @listaprecio.lpre_remarque3 %>
+</p>
+<p>
+  <b>Precio de lista:</b>
+  <%=h @listaprecio.lpre_preciolista %>
+</p>
+
+<p>
+  <b>Lpre ultmod:</b>
+  <%=h @listaprecio.lpre_ultmod %>
+</p>
+
+<p>
+  <b>Lpre usuario:</b>
+  <%=h @listaprecio.lpre_usuario %>
+</p>
+
+
+

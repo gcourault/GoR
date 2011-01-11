@@ -1,0 +1,77 @@
+<h1>Lista de precios</h1>
+<!-- restrigir la index por url -->
+<% restrict_to "(rol 3 |rol 4 | rol 5 | rol 6 | rol 7 ) & !blacklist" do %>
+ <% if (params[:maestrolistaid].to_i > 0) %> 
+  <% else %>
+   <% form_tag :controller => 'listaprecios', :action => 'listaprecio' do %>  
+     <Fieldset class="filtro" >
+      Buscar lista de precios N&uacute;mero:
+      <%= text_field_tag :nrolista, params[:nrolista], :class => "textosbox" %>
+      Modelo:
+      <%= text_field_tag :modelo, params[:modelo], :class => "textosbox" %>
+      <%= submit_tag "Buscar", :name => nil, :class => "textosbox" %>
+     </Fieldset>
+   <% end %>
+ <% end %>
+<% end %>
+<% empresa = Empresa.find(:first) %>
+<% if (params[:nrolista].nil? || params[:nrolista].empty?) %> <% params[:nrolista] = empresa.empr_listavigente %> <% end %>
+<% if (session[:user].usur_rol.to_i <= 2) %> 
+<!-- si el usuario tiene rol 1 muestra la ultima lista cuyo estado sea publica -->
+<% params[:nrolista] = Listaprecio.maximum(:lpre_nrolista, :joins => [:maestrolista], :conditions => ["maestrolistas.mlis_internapublica = 'Publica'"]) %> 
+<% end %>
+<% @maestrol = Maestrolista.find_by_mlis_nrolista( params[:nrolista] ) %>
+<% @marcas = Marca.find(:all, :order => ['marc_codigo']) %>
+<% @rubros = Rubro.find(:all, :order => ['rubr_codigo']) %>
+<h2><%= @maestrol.mlis_comentarioweb %></h2>
+<br />
+<table >
+<tr>
+<td  class="boton" width="150px"  align="center">
+<%= image_tag "pdf.png" %> 
+<span  style="vertical-align: top"> <%= link_to 'Generar PDF', :controller => 'listaprecios/listaprecio/', :action => 'listaprecio.pdf', :nrolista => params[:nrolista], :class => "textosbox" %> </span>
+</td>
+
+<td class="boton" width="150px"  align="center" vertical-align="center" >
+<%= image_tag "excel.png" %> 
+<span  style="vertical-align: top"> <%= link_to_remote 'Exportar a Excel', {:url => {:controller => "listaprecios", :action => "xls", :nrolista => params[:nrolista]}, :disable_with => "Por favor espere...", :before=>"this.style.display='none'", :complete =>  "Element.show ('addxls');"},  {:href => url_for(:controller => "listaprecios", :action => "xls", :nrolista => params[:nrolista])} %> </span>
+<div id="addxls" style="display:none">
+ <%= render :partial => 'listaprecios/xls'  %>
+</div>
+</td>
+</tr>
+</table>
+<br />
+<div class="tablaContainer">
+ <table class="tabladentrocont">
+  <% for marca in @marcas %>
+         <% params[:marcaid] = marca.id %> 
+         <% for rubro in @rubros %>
+            <% params[:rubroid] = rubro.id %> 
+            <% @listaprecios = Listaprecio.search(params[:nrolista] , params[:modelo],  params[:marcaid],  params[:rubroid], params[:maestrolistaid]) %>
+            <% if @listaprecios.size > 0 %>
+               <tr class="textgroup"> <td colspan = "2"> Marca:  <%=h marca.marc_descripcion %> </td> <td td colspan = "4"> Rubro:  <%=h rubro.rubr_descripcion %> </td></tr>
+               <tr class="headerStyle">
+               <th>C&oacute;digo</th>
+  	       <th>Modelo</th>
+   	       <th>Medida</th>
+               <th> </th>
+               <th>Telas</th>
+  	       <th>Precio venta</th>
+  	       <th>Lista N</th>
+	       </tr>
+   <% @listaprecios.each do |listaprecio| %>
+   <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+    <td><%=h listaprecio.articulo.marca.marc_codigo %> - <%=h listaprecio.articulo.rubro.rubr_codigo %>  -  <%=h listaprecio.articulo.arti_codigo %> </td>
+    <td><%=h listaprecio.articulo.arti_modelo %></td>
+    <td><%=h listaprecio.articulo.arti_medida %></td>
+    <td><%=h listaprecio.articulo.arti_conosincamara %></td>
+    <td><%=h listaprecio.articulo.arti_telas %></td>
+    <td><%=h number_to_currency(listaprecio.lpre_precioventa.round(0), :precision => 2, :separator => ",", :delimiter => ".")  %></td>
+    <td><%=h listaprecio.lpre_nrolista %></td> 
+  </tr>
+<% end %>
+<% end %>
+<% end %>
+<% end %>
+</table>

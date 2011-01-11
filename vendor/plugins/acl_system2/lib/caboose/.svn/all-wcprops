@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/gescom-onrails/!svn/ver/306/vendor/plugins/acl_system2/lib/caboose
+END
+role_handler.rb
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/gescom-onrails/!svn/ver/97/vendor/plugins/acl_system2/lib/caboose/role_handler.rb
+END
+access_control.rb
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/gescom-onrails/!svn/ver/306/vendor/plugins/acl_system2/lib/caboose/access_control.rb
+END
+logic_parser.rb
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/gescom-onrails/!svn/ver/97/vendor/plugins/acl_system2/lib/caboose/logic_parser.rb
+END

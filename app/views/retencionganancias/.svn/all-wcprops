@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/gescom-onrails/!svn/ver/575/app/views/retencionganancias
+END
+edit.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/gescom-onrails/!svn/ver/358/app/views/retencionganancias/edit.html.erb
+END
+_editar.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/gescom-onrails/!svn/ver/358/app/views/retencionganancias/_editar.html.erb
+END
+index.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/gescom-onrails/!svn/ver/323/app/views/retencionganancias/index.html.erb
+END
+_new.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/gescom-onrails/!svn/ver/382/app/views/retencionganancias/_new.html.erb
+END
+new.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/gescom-onrails/!svn/ver/323/app/views/retencionganancias/new.html.erb
+END
+retgan.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/gescom-onrails/!svn/ver/575/app/views/retencionganancias/retgan.html.erb
+END
+show.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/gescom-onrails/!svn/ver/323/app/views/retencionganancias/show.html.erb
+END

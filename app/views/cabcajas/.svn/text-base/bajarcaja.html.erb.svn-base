@@ -1,0 +1,37 @@
+<h1>Listado de cajas pendientes de bajar</h1>
+
+<div id="tablaContainer" >
+<table>
+<tr>
+ <td class="boton" width="120" align="center">
+   <%= image_tag "volver.png" %> 
+   <span style="vertical-align: top">  
+  <%= link_to 'Volver', :controller => 'login', :action => 'iniciarsession'%>
+   </span>
+ </td>
+</tr>
+</table>
+
+<table >
+  <tr class="headerStyle">
+    <th>Sucursal</th>
+    <th>Nrocaja</th>
+    <th>Fecha</th>
+    <th>Cerrada</th>
+    <th>Importada</th>
+    
+  </tr>
+
+<% @cajas.each do |caja| %>
+  <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+    <td><%=h caja.sucursal.sucu_nombre %></td>
+    <td align="center" ><%=h caja.ccaj_nrocaja %></td>
+    <td><%=h caja.ccaj_fecha %></td>
+    <td align="center" ><%=h caja.ccaj_cerrada %></td>
+    <td align="center" ><%=h caja.ccaj_importar %></td>
+    <td><%= link_to 'Bajar caja' %></td>
+  </tr>
+<% end %>
+</table>
+</div>
+

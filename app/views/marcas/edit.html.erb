@@ -1,0 +1,28 @@
+<h1>Editing marca</h1>
+
+<% form_for(@marca) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :marc_codigo %><br />
+    <%= f.text_field :marc_codigo %>
+  </p>
+  <p>
+    <%= f.label :marc_descripcion %><br />
+    <%= f.text_field :marc_descripcion %>
+  </p>
+  <p>
+    <%= f.label :marc_usuario %><br />
+    <%= f.text_field :marc_usuario %>
+  </p>
+  <p>
+    <%= f.label :marc_ultmod %><br />
+    <%= f.date_select :marc_ultmod %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @marca %> |
+<%= link_to 'Back', marcas_path %>

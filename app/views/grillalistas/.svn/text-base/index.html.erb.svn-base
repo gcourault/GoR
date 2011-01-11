@@ -1,0 +1,30 @@
+<h1>Listing grillalistas</h1>
+
+<table>
+  <tr>
+    <th>Glis nrolista</th>
+    <th>Glis nrogrilla</th>
+    <th>Glis nrocolumna</th>
+    <th>Glis porcentaje</th>
+    <th>Glis usuario</th>
+    <th>Glis ultmod</th>
+  </tr>
+
+<% @grillalistas.each do |grillalista| %>
+  <tr>
+    <td><%=h grillalista.glis_nrolista %></td>
+    <td><%=h grillalista.glis_nrogrilla %></td>
+    <td><%=h grillalista.glis_nrocolumna %></td>
+    <td><%=h grillalista.glis_porcentaje %></td>
+    <td><%=h grillalista.glis_usuario %></td>
+    <td><%=h grillalista.glis_ultmod %></td>
+    <td><%= link_to 'Show', grillalista %></td>
+    <td><%= link_to 'Edit', edit_grillalista_path(grillalista) %></td>
+    <td><%= link_to 'Destroy', grillalista, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New grillalista', new_grillalista_path %>

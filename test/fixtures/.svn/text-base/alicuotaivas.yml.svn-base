@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  id: 
+  aiva_alicuota: 
+  aiva_inicio: 
+  aiva_final: 
+  aiva_usuario: 
+  aiva_ultmod: 2009-10-20
+
+two:
+  id: 
+  aiva_alicuota: 
+  aiva_inicio: 
+  aiva_final: 
+  aiva_usuario: 
+  aiva_ultmod: 2009-10-20

@@ -1,0 +1,111 @@
+
+<h1>B&uacute;squeda y correcci&oacute;n de cheques</h1>
+<% form_tag :controller => 'chequeterceros', :action => 'corrigecheque' do %>
+<!-- lo pongo asi para que cuando vuelvo del edit y hago (params[:fechahasta].to_date || Date.today) no de error-->
+<% if params[:fechadesde].blank? %>
+<% fechadesde = Date.today - 30.days %>
+<% else %>
+<% fechadesde = params[:fechadesde].to_date %>
+<% end %>
+<% if  params[:fechahasta].blank?  %>
+<% fechahasta = Date.today + 30.days %>
+<% else %>
+<% fechahasta = params[:fechahasta].to_date %>
+<% end %>
+
+<Fieldset class="filtro">
+<table class="tablafiltro">
+  <tr>
+    <td>
+	Ingrese nro cheque: 
+    </td>
+    <td>
+	<%= text_field_tag :nrocheque, params[:nrocheque], :class => "textosbox" %>
+    </td>
+    <td>
+	Ingrese C.U.I.T.:
+    </td>
+    <td>
+	<%= text_field_tag :cuit, params[:cuit], :class => "textosbox" %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+	Ingrese Importe:
+    </td>
+    <td>
+	<%= text_field_tag :importe, params[:importe], :class => "textosbox" %>
+    </td>
+    <td>
+	Ingrese C&oacute;digo Banco:
+    </td>
+    <td>
+	<%= text_field_tag :codbanco, params[:codbanco], :class => "textosbox" %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+	Ingrese Desde Fecha Vto.:
+    </td>
+    <td>
+	<%= select_date(fechadesde, {:prefix=>"fechadesde"}, {:class => "textosbox"}) %>
+    </td>
+    <td>
+ 	Ingrese Hasta Fecha Vto.:
+    </td>
+    <td>
+	<%= select_date(fechahasta, {:prefix=>"fechahasta"}, {:class => "textosbox"}) %>
+    <td>
+  </tr>
+    <tr>
+    <td>
+     <input type="checkbox" name="venc" value="" />      
+        Fecha de vencimiento "01-12-0001"
+     </td>
+  
+    <td colspan="3" align="center">
+ 	<%= submit_tag "Buscar", :class => "textosbox" %>
+    </td>
+   </tr>
+  </table>
+ </Fieldset>
+<% end %>
+
+
+<table class="tabladentrocont" border="0" cellpadding="0" cellspacing="0">
+  <tr class="headerStyle">
+   <th></th>
+   <th> Sucursal </th>
+   <th> Nombre banco </th>
+   <th> C&oacute;digo banco </th>
+   <th> Nro. cheque </th>
+   <th> CUIT </th>
+   <th> Fecha vencimiento </th>
+   <th> Fecha emisi&oacute;n </th>
+   <th width="70"> Importe </th>
+   <th> Suc. del banco</th>
+   <th> C&oacute;digo postal </th>
+   <th> Caja </th>
+   <th> Cliente </th>
+  </tr>
+<% @chequeterceros.each do |chequetercero|%>
+  <tr class="<%= cycle('rowStyle', 'rowStyle1') %>">
+   <td><%= link_to 'Editar', edit_chequetercero_path(chequetercero, :page => params[:page] ) %></td>
+   <td><%=h chequetercero.sucursal.sucu_abreviatura %> </td>
+   <td><%=h chequetercero.banco.banc_nombre %> </td>
+   <td><%=h chequetercero.banco.banc_codigo %> </td>
+   <td><%=h chequetercero.cter_nrocheque %> </td>
+   <td><%=h chequetercero.cter_cuitlibrador %> </td>
+   <td align="center"><%=h chequetercero.cter_vencimiento %> </td>
+   <td align="center"><%=h chequetercero.cter_emision %> </td>
+   <td align="right"><%=h number_to_currency(chequetercero.cter_importe, :precision => 2, :separator => ",", :delimiter => ".")%> </td>
+   <td align="center"><%=h chequetercero.cter_sucursalbanco %> </td>
+   <td align="center"><%=h chequetercero.cter_codigopostal %> </td>
+   <td><%=h chequetercero.cabcaja.ccaj_nrocaja  if !chequetercero.cabcaja.nil? %> </td>
+   <td><%=h chequetercero.cliente.clie_razonsocial  if !chequetercero.cliente.nil? %> </td>
+  </tr>
+<% end %>
+</table>
+
+<%=will_paginate @chequeterceros, :params => { :nrocheque => params[:nrocheque], :cuit => params[:cuit], :importe => params[:importe], :codbanco => params[:codbanco], :fechadesde => params[:fechadesde], :fechahasta => params[:fechahasta]}  %>
+

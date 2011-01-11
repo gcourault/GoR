@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/gescom-onrails/!svn/ver/560/app/views/cabcajas
+END
+edit.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/gescom-onrails/!svn/ver/26/app/views/cabcajas/edit.html.erb
+END
+index.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/gescom-onrails/!svn/ver/483/app/views/cabcajas/index.html.erb
+END
+new.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/gescom-onrails/!svn/ver/26/app/views/cabcajas/new.html.erb
+END
+bajarcaja.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/gescom-onrails/!svn/ver/560/app/views/cabcajas/bajarcaja.html.erb
+END
+show.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/gescom-onrails/!svn/ver/26/app/views/cabcajas/show.html.erb
+END

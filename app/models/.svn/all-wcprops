@@ -1,0 +1,407 @@
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/gescom-onrails/!svn/ver/584/app/models
+END
+contabilidad.rb
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/gescom-onrails/!svn/ver/566/app/models/contabilidad.rb
+END
+articulo.rb
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/gescom-onrails/!svn/ver/528/app/models/articulo.rb
+END
+stock.rb
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/gescom-onrails/!svn/ver/578/app/models/stock.rb
+END
+marca.rb
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/gescom-onrails/!svn/ver/162/app/models/marca.rb
+END
+rencompra.rb
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/gescom-onrails/!svn/ver/331/app/models/rencompra.rb
+END
+cabplaegreso.rb
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/gescom-onrails/!svn/ver/564/app/models/cabplaegreso.rb
+END
+provincia.rb
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/gescom-onrails/!svn/ver/369/app/models/provincia.rb
+END
+cabfactura.rb
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/gescom-onrails/!svn/ver/422/app/models/cabfactura.rb
+END
+descrevendedor.rb
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/gescom-onrails/!svn/ver/149/app/models/descrevendedor.rb
+END
+situacionafip.rb
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/gescom-onrails/!svn/ver/498/app/models/situacionafip.rb
+END
+grillalista.rb
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/gescom-onrails/!svn/ver/319/app/models/grillalista.rb
+END
+maestrolista.rb
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/gescom-onrails/!svn/ver/136/app/models/maestrolista.rb
+END
+cabpedidoweb.rb
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/gescom-onrails/!svn/ver/183/app/models/cabpedidoweb.rb
+END
+retencionganancia.rb
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/gescom-onrails/!svn/ver/326/app/models/retencionganancia.rb
+END
+estadocheter.rb
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/gescom-onrails/!svn/ver/153/app/models/estadocheter.rb
+END
+conceptocaucion.rb
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/gescom-onrails/!svn/ver/137/app/models/conceptocaucion.rb
+END
+emailer.rb
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/gescom-onrails/!svn/ver/263/app/models/emailer.rb
+END
+listaprecio.rb
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/gescom-onrails/!svn/ver/584/app/models/listaprecio.rb
+END
+banco.rb
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/gescom-onrails/!svn/ver/442/app/models/banco.rb
+END
+rg1361afip.rb
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/gescom-onrails/!svn/ver/513/app/models/rg1361afip.rb
+END
+pagocompra.rb
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/gescom-onrails/!svn/ver/445/app/models/pagocompra.rb
+END
+cabcargachequeter.rb
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/gescom-onrails/!svn/ver/416/app/models/cabcargachequeter.rb
+END
+tipodocumento.rb
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/gescom-onrails/!svn/ver/498/app/models/tipodocumento.rb
+END
+renfactura.rb
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/gescom-onrails/!svn/ver/422/app/models/renfactura.rb
+END
+role.rb
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/gescom-onrails/!svn/ver/185/app/models/role.rb
+END
+vendedor.rb
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/gescom-onrails/!svn/ver/479/app/models/vendedor.rb
+END
+localidad.rb
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/gescom-onrails/!svn/ver/408/app/models/localidad.rb
+END
+reclamo.rb
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/gescom-onrails/!svn/ver/336/app/models/reclamo.rb
+END
+cliente.rb
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/gescom-onrails/!svn/ver/500/app/models/cliente.rb
+END
+jurisdiccion.rb
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/gescom-onrails/!svn/ver/422/app/models/jurisdiccion.rb
+END
+puntosventa.rb
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/gescom-onrails/!svn/ver/483/app/models/puntosventa.rb
+END
+cabcompra.rb
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/gescom-onrails/!svn/ver/571/app/models/cabcompra.rb
+END
+depositocaucion.rb
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/gescom-onrails/!svn/ver/309/app/models/depositocaucion.rb
+END
+rubro.rb
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/gescom-onrails/!svn/ver/162/app/models/rubro.rb
+END
+devueltocaucion.rb
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/gescom-onrails/!svn/ver/153/app/models/devueltocaucion.rb
+END
+roles_usuario.rb
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/gescom-onrails/!svn/ver/185/app/models/roles_usuario.rb
+END
+empresa.rb
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/gescom-onrails/!svn/ver/314/app/models/empresa.rb
+END
+ejercicio.rb
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/gescom-onrails/!svn/ver/554/app/models/ejercicio.rb
+END
+estadistica.rb
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/gescom-onrails/!svn/ver/343/app/models/estadistica.rb
+END
+cuentacaja.rb
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/gescom-onrails/!svn/ver/465/app/models/cuentacaja.rb
+END
+chequetercero.rb
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/gescom-onrails/!svn/ver/556/app/models/chequetercero.rb
+END
+cuitcheque.rb
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/gescom-onrails/!svn/ver/544/app/models/cuitcheque.rb
+END
+cuentabancaria.rb
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/gescom-onrails/!svn/ver/456/app/models/cuentabancaria.rb
+END
+consignatario.rb
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/gescom-onrails/!svn/ver/482/app/models/consignatario.rb
+END
+listadocaucion.rb
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/gescom-onrails/!svn/ver/309/app/models/listadocaucion.rb
+END
+sucursal.rb
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/gescom-onrails/!svn/ver/488/app/models/sucursal.rb
+END
+plandecuenta.rb
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/gescom-onrails/!svn/ver/565/app/models/plandecuenta.rb
+END
+cabcaja.rb
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/gescom-onrails/!svn/ver/564/app/models/cabcaja.rb
+END
+proveedor.rb
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/gescom-onrails/!svn/ver/577/app/models/proveedor.rb
+END
+cabasiento.rb
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/gescom-onrails/!svn/ver/562/app/models/cabasiento.rb
+END
+notifications.rb
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/gescom-onrails/!svn/ver/285/app/models/notifications.rb
+END
+cabrecibo.rb
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/gescom-onrails/!svn/ver/419/app/models/cabrecibo.rb
+END
+formapago.rb
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/gescom-onrails/!svn/ver/465/app/models/formapago.rb
+END
+coeficiente.rb
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/gescom-onrails/!svn/ver/554/app/models/coeficiente.rb
+END
+conceptoegreso.rb
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/gescom-onrails/!svn/ver/484/app/models/conceptoegreso.rb
+END
+renplaegreso.rb
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/gescom-onrails/!svn/ver/484/app/models/renplaegreso.rb
+END
+usuario.rb
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/gescom-onrails/!svn/ver/274/app/models/usuario.rb
+END
+rencargachequeter.rb
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/gescom-onrails/!svn/ver/431/app/models/rencargachequeter.rb
+END
+revendedor.rb
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/gescom-onrails/!svn/ver/422/app/models/revendedor.rb
+END
+logchequetercero.rb
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/gescom-onrails/!svn/ver/288/app/models/logchequetercero.rb
+END
+alicuotaiva.rb
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/gescom-onrails/!svn/ver/422/app/models/alicuotaiva.rb
+END
+listadobanco.rb
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/gescom-onrails/!svn/ver/169/app/models/listadobanco.rb
+END
+cabremito.rb
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/gescom-onrails/!svn/ver/216/app/models/cabremito.rb
+END
+tipocomprobante.rb
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/gescom-onrails/!svn/ver/392/app/models/tipocomprobante.rb
+END
+renpedidoweb.rb
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/gescom-onrails/!svn/ver/221/app/models/renpedidoweb.rb
+END
+renasiento.rb
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/gescom-onrails/!svn/ver/534/app/models/renasiento.rb
+END
+condicionpago.rb
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/gescom-onrails/!svn/ver/422/app/models/condicionpago.rb
+END

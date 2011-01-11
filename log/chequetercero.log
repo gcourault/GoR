@@ -1,0 +1,159 @@
+# Logfile created on jue jul 08 11:50:19 -0300 2010 by logger.rb/22285
+  [4;36;1mSQL (0.4ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mUsuario Columns (1.1ms)[0m   [0;1mSHOW FIELDS FROM usuarios[0m
+  [4;35;1mUsuario Load (0.4ms)[0m   [0mSELECT * FROM `usuarios` WHERE (`usuarios`.`id` = 14) LIMIT 1[0m
+  [4;36;1mroles_usuarios Columns (0.6ms)[0m   [0;1mSHOW FIELDS FROM roles_usuarios[0m
+  [4;35;1mRole Load (0.3ms)[0m   [0mSELECT * FROM `roles` INNER JOIN `roles_usuarios` ON (`roles`.`id`=`roles_usuarios`.`role_id`) WHERE ((`roles_usuarios`.`usuario_id` = 14)) [0m
+  [4;36;1mRole Columns (0.5ms)[0m   [0;1mSHOW FIELDS FROM roles[0m
+  [4;35;1mChequetercero Load (1.0ms)[0m   [0mSELECT `chequeterceros`.* FROM `chequeterceros` LEFT OUTER JOIN `bancos` ON (`bancos`.`id`=`chequeterceros`.`banco_id`) WHERE (cter_vencimiento >= '' and cter_vencimiento <= '' and cter_nrocheque = '61696851') ORDER BY cter_vencimiento desc LIMIT 0, 20[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mUsuario Columns (1.2ms)[0m   [0;1mSHOW FIELDS FROM usuarios[0m
+  [4;35;1mUsuario Load (0.4ms)[0m   [0mSELECT * FROM `usuarios` WHERE (`usuarios`.`id` = 14) LIMIT 1[0m
+  [4;36;1mroles_usuarios Columns (0.6ms)[0m   [0;1mSHOW FIELDS FROM roles_usuarios[0m
+  [4;35;1mRole Load (0.3ms)[0m   [0mSELECT * FROM `roles` INNER JOIN `roles_usuarios` ON (`roles`.`id`=`roles_usuarios`.`role_id`) WHERE ((`roles_usuarios`.`usuario_id` = 14)) [0m
+  [4;36;1mRole Columns (0.5ms)[0m   [0;1mSHOW FIELDS FROM roles[0m
+  [4;35;1mChequetercero Load (1.0ms)[0m   [0mSELECT `chequeterceros`.* FROM `chequeterceros` LEFT OUTER JOIN `bancos` ON (`bancos`.`id`=`chequeterceros`.`banco_id`) WHERE (cter_vencimiento >= '' and cter_vencimiento <= '' and cter_nrocheque = '61696852') ORDER BY cter_vencimiento desc LIMIT 0, 20[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mUsuario Columns (1.0ms)[0m   [0;1mSHOW FIELDS FROM usuarios[0m
+  [4;35;1mUsuario Load (0.4ms)[0m   [0mSELECT * FROM `usuarios` WHERE (`usuarios`.`id` = 14) LIMIT 1[0m
+  [4;36;1mroles_usuarios Columns (0.7ms)[0m   [0;1mSHOW FIELDS FROM roles_usuarios[0m
+  [4;35;1mRole Load (0.3ms)[0m   [0mSELECT * FROM `roles` INNER JOIN `roles_usuarios` ON (`roles`.`id`=`roles_usuarios`.`role_id`) WHERE ((`roles_usuarios`.`usuario_id` = 14)) [0m
+  [4;36;1mRole Columns (0.6ms)[0m   [0;1mSHOW FIELDS FROM roles[0m
+  [4;35;1mChequetercero Load (1.1ms)[0m   [0mSELECT `chequeterceros`.* FROM `chequeterceros` LEFT OUTER JOIN `bancos` ON (`bancos`.`id`=`chequeterceros`.`banco_id`) WHERE (cter_vencimiento >= '2010-06-08' and cter_vencimiento <= '2010-08-07' and cter_nrocheque = '61696852') ORDER BY cter_vencimiento desc LIMIT 0, 20[0m
+  [4;36;1mChequetercero Columns (1.5ms)[0m   [0;1mSHOW FIELDS FROM chequeterceros[0m
+  [4;35;1mSucursal Columns (1.1ms)[0m   [0mSHOW FIELDS FROM sucursals[0m
+  [4;36;1mSucursal Load (0.4ms)[0m   [0;1mSELECT * FROM `sucursals` WHERE (`sucursals`.`id` = 8) [0m
+  [4;35;1mBanco Columns (0.8ms)[0m   [0mSHOW FIELDS FROM bancos[0m
+  [4;36;1mBanco Load (0.3ms)[0m   [0;1mSELECT * FROM `bancos` WHERE (`bancos`.`id` = 13) [0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mUsuario Columns (18.8ms)[0m   [0mSHOW FIELDS FROM usuarios[0m
+  [4;36;1mUsuario Load (0.4ms)[0m   [0;1mSELECT * FROM `usuarios` WHERE (`usuarios`.`id` = 14) LIMIT 1[0m
+  [4;35;1mroles_usuarios Columns (0.6ms)[0m   [0mSHOW FIELDS FROM roles_usuarios[0m
+  [4;36;1mRole Load (0.3ms)[0m   [0;1mSELECT * FROM `roles` INNER JOIN `roles_usuarios` ON (`roles`.`id`=`roles_usuarios`.`role_id`) WHERE ((`roles_usuarios`.`usuario_id` = 14)) [0m
+  [4;35;1mRole Columns (0.5ms)[0m   [0mSHOW FIELDS FROM roles[0m
+  [4;36;1mChequetercero Columns (1.7ms)[0m   [0;1mSHOW FIELDS FROM chequeterceros[0m
+  [4;35;1mChequetercero Load (1.2ms)[0m   [0mSELECT * FROM `chequeterceros` WHERE ((`chequeterceros`.`id`=17208 AND `chequeterceros`.`sucursal_id`=8)) [0m
+  [4;36;1mBanco Load (0.6ms)[0m   [0;1mSELECT * FROM `bancos` ORDER BY banc_codigo[0m
+  [4;35;1mBanco Columns (0.7ms)[0m   [0mSHOW FIELDS FROM bancos[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mUsuario Columns (1.0ms)[0m   [0;1mSHOW FIELDS FROM usuarios[0m
+  [4;35;1mUsuario Load (0.5ms)[0m   [0mSELECT * FROM `usuarios` WHERE (`usuarios`.`id` = 14) LIMIT 1[0m
+  [4;36;1mroles_usuarios Columns (0.6ms)[0m   [0;1mSHOW FIELDS FROM roles_usuarios[0m
+  [4;35;1mRole Load (0.3ms)[0m   [0mSELECT * FROM `roles` INNER JOIN `roles_usuarios` ON (`roles`.`id`=`roles_usuarios`.`role_id`) WHERE ((`roles_usuarios`.`usuario_id` = 14)) [0m
+  [4;36;1mRole Columns (0.5ms)[0m   [0;1mSHOW FIELDS FROM roles[0m
+  [4;35;1mChequetercero Columns (1.4ms)[0m   [0mSHOW FIELDS FROM chequeterceros[0m
+  [4;36;1mChequetercero Load (0.5ms)[0m   [0;1mSELECT * FROM `chequeterceros` WHERE ((`chequeterceros`.`id`=17208 AND `chequeterceros`.`sucursal_id`=8)) [0m
+  [4;35;1mSQL (0.6ms)[0m   [0mBEGIN[0m
+  [4;36;1mChequetercero Update (0.9ms)[0m   [0;1mUPDATE `chequeterceros` SET `motivoingreso_id` = 1, `cter_emision` = '2010-02-26', `listadocaucion_id` = 0, `cliente_id` = 1772, `banco_id` = 13, `cter_observaciones` = '', `cter_cuitlibrador` = '20109081001', `cter_nrocuenta` = 89268, `cter_importe` = 1186.0, `cter_borradocaucion` = 'N', `cabfactura_id` = 26430, `cter_observadestino` = '', `cter_sucursalbanco` = 388, `cter_vencimiento` = '2010-07-02', `cter_egreso` = '0001-12-01', `cter_ingreso` = '2010-02-24', `motivoegreso_id` = 0, `cter_ultmod` = '2010-07-08 12:01:09', `cabrecibo_id` = 0, `cter_codigopostal` = 3560, `cabcaja_id` = 322, `cter_usuario` = 'Administrador', `cter_nrocheque` = 61696851 WHERE (`id` = 17208) AND (`sucursal_id` = 8)[0m
+  [4;35;1mSQL (43.2ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mUsuario Columns (9.6ms)[0m   [0;1mSHOW FIELDS FROM usuarios[0m
+  [4;35;1mUsuario Load (0.4ms)[0m   [0mSELECT * FROM `usuarios` WHERE (`usuarios`.`id` = 14) LIMIT 1[0m
+  [4;36;1mroles_usuarios Columns (0.7ms)[0m   [0;1mSHOW FIELDS FROM roles_usuarios[0m
+  [4;35;1mRole Load (0.3ms)[0m   [0mSELECT * FROM `roles` INNER JOIN `roles_usuarios` ON (`roles`.`id`=`roles_usuarios`.`role_id`) WHERE ((`roles_usuarios`.`usuario_id` = 14)) [0m
+  [4;36;1mRole Columns (0.5ms)[0m   [0;1mSHOW FIELDS FROM roles[0m
+  [4;35;1mChequetercero Load (1.1ms)[0m   [0mSELECT `chequeterceros`.* FROM `chequeterceros` LEFT OUTER JOIN `bancos` ON (`bancos`.`id`=`chequeterceros`.`banco_id`) WHERE (cter_vencimiento >= '' and cter_vencimiento <= '' and cter_nrocheque = '61696852') ORDER BY cter_vencimiento desc LIMIT 0, 20[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mUsuario Columns (0.9ms)[0m   [0;1mSHOW FIELDS FROM usuarios[0m
+  [4;35;1mUsuario Load (0.4ms)[0m   [0mSELECT * FROM `usuarios` WHERE (`usuarios`.`id` = 14) LIMIT 1[0m
+  [4;36;1mroles_usuarios Columns (0.6ms)[0m   [0;1mSHOW FIELDS FROM roles_usuarios[0m
+  [4;35;1mRole Load (0.3ms)[0m   [0mSELECT * FROM `roles` INNER JOIN `roles_usuarios` ON (`roles`.`id`=`roles_usuarios`.`role_id`) WHERE ((`roles_usuarios`.`usuario_id` = 14)) [0m
+  [4;36;1mRole Columns (0.5ms)[0m   [0;1mSHOW FIELDS FROM roles[0m
+  [4;35;1mChequetercero Load (1.3ms)[0m   [0mSELECT `chequeterceros`.* FROM `chequeterceros` LEFT OUTER JOIN `bancos` ON (`bancos`.`id`=`chequeterceros`.`banco_id`) WHERE (cter_vencimiento >= '2010-06-08' and cter_vencimiento <= '2010-08-07' and cter_nrocheque = '61696852') ORDER BY cter_vencimiento desc LIMIT 0, 20[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mUsuario Columns (3.1ms)[0m   [0;1mSHOW FIELDS FROM usuarios[0m
+  [4;35;1mUsuario Load (0.4ms)[0m   [0mSELECT * FROM `usuarios` WHERE (`usuarios`.`id` = 14) LIMIT 1[0m
+  [4;36;1mroles_usuarios Columns (0.6ms)[0m   [0;1mSHOW FIELDS FROM roles_usuarios[0m
+  [4;35;1mRole Load (0.3ms)[0m   [0mSELECT * FROM `roles` INNER JOIN `roles_usuarios` ON (`roles`.`id`=`roles_usuarios`.`role_id`) WHERE ((`roles_usuarios`.`usuario_id` = 14)) [0m
+  [4;36;1mRole Columns (0.5ms)[0m   [0;1mSHOW FIELDS FROM roles[0m
+  [4;35;1mChequetercero Load (1.2ms)[0m   [0mSELECT `chequeterceros`.* FROM `chequeterceros` LEFT OUTER JOIN `bancos` ON (`bancos`.`id`=`chequeterceros`.`banco_id`) WHERE (cter_vencimiento >= '2010-06-08' and cter_vencimiento <= '2010-08-07' and cter_nrocheque = '61696851') ORDER BY cter_vencimiento desc LIMIT 0, 20[0m
+  [4;36;1mChequetercero Columns (1.5ms)[0m   [0;1mSHOW FIELDS FROM chequeterceros[0m
+  [4;35;1mSucursal Columns (1.1ms)[0m   [0mSHOW FIELDS FROM sucursals[0m
+  [4;36;1mSucursal Load (0.4ms)[0m   [0;1mSELECT * FROM `sucursals` WHERE (`sucursals`.`id` = 8) [0m
+  [4;35;1mBanco Columns (0.8ms)[0m   [0mSHOW FIELDS FROM bancos[0m
+  [4;36;1mBanco Load (0.3ms)[0m   [0;1mSELECT * FROM `bancos` WHERE (`bancos`.`id` = 13) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `sucursals` WHERE (`sucursals`.`id` = 8) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `bancos` WHERE (`bancos`.`id` = 13) [0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mUsuario Columns (0.9ms)[0m   [0mSHOW FIELDS FROM usuarios[0m
+  [4;36;1mUsuario Load (0.4ms)[0m   [0;1mSELECT * FROM `usuarios` WHERE (`usuarios`.`id` = 14) LIMIT 1[0m
+  [4;35;1mroles_usuarios Columns (0.6ms)[0m   [0mSHOW FIELDS FROM roles_usuarios[0m
+  [4;36;1mRole Load (0.3ms)[0m   [0;1mSELECT * FROM `roles` INNER JOIN `roles_usuarios` ON (`roles`.`id`=`roles_usuarios`.`role_id`) WHERE ((`roles_usuarios`.`usuario_id` = 14)) [0m
+  [4;35;1mRole Columns (0.5ms)[0m   [0mSHOW FIELDS FROM roles[0m
+  [4;36;1mChequetercero Columns (1.5ms)[0m   [0;1mSHOW FIELDS FROM chequeterceros[0m
+  [4;35;1mChequetercero Load (0.7ms)[0m   [0mSELECT * FROM `chequeterceros` WHERE ((`chequeterceros`.`id`=17209 AND `chequeterceros`.`sucursal_id`=8)) [0m
+  [4;36;1mBanco Load (0.6ms)[0m   [0;1mSELECT * FROM `bancos` ORDER BY banc_codigo[0m
+  [4;35;1mBanco Columns (0.7ms)[0m   [0mSHOW FIELDS FROM bancos[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mUsuario Columns (18.3ms)[0m   [0;1mSHOW FIELDS FROM usuarios[0m
+  [4;35;1mUsuario Load (0.4ms)[0m   [0mSELECT * FROM `usuarios` WHERE (`usuarios`.`id` = 14) LIMIT 1[0m
+  [4;36;1mroles_usuarios Columns (0.7ms)[0m   [0;1mSHOW FIELDS FROM roles_usuarios[0m
+  [4;35;1mRole Load (0.3ms)[0m   [0mSELECT * FROM `roles` INNER JOIN `roles_usuarios` ON (`roles`.`id`=`roles_usuarios`.`role_id`) WHERE ((`roles_usuarios`.`usuario_id` = 14)) [0m
+  [4;36;1mRole Columns (0.5ms)[0m   [0;1mSHOW FIELDS FROM roles[0m
+  [4;35;1mChequetercero Columns (1.5ms)[0m   [0mSHOW FIELDS FROM chequeterceros[0m
+  [4;36;1mChequetercero Load (0.5ms)[0m   [0;1mSELECT * FROM `chequeterceros` WHERE ((`chequeterceros`.`id`=17209 AND `chequeterceros`.`sucursal_id`=8)) [0m
+  [4;35;1mSQL (0.2ms)[0m   [0mBEGIN[0m
+  [4;36;1mChequetercero Update (0.7ms)[0m   [0;1mUPDATE `chequeterceros` SET `motivoingreso_id` = 1, `cter_emision` = '2010-02-26', `listadocaucion_id` = 0, `cliente_id` = 1772, `banco_id` = 13, `cter_observaciones` = '', `cter_cuitlibrador` = '20109081001', `cter_nrocuenta` = 89268, `cter_importe` = 1190.0, `cter_borradocaucion` = 'N', `cabfactura_id` = 26430, `cter_observadestino` = '', `cter_sucursalbanco` = 388, `cter_vencimiento` = '2010-08-02', `cter_egreso` = '0001-12-01', `cter_ingreso` = '2010-02-24', `motivoegreso_id` = 0, `cter_ultmod` = '2010-07-08 12:02:28', `cabrecibo_id` = 0, `cter_codigopostal` = 3560, `cabcaja_id` = 322, `cter_usuario` = 'Administrador', `cter_nrocheque` = 61696852 WHERE (`id` = 17209) AND (`sucursal_id` = 8)[0m
+  [4;35;1mSQL (59.5ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mUsuario Columns (0.9ms)[0m   [0;1mSHOW FIELDS FROM usuarios[0m
+  [4;35;1mUsuario Load (0.4ms)[0m   [0mSELECT * FROM `usuarios` WHERE (`usuarios`.`id` = 14) LIMIT 1[0m
+  [4;36;1mroles_usuarios Columns (0.6ms)[0m   [0;1mSHOW FIELDS FROM roles_usuarios[0m
+  [4;35;1mRole Load (0.3ms)[0m   [0mSELECT * FROM `roles` INNER JOIN `roles_usuarios` ON (`roles`.`id`=`roles_usuarios`.`role_id`) WHERE ((`roles_usuarios`.`usuario_id` = 14)) [0m
+  [4;36;1mRole Columns (0.5ms)[0m   [0;1mSHOW FIELDS FROM roles[0m
+  [4;35;1mChequetercero Load (1.1ms)[0m   [0mSELECT `chequeterceros`.* FROM `chequeterceros` LEFT OUTER JOIN `bancos` ON (`bancos`.`id`=`chequeterceros`.`banco_id`) WHERE (cter_vencimiento >= '' and cter_vencimiento <= '' and cter_nrocheque = '61696852') ORDER BY cter_vencimiento desc LIMIT 0, 20[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mUsuario Columns (1.1ms)[0m   [0;1mSHOW FIELDS FROM usuarios[0m
+  [4;35;1mUsuario Load (0.4ms)[0m   [0mSELECT * FROM `usuarios` WHERE (`usuarios`.`id` = 14) LIMIT 1[0m
+  [4;36;1mroles_usuarios Columns (0.7ms)[0m   [0;1mSHOW FIELDS FROM roles_usuarios[0m
+  [4;35;1mRole Load (0.3ms)[0m   [0mSELECT * FROM `roles` INNER JOIN `roles_usuarios` ON (`roles`.`id`=`roles_usuarios`.`role_id`) WHERE ((`roles_usuarios`.`usuario_id` = 14)) [0m
+  [4;36;1mRole Columns (0.5ms)[0m   [0;1mSHOW FIELDS FROM roles[0m
+  [4;35;1mChequetercero Load (1.8ms)[0m   [0mSELECT `chequeterceros`.* FROM `chequeterceros` LEFT OUTER JOIN `bancos` ON (`bancos`.`id`=`chequeterceros`.`banco_id`) WHERE (cter_vencimiento >= '2010-06-08' and cter_vencimiento <= '2010-08-07' and cter_nrocheque = '61696852') ORDER BY cter_vencimiento desc LIMIT 0, 20[0m
+  [4;36;1mChequetercero Columns (1.5ms)[0m   [0;1mSHOW FIELDS FROM chequeterceros[0m
+  [4;35;1mSucursal Columns (1.2ms)[0m   [0mSHOW FIELDS FROM sucursals[0m
+  [4;36;1mSucursal Load (0.4ms)[0m   [0;1mSELECT * FROM `sucursals` WHERE (`sucursals`.`id` = 8) [0m
+  [4;35;1mBanco Columns (0.8ms)[0m   [0mSHOW FIELDS FROM bancos[0m
+  [4;36;1mBanco Load (0.3ms)[0m   [0;1mSELECT * FROM `bancos` WHERE (`bancos`.`id` = 13) [0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mUsuario Columns (0.9ms)[0m   [0mSHOW FIELDS FROM usuarios[0m
+  [4;36;1mUsuario Load (0.4ms)[0m   [0;1mSELECT * FROM `usuarios` WHERE (`usuarios`.`id` = 14) LIMIT 1[0m
+  [4;35;1mroles_usuarios Columns (0.6ms)[0m   [0mSHOW FIELDS FROM roles_usuarios[0m
+  [4;36;1mRole Load (0.3ms)[0m   [0;1mSELECT * FROM `roles` INNER JOIN `roles_usuarios` ON (`roles`.`id`=`roles_usuarios`.`role_id`) WHERE ((`roles_usuarios`.`usuario_id` = 14)) [0m
+  [4;35;1mRole Columns (0.6ms)[0m   [0mSHOW FIELDS FROM roles[0m
+  [4;36;1mChequetercero Columns (1.5ms)[0m   [0;1mSHOW FIELDS FROM chequeterceros[0m
+  [4;35;1mChequetercero Load (0.8ms)[0m   [0mSELECT * FROM `chequeterceros` WHERE ((`chequeterceros`.`id`=17209 AND `chequeterceros`.`sucursal_id`=8)) [0m
+  [4;36;1mBanco Load (0.7ms)[0m   [0;1mSELECT * FROM `bancos` ORDER BY banc_codigo[0m
+  [4;35;1mBanco Columns (0.7ms)[0m   [0mSHOW FIELDS FROM bancos[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mUsuario Columns (1.0ms)[0m   [0;1mSHOW FIELDS FROM usuarios[0m
+  [4;35;1mUsuario Load (2.3ms)[0m   [0mSELECT * FROM `usuarios` WHERE (`usuarios`.`id` = 14) LIMIT 1[0m
+  [4;36;1mroles_usuarios Columns (0.6ms)[0m   [0;1mSHOW FIELDS FROM roles_usuarios[0m
+  [4;35;1mRole Load (0.3ms)[0m   [0mSELECT * FROM `roles` INNER JOIN `roles_usuarios` ON (`roles`.`id`=`roles_usuarios`.`role_id`) WHERE ((`roles_usuarios`.`usuario_id` = 14)) [0m
+  [4;36;1mRole Columns (1.1ms)[0m   [0;1mSHOW FIELDS FROM roles[0m
+  [4;35;1mChequetercero Columns (1.4ms)[0m   [0mSHOW FIELDS FROM chequeterceros[0m
+  [4;36;1mChequetercero Load (0.5ms)[0m   [0;1mSELECT * FROM `chequeterceros` WHERE ((`chequeterceros`.`id`=17209 AND `chequeterceros`.`sucursal_id`=8)) [0m
+  [4;35;1mSQL (0.2ms)[0m   [0mBEGIN[0m
+  [4;36;1mChequetercero Update (0.7ms)[0m   [0;1mUPDATE `chequeterceros` SET `motivoingreso_id` = 1, `cter_emision` = '2010-02-26', `listadocaucion_id` = 0, `cliente_id` = 1772, `banco_id` = 13, `cter_observaciones` = '', `cter_cuitlibrador` = '20109081001', `cter_nrocuenta` = 89268, `cter_importe` = 1190.0, `cter_borradocaucion` = 'N', `cabfactura_id` = 26430, `cter_observadestino` = '', `cter_sucursalbanco` = 388, `cter_vencimiento` = '2010-08-02', `cter_egreso` = '0001-12-01', `cter_ingreso` = '2010-02-24', `motivoegreso_id` = 0, `cter_ultmod` = '2010-07-08 12:30:31', `cabrecibo_id` = 0, `cter_codigopostal` = 3560, `cabcaja_id` = 322, `cter_usuario` = 'Administrador', `cter_nrocheque` = 61696851 WHERE (`id` = 17209) AND (`sucursal_id` = 8)[0m
+  [4;35;1mSQL (45.0ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.5ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mUsuario Columns (0.9ms)[0m   [0;1mSHOW FIELDS FROM usuarios[0m
+  [4;35;1mUsuario Load (0.4ms)[0m   [0mSELECT * FROM `usuarios` WHERE (`usuarios`.`id` = 14) LIMIT 1[0m
+  [4;36;1mroles_usuarios Columns (0.6ms)[0m   [0;1mSHOW FIELDS FROM roles_usuarios[0m
+  [4;35;1mRole Load (0.3ms)[0m   [0mSELECT * FROM `roles` INNER JOIN `roles_usuarios` ON (`roles`.`id`=`roles_usuarios`.`role_id`) WHERE ((`roles_usuarios`.`usuario_id` = 14)) [0m
+  [4;36;1mRole Columns (0.5ms)[0m   [0;1mSHOW FIELDS FROM roles[0m
+  [4;35;1mChequetercero Load (1.0ms)[0m   [0mSELECT `chequeterceros`.* FROM `chequeterceros` LEFT OUTER JOIN `bancos` ON (`bancos`.`id`=`chequeterceros`.`banco_id`) WHERE (cter_vencimiento >= '' and cter_vencimiento <= '' and cter_nrocheque = '61696851') ORDER BY cter_vencimiento desc LIMIT 0, 20[0m

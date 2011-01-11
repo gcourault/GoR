@@ -1,0 +1,150 @@
+<h1>Evolución de las ventas por mes</h1>
+
+<% if params[:fechadesde].blank? %>
+<% from_time =  Date.today - 6.months   %>
+<% else %>
+<% from_time = params[:fechadesde] %>
+<% end %>
+<% if params[:fechahasta].blank? %>
+<% to_time =  Date.today   %>
+<% else %>
+<% to_time = params[:fechahasta] %>
+<% end %>
+<Fieldset class="filtro">
+<legend ALIGN="left" class="formlegend">Seleccione entre que fechas</legend>
+<table class="tablafiltro">
+
+<% form_tag :controller => 'estadisticas', :action => 'ventasmonto' do %> 
+<tr>
+<td>  
+ </td>
+   <td >
+      Fecha desde:
+    </td>
+    <td>
+      <%=  select_date from_time , {:prefix => "fechadesde"}, {:class => "textosbox"} %> 
+    </td>
+    <td>
+      Fecha hasta: 
+    </td>
+     <td>
+      <%= select_date to_time, {:prefix=>"fechahasta"}, {:class => "textosbox"} %>
+    </td>
+    <td colspan="2">
+     <%= submit_tag "Consultar", :class => "textosbox", :onclick=>"javascript:mostrar_div('output')" %>
+    </td>
+</tr>
+<% end %>
+</table>
+</Fieldset>
+<br />
+<% if @ventamontos.size > 0 %>
+<table>
+  <tr>
+    <td>
+     <table>
+      <tr>
+       <td><%= image_tag "ventasmontototales.png" %>  </td> 
+      </tr>
+     </table>
+    </td>
+    <td>
+     <table class="tabladentrocont">
+      <tr>
+       <td><b> mes - a&ntilde;o </td>
+       <td align="center"><b> total </td>
+      </tr>
+      <% @ventamontogrups.each do |vent| %>
+      <tr>
+       <td> <%= vent.mes %> - <%= vent.anio %> </td>
+       <td><%=h number_to_currency(vent.cantidad, :precision => 2, :separator => ",", :delimiter => ".") %></td>
+      </tr>
+      <% end %>
+     </table>
+    </td>
+  </tr>
+  <tr>
+   <td>  <%= image_tag "ventasmontos.png" %> </td> 
+   <td> </td>
+  </tr>
+</table>
+
+
+<table>
+ <tr>
+  <% @sucursals = Sucursal.find(:all) %>
+  <% for sucu in @sucursals %>
+  <% if sucu.id.to_i == 1 ||  sucu.id.to_i == 2 || sucu.id.to_i == 3 ||  sucu.id.to_i == 4 || sucu.id.to_i == 5 %>
+  <td>
+   <table border="1">
+     <tr><td colspan="2" align="center"> <b><%= sucu.sucu_abreviatura %></td> </tr>
+     <tr>
+       <td>Mes - A&ntilde;o</td>
+       <td>Cantidad</td>
+     </tr>
+     <% @ventamontos.each do |v| %>
+      <% if v.sucursal == sucu.sucu_abreviatura %>
+      <tr>
+        <td><%=h v.mes %> - <%=h v.anio %></td>
+        <td><%=h number_to_currency(v.cantidad, :precision => 2, :separator => ",", :delimiter => ".") %></td>
+      </tr>
+      <% end %>
+     <% end %>
+
+   </table>
+  </td>
+  <% end %>
+   <% if sucu.id.to_i == 6 %>
+     </tr>
+     <tr>
+   <% end %>
+  <% if sucu.id.to_i == 6 ||  sucu.id.to_i == 7 || sucu.id.to_i == 8 ||  sucu.id.to_i == 9 || sucu.id.to_i == 10 %>
+   <td>
+    <table border="1">
+      <tr><td colspan="2" align="center"><b> <%= sucu.sucu_abreviatura %></td> </tr>
+      <tr>
+       <td>Mes - A&ntilde;o</td>
+       <td>Cantidad</td>
+      </tr>
+      <% @ventamontos.each do |v| %>
+       <% if v.sucursal == sucu.sucu_abreviatura %>
+       <tr>
+        <td><%=h v.mes %> - <%=h v.anio %></td>
+        <td><%=h number_to_currency(v.cantidad, :precision => 2, :separator => ",", :delimiter => ".") %></td>
+       </tr>
+       <% end %>
+      <% end %>
+    </table>
+   </td>
+  <% end %>
+
+  <% if sucu.id.to_i == 11 %>
+   </tr>
+   <tr>
+  <% end %>
+  <% if sucu.id.to_i == 11 ||  sucu.id.to_i == 12 || sucu.id.to_i == 13  %>
+   <td>
+    <table border="1">
+      <tr><td colspan="2" align="center"><b> <%= sucu.sucu_abreviatura %></td> </tr>
+      <tr>
+        <td>Mes - A&ntilde;o</td>
+        <td>Cantidad</td>
+      </tr>
+      <% @ventamontos.each do |v| %>
+       <% if v.sucursal == sucu.sucu_abreviatura %>
+       <tr>
+         <td><%=h v.mes %> - <%=h v.anio %></td>
+         <td><%=h number_to_currency(v.cantidad, :precision => 2, :separator => ",", :delimiter => ".") %></td>
+       </tr>
+       <% end %>
+      <% end %>
+    </table>
+   </td>
+ <% end %>
+<% end %>
+</tr>
+</table>
+<% end %>
+
+
+

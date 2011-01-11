@@ -1,0 +1,82 @@
+<h1>Agregar articulo listaprecio</h1>
+<br />
+
+<table  > <tr>
+<td class="boton" width="100" align="center">
+ <%= image_tag "volver.png" %>
+ <span style="vertical-align: top">  
+ <%= link_to 'Volver', :controller => 'listaprecios', :action => 'index', :maestrolistaid => params[:maestrolistaid] %>
+ </span>
+</td> </tr>
+</table>
+<br />
+<table>
+<% @maestrolista = Maestrolista.find_by_id(params[:maestrolistaid]) %>
+
+<% form_for(@listaprecio) do |f| %>
+  <%= f.error_messages %>
+
+ <tr height="40px">
+  <td colspan="3" align="center">
+    <%= f.label "Nombre de la lista:" %> 
+    <% if @maestrolista.nil? %> <% else %> <%=h @maestrolista.mlis_nombre %> <% end %>
+  </td>  
+  <td colspan="3" align="center">
+     <%= f.hidden_field (:lpre_nrolista, :value => @maestrolista.mlis_nrolista , :readonly => true) %> 
+  </td>
+
+  <td colspan="3" align="center">
+     <%= f.hidden_field (:maestrolista_id, :value => params[:maestrolistaid].to_i , :readonly => true) %> 
+  </td>
+</tr>
+
+ <tr height="40px">
+  <td colspan="3" align="center">
+    <%= f.label "C&oacute;digo lista:" %>
+    <%= f.select (:lpre_codigolista, options_for_select(["C", "I", "T", "O"], @listaprecio.lpre_codigolista.to_s)) %> 
+  </td>  
+ </tr>
+ <tr height="40px">
+  <td colspan="3" align="center">
+     <%= f.label "Art&iacute;culo:"  %>
+     <%= @articulos = Articulo.find(:all, :order =>"arti_descripcion")
+      f.collection_select(:articulo_id,
+     @articulos, :id, :arti_descripcion, :prompt=>"Seleccione un articulo:") %>
+  </td>  
+ </tr>
+ <tr height="40px">
+   <td>
+    <%= f.label "Precio lista:" %>
+    <%= f.text_field :lpre_preciolista, :size => 10 %>
+  </td>
+  <td>
+    <%= f.label "Precio costo:" %>
+    <%= f.text_field :lpre_preciocosto, :size => 10 %>
+  </td>
+  <td>
+    <%= f.label "Precio venta:" %>
+    <%= f.text_field :lpre_precioventa, :size => 10 %>
+  </td>
+ </tr>
+ <tr height="40px">
+  <td>
+    <%= f.label "Remarque :" %>
+    <%= f.text_field :lpre_remarque, :size => 10 %>
+  </td>
+  <td>
+    <%= f.label "Remarque 2:" %>
+    <%= f.text_field :lpre_remarque2, :size => 10 %>
+  </td>
+  <td>
+    <%= f.label "Remarque 3:" %>
+    <%= f.text_field :lpre_remarque3, :size => 10 %>
+  </td>
+ </tr>
+ <tr height="40px">
+  <td colspan="3" align="center" height="70">
+    <%= f.submit 'Agregar'%>
+ </td> 
+ </tr>
+<% end %>
+</table>
+

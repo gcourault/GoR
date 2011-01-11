@@ -1,0 +1,206 @@
+<h1>Nuevo art&iacute;culo</h1>
+<br />
+<table>
+<tr>
+<td class="boton"  align="center">
+  <%= image_tag "volver.png" %>
+ <span style="vertical-align: top"> 
+ <%= link_to 'Volver',:controller => 'articulos', :action => 'index'%>
+ </span>
+</td>
+</tr>
+</table>
+<br />
+<% form_for(@articulo) do |f| %>
+  <%= f.error_messages %>
+<table>
+<tr>
+  <td>
+    <%= f.label "C&oacute;digo:" %>
+  </td>
+  <td>
+   <% codart = Articulo.maximum(:arti_codigo) %>
+   <%= f.text_field :arti_codigo, :value => (codart + 1), :readonly => true, :size => 10 %>
+  </td>
+ </tr>
+ <tr>
+  <td>
+    <%= f.label "C&oacute;digo de Pirelli:" %>
+  </td>
+  <td>
+     <%= f.text_field :arti_clavesecundaria %>
+  </td>
+ </tr>
+ <tr>
+  <td>
+    <%= f.label "Descripci&oacute;n:" %>
+  </td>
+  <td>
+    <%= f.text_field :arti_descripcion %>
+  </td>
+  </tr>
+  <tr>
+   <td>
+    <%= f.label "Marca:" %>
+  </td>
+  <td>
+    <%= @marcas = Marca.find(:all, :order =>"marc_descripcion")
+      f.collection_select(:marca_id,
+     @marcas, :id, :marc_descripcion, :prompt=>"Seleccione una marca:") %>
+  </td>
+ </tr>
+ <tr>
+  <td>
+    <%= f.label "Rubro:" %>
+  </td>
+  <td>
+     <%= @rubros = Rubro.find(:all, :order =>"rubr_descripcion")
+      f.collection_select(:rubro_id,
+     @rubros, :id, :rubr_descripcion, :prompt=>"Seleccione un rubro:") %>
+  </td>
+ </tr>
+ <tr>
+  <td>
+    <%= f.label "Modelo:" %>
+  </td>
+  <td>
+    <%= f.text_field :arti_modelo %>
+  </td>
+ </tr>
+ <tr>
+  <td>
+    <%= f.label "Medida:" %>
+  </td>
+  <td>
+    <%= f.text_field :arti_medida %>
+  </td>
+ </tr>
+ <tr>
+ <td>
+    <%= f.label "Con o sin camara:" %>
+  </td>
+  <td>
+    <%= f.text_field :arti_conosincamara %>
+  </td>
+ </tr>
+ <tr>
+  <td>
+    <%= f.label "Telas:" %>
+  </td>
+  <td>
+    <%= f.text_field :arti_telas %>
+  </td>
+ </tr>
+ <tr>
+  <td>
+    <%= f.label "Ancho:" %>
+  </td>
+  <td>
+    <%= f.text_field :arti_ancho %>
+  </td>
+ </tr>
+ <tr>
+  <td>
+    <%= f.label "Diametro:" %>
+  </td>
+  <td>
+    <%= f.text_field :arti_diametro %>
+  </td>
+ </tr>
+ <tr>
+  <td>
+    <%= f.label "Aro:" %>
+  </td>
+  <td>
+    <%= f.text_field :arti_aro %>
+  </td>
+ </tr>
+ <tr>
+  <td>
+    <%= f.label "Alicuota iva:" %>
+  </td>
+  <td>
+    <%= @alicuotaivas = Alicuotaiva.find(:all, :order =>"aiva_alicuota")
+      f.collection_select(:alicuotaiva_id,
+     @alicuotaivas, :id, :aiva_alicuota, :prompt=>"Seleccione una alicuota:") %>
+  </td>
+<!--  <p>
+    <%= f.label "C&oacute;digo lista:" %>
+    <%= f.select (:arti_codigolista, options_for_select([['C', 'C'],['I', 'I'], ['T', 'T']])) %> 
+  </p> -->
+</tr>
+<tr>
+  <td>
+    <%= f.label "Imp/Nac:" %>
+  </td>
+  <td>
+    <%= f.select (:arti_impnac , options_for_select([['I', 'I'],['N', 'N']])) %>   
+  </td>
+ </tr>
+ <tr>
+  <td>
+    <%= f.label "Venta cta ord:" %>
+  </td>
+  <td>
+    <%= f.select (:arti_ventactaord , options_for_select([['S', 'S'],['N', 'N']])) %>   
+  </td>
+ </tr>
+  <tr>
+    <td>
+    <%= f.label "Consignatario:" %>
+   </td>
+  <td>
+    <%= @consignatarios = Consignatario.find(:all)
+    f.collection_select(:consignatario_id, @consignatarios, :id, :csgn_nombre, :include_blank => true) %>
+  </td>
+</tr>
+ <tr>
+  <td>
+    <%= f.label "Habilitado:" %>
+  </td>
+  <td>
+    <%= f.select (:arti_habilitado, options_for_select([['S', 'S'],['N', 'N']])) %>   
+  </td>
+  </tr>
+  <tr>
+  <td>
+    <%= f.label "Promo pirelli:" %>
+  </td>
+  <td>
+    <%= f.select (:arti_promopirelli, options_for_select([['S', 'S'],['N', 'N']])) %>   
+
+  </td>
+ </tr>
+ <tr>
+  <td>
+    <%= f.label "Controla stock:" %>
+  </td>
+  <td>
+    <%= f.select (:arti_controlastock, options_for_select([['S', 'S'],['N', 'N']])) %>  
+  </td>
+ </tr>
+ <tr>
+  <td>
+    <%= f.label "Liquida comision:" %>
+  </td>
+  <td>
+    <%= f.select (:arti_liquidacomision, options_for_select([['S', 'S'],['N', 'N']])) %>  
+  </td>
+ </tr>
+
+ <tr>
+  <td>
+    <%= f.label "Nuevo:" %>
+  </td>
+  <td>
+    <%= f.select (:arti_artinuevo, options_for_select([['S', 'S'],['N', 'N']])) %>  
+  </td>
+ </tr>
+<tr>
+ <td colspan="2" align="center" height="70">
+    <%= f.submit 'Crear' %>
+  </td>
+</tr>
+</table>
+<% end %>
+

@@ -1,0 +1,54 @@
+<h1>Editando cuit cheque</h1>
+
+<% form_for(@cuitcheque) do |f| %>
+  <%= f.error_messages %>
+<table>
+  <tr>
+   <td>
+    <%= f.label "CUIT del librador:" %>
+    </td>
+    <td>
+    <%= f.text_field :ccheq_cuit, :class => "textosbox" %>
+    </td>
+  </tr>
+  <tr>
+   <td>
+    <%= f.label "Razón Social:" %>
+    </td>
+    <td>
+    <%= f.text_field :ccheq_razonsocial, :class => "textosbox" %>
+  </td>
+   </tr>
+   <tr>
+   <td>
+    <%= f.label "Localidad:" %>
+   </td>
+    <td>
+    <%= f.text_field :ccheq_localidad, :class => "textosbox" %>
+    </td>
+  </tr>
+   <tr>
+   <td>
+    <%= f.label "Provincia:" %>
+   </td>
+   <td>
+    <%= f.text_field :ccheq_provincia, :class => "textosbox" %>
+    </td>
+  </tr>
+  
+  <tr>
+    <td colspan="2" align="center">
+    <%= f.submit 'Modificar', :class => "textosbox" %>
+    </td>
+  </tr>
+</table>
+<% end %>
+<br />
+<table>
+<tr>
+<td class="boton"  align="center">
+<%= link_to 'Mostrar', @cuitcheque %> |
+<%= link_to 'Volver', cuitcheques_path %>
+</td>
+</tr>
+</table>

@@ -1,0 +1,26 @@
+<p>
+  <b>CUIT del librador:</b>
+  <%=h @cuitcheque.ccheq_cuit %>
+</p>
+<p>
+  <b>Razón Social:</b>
+  <%=h @cuitcheque.ccheq_razonsocial %>
+</p>
+<p>
+  <b>Localidad:</b>
+  <%=h @cuitcheque.ccheq_localidad %>
+</p>
+<p>
+  <b>Provincia:</b>
+  <%=h @cuitcheque.ccheq_provincia %>
+</p>
+
+<br />
+<table>
+<tr>
+<td class="boton"  align="center">
+<%= link_to 'Editar', edit_cuitcheque_path(@cuitcheque) %> |
+<%= link_to 'Volver', cuitcheques_path %>
+</td>
+</tr>
+</table>

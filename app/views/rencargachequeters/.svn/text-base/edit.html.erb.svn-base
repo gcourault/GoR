@@ -1,0 +1,12 @@
+<h1>Editing rencargachequeter</h1>
+
+<% form_for(@rencargachequeter) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @rencargachequeter %> |
+<%= link_to 'Back', rencargachequeters_path %>

@@ -1,0 +1,38 @@
+<h1>Editando item del pedido</h1>
+<br />
+<% if @cabpedidoweb.pweb_estado.to_s == 'Abierto' %>
+<table>
+<% form_for(@renpedidoweb) do |f| %>
+  <%= f.error_messages %>
+<tr>
+  <td>
+    <%= f.label "Art&iacute;culo:"  %>
+  </td>
+  <td>
+    <%= f.collection_select(:articulo_id,
+    @articulos, :id, :arti_descripcion, :prompt=> "Seleccione un articulo:") %>
+  </td>  
+ </tr>
+ <tr>
+  <td>
+    <%= f.label "Cantidad:" %>
+  </td>
+  <td>
+    <%= f.text_field :rweb_cantidad, :size => 10, :onkeypress => "return IsNumber(event);"%>
+  </td>
+</tr>
+<tr>
+  <td colspan="2" align="center">
+    <%= f.submit 'Modificar' %>
+  </td>
+</tr>
+<% end %>
+</table>
+<% else %>
+  <h1>EL renglón que intenta editar no corresponde a un pedido abierto </h1>
+<% end %>
+<br />
+<img  src="/images/volver.png" width="20px" height="20px" border="0"> 
+<span style="vertical-align: top">
+<%= link_to 'Volver', :controller => 'renpedidowebs', :idcabpedido => @renpedidoweb.cabpedidoweb_id, :page => params[:page]%>
+</span>

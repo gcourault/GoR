@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+        <%= stylesheet_link_tag 'application' %>
+	<title>Gescom</title>
+</head>
+<body>
+<div id="contenttext">
+   <div class="bodytext" style="padding:12px;" align="center">
+   <strong style = "text-align:center;"> <h1>Bienvenido a la intranet de Fleming y Martolio!</h1></br>
+   <h2> Conectividad para nuestras aplicaciones </h2>
+  
+  </strong><br/>
+  <br />
+  </div>
+</div>
+
+</body>
+</html> 

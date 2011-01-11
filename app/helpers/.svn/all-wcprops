@@ -1,0 +1,83 @@
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/gescom-onrails/!svn/ver/488/app/helpers
+END
+listaprecios_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/gescom-onrails/!svn/ver/28/app/helpers/listaprecios_helper.rb
+END
+application_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/gescom-onrails/!svn/ver/488/app/helpers/application_helper.rb
+END
+alicuotaivas_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/gescom-onrails/!svn/ver/10/app/helpers/alicuotaivas_helper.rb
+END
+intranet_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/gescom-onrails/!svn/ver/11/app/helpers/intranet_helper.rb
+END
+sucursals_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/gescom-onrails/!svn/ver/22/app/helpers/sucursals_helper.rb
+END
+articulos_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/gescom-onrails/!svn/ver/28/app/helpers/articulos_helper.rb
+END
+bancos_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/gescom-onrails/!svn/ver/22/app/helpers/bancos_helper.rb
+END
+marcas_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/gescom-onrails/!svn/ver/160/app/helpers/marcas_helper.rb
+END
+cabcajas_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/gescom-onrails/!svn/ver/22/app/helpers/cabcajas_helper.rb
+END
+proveedors_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/gescom-onrails/!svn/ver/28/app/helpers/proveedors_helper.rb
+END
+listapublico_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/gescom-onrails/!svn/ver/33/app/helpers/listapublico_helper.rb
+END
+maestrolistas_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/gescom-onrails/!svn/ver/76/app/helpers/maestrolistas_helper.rb
+END
+rubros_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/gescom-onrails/!svn/ver/28/app/helpers/rubros_helper.rb
+END

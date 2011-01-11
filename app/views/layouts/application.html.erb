@@ -1,0 +1,395 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<%=  javascript_include_tag :defaults, 'application' %>
+
+<script language="JavaScript">
+function muestra_oculta(id){
+if (document.getElementById){ //se obtiene el id
+var el = document.getElementById(id); //se define la variable "el" igual a nuestro div
+el.style.display = (el.style.display == 'none') ? 'block' : 'none'; //damos un atributo display:none que oculta el div
+}
+}
+window.onload = function(){/*hace que se cargue la función lo que predetermina que div estará oculto hasta llamar a la función nuevamente*/
+muestra_oculta('registrarse');/* "contenido_a_mostrar" es el nombre que le dimos al DIV */
+}
+</script>
+
+<!--para cerrar la ventana del explorador pero no anda en mozilla -->
+ <script  language="JavaScript">
+function closeMe() {
+var win = window.open("about:blank","_self") /* window.open('422.html', '_self', null); */ 
+win.self.close();
+
+}
+</script > 
+
+<html>
+<head class="headlog">
+      	<title>Fleming y Martolio Gescom-onrails </title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <%= stylesheet_link_tag 'fx-slide' %>
+
+
+<div class="bodylog">
+<!--oculta el panel si no esta en la pagina de login -->
+<%  if  current_page?(:action => 'login') %>
+  <div id="ocultarlogin">
+<% else %>
+  <div id="ocultarlogin" style="display:none">
+<% end %>
+<div id="panel" >
+ <table  id="login"  width="100%">
+  <tr>
+   <td>
+        <!-- Login -->
+	  <div class="loginContent">
+               <form action="" method="post">
+                  <table >
+                      <% form_tag :action=> "login" do  %>
+                          <tr>
+                           <td style="width: 200px; text-align: right;">
+			   	<label for="user_login"><b>Nombre de usuario: </b></label>
+                           </td>
+                           <td> 
+ 			   	<%= text_field "user", "login", :size => 20, :class => "field" %><br/>
+			   </td>
+                        </tr>
+                        <tr>
+                           <td style="width: 120px; text-align: right">
+			   	<label for="user_password"><b>Contraseña:</b></label>
+                           </td>
+                           <td>
+			   	<%= password_field "user", "password", :size => 20, :class => "field"%><br/>
+                           </td>
+                           <td  >
+                           	<%= submit_tag "", :class => "button_login" %>
+                           </td>
+                        </tr>
+                      <% end %>
+                     </table>
+                    
+                  </form>
+	    
+                     </div> <!-- /loginContent --> 
+                  <div class="loginClose"><a class="alog" onclick="muestra_oculta('panel')" id="closeLogin" href='<%= url_for :controller => 'intranet', :action => 'intranet'%>'>Cerrar Panel</a></div>
+   </td>
+  </tr>
+ </table>
+</div> <!-- /ocultarlogin  -->
+</div> <!-- panel -->
+
+ <div id="container">
+
+    <div id="top">
+
+	<!-- login -->
+	<ul class="login">
+	   <li class="left">&nbsp;</li>
+	   <li>Fleming y Martolio S.R.L.</li>
+	   <li>|</li>
+	   <li><a  id="toggleLogin"> <%= link_to 'Iniciar' , :controller => 'login', :action => 'login' %></a></li>
+           <li>|</li>
+	   <li><a> <%= link_to 'Cerrar sesion' , :controller => 'login', :action => 'logout' %> </a></li>
+
+<!--  
+<li>|</li>
+
+<li> <a href="#" onclick="closeMe();">Salir</a></li> -->
+      
+	</ul> <!-- / login -->
+    </div> <!-- / top -->
+
+</div>
+<!-- hasta aca login -->
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+        <%= stylesheet_link_tag 'application' %>
+        <%= stylesheet_link_tag 'cabasientomodelo' %>
+ 	<title>Gescom</title>
+
+<div id="output" style="float:right; display:none;">
+</div>
+<!-- script para la barra de cargando en el onclick -->
+<script>
+function mostrar_div(id) {
+  var element = document.getElementById(id);
+  element.innerHTML = '<br /><p style="color:blue"><b> Cargando, por favor espere...</b> </p>';
+  element.style.display = '';
+}
+</script>
+
+<!-- script para la barra de cargando mientras carga la pagina nueva -->
+<SCRIPT>
+var DHTML = (document.getElementById || document.all || document.layers);
+function ap_getObj(name) {
+if (document.getElementById)
+{ return document.getElementById(name).style; }
+else if (document.all)
+{ return document.all[name].style; }
+else if (document.layers)
+{ return document.layers[name]; }
+}
+function ap_showWaitMessage(div,flag) {
+if (!DHTML) return;
+var x = ap_getObj(div); x.visibility = (flag) ? 'visible':'hidden'
+if(! document.getElementById) if(document.layers) x.left=280/2; return true; } ap_showWaitMessage('waitDiv', 3);
+//-->
+</SCRIPT>
+
+</head>
+<body>
+         <div id="page" align="left">
+	   <div id="content" style="padding:0px; margin:0px; align:left;">
+	      <div id="topheader">
+	      </div>
+	      <div id="menu">
+                 <div id="menulinea">
+		    <div align="right" class="smallwhitetext">
+		    </div>
+                 </div>
+              </div>
+<!-- fin menu tab -->
+<!--menu black http://purecssmenu.com/ -->
+         <table width="100%" >
+             <tr>
+               <td align="center"> 
+<!-- MENU -->
+<% if session[:user].nil? %>
+<% else %>
+
+<!-- Menu bar. -->
+<div class="menuBar" style="width:100%;">
+<% if session[:user].usur_nivelmenu.to_i >= 1  %>
+
+<a class="menuButton" href="" onclick="return buttonClick(event, 'ventaMenu');" onmouseover="buttonMouseover(event, 'ventaMenu');">Venta</a>
+<% end %>
+<% if session[:user].usur_nivelmenu.to_i >= 2 %>
+<a class="menuButton" href="" onclick="return buttonClick(event, 'gcomercialMenu');" onmouseover="buttonMouseover(event, 'gcomercialMenu');">Gesti&oacute;n Comercial</a>
+<% end %>
+<% if session[:user].usur_nivelmenu.to_i >= 3 && session[:sucursal] == 1 %>
+<a class="menuButton" href="" onclick="return buttonClick(event, 'gcontableMenu');" onmouseover="buttonMouseover(event, 'gcontableMenu');">Gesti&oacute;n Contable</a>
+<% end %>
+<% if session[:user].usur_nivelmenu.to_i >= 4 && session[:sucursal] == 1 %>
+<a class="menuButton" href="" onclick="return buttonClick(event, 'gadminMenu');" onmouseover="buttonMouseover(event, 'gadminMenu');">Gesti&oacute;n Administrativa</a>
+<% end %>
+
+<% if session[:user].usur_nivelmenu.to_i >= 3 && session[:sucursal] != 1 %>
+
+<a class="menuButton" href="" onclick="return buttonClick(event, 'iestadisticoMenu');" onmouseover="buttonMouseover(event, 'iestadisticoMenu');">Estadisticas</a>
+<% end %>
+<% if session[:user].usur_nivelmenu.to_i >= 5 && session[:sucursal] == 1 %>
+<a class="menuButton" href="" onclick="return buttonClick(event, 'informeMenu');" onmouseover="buttonMouseover(event, 'informeMenu');">Informes</a>
+<a class="menuButton" href="" onclick="return buttonClick(event, 'iestadisticoMenu');" onmouseover="buttonMouseover(event, 'iestadisticoMenu');">Estadisticas</a>
+<a class="menuButton" href="" onclick="return buttonClick(event, 'listadoMenu');" onmouseover="buttonMouseover(event, 'listadoMenu');">Listados</a>
+<% end %>
+<% if session[:user].usur_nivelmenu.to_i >= 7  %>
+<a class="menuButton" href="" onclick="return buttonClick(event, 'adminMenu');" onmouseover="buttonMouseover(event, 'adminMenu');">Administraci&oacute;n</a>
+<% end %>
+</div>
+<!-- Main menus. -->
+<% if session[:user].usur_nivelmenu.to_i >= 1  %>
+<div id="ventaMenu" class="menu" onmouseover="menuMouseover(event)">
+<% if session[:user].usur_nivelmenu.to_i >= 1 && session[:sucursal] == 1 %>
+<a class="menuItem" href="" onclick="return false;" onmouseover="menuItemMouseover(event, 'gventaMenu1');">  <%= image_tag "lista1.png" %> <span class="menuItemText" style="vertical-align: top">Listas de precios</span><span class="menuItemArrow" style="vertical-align: top">▶</span></a>
+
+<a class="menuItem" onclick="javascript:mostrar_div('output')"  href = '<%= url_for :controller => 'cabpedidowebs', :action => 'index' %>'> <%= image_tag "pedido1.png" %> <span  style="vertical-align: top"> Pedidos</span></a>
+<% end %>
+<% if session[:user].usur_nivelmenu.to_i >= 2  && session[:sucursal] == 1%> 
+<a class="menuItem"  onclick="javascript:mostrar_div('output')"  href = '<%= url_for :controller => 'clientes', :action => 'resumencliente', :id => 1 %>'> <%= image_tag "cliente.png" %> <span class="menuItemText" style="vertical-align: top"> Informe de cliente</a>
+<% end %>
+<% if (session[:user].usur_nivelmenu.to_i >= 2 && session[:sucursal] != 1)%> 
+<a class="menuItem" href="" onclick="return false;" onmouseover="menuItemMouseover(event, 'iestadisticoMenu2');"
+><span class="menuItemText">  <%= image_tag "clientes.png" %> <span  style="vertical-align: top">Clientes </span><span class="menuItemArrow" style="vertical-align: top"> ▶ </span></a>
+<% end %>
+<% if (session[:user].usur_nivelmenu.to_i >= 3 && session[:sucursal] == 1)%> 
+<a class="menuItem" href="" onclick="return false;" onmouseover="menuItemMouseover(event, 'iestadisticoMenu2');"
+><span class="menuItemText">  <%= image_tag "clientes.png" %> <span  style="vertical-align: top">Clientes </span><span class="menuItemArrow" style="vertical-align: top"> ▶ </span></a>
+<% end %>
+<% if (session[:user].usur_nivelmenu.to_i >= 4 && session[:sucursal] == 1)%> 
+<a class="menuItem" onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'puntosventas', :action => 'index' %>'>  <%= image_tag "pventas.png" %> <span  style="vertical-align: top">Puntos de venta</a>
+<% end %>
+
+<% if session[:user].usur_nivelmenu.to_i >= 6 && session[:sucursal] == 1%>
+<a class="menuItem"  onclick="javascript:mostrar_div('output')"  href = '<%= url_for :controller => 'stocks', :action => 'consultastock', :id => 1 %>'> <%= image_tag "stock.png" %> <span class="menuItemText" style="vertical-align: top"> Stock</a>
+<a class="menuItem"  onclick="javascript:mostrar_div('output')"  href = '<%= url_for :controller => 'descrevendedors', :action => 'index' %>'> <%= image_tag "descue.png" %> <span class="menuItemText" style="vertical-align: top"> Descuento revendedores</a>
+
+<% end %>
+</div>
+<% end %>
+<% if session[:user].usur_nivelmenu.to_i >= 2 %>
+<div id="gcomercialMenu" class="menu" onmouseover="menuMouseover(event)">
+<% if session[:user].usur_nivelmenu.to_i >= 4 && session[:sucursal] == 1 %>
+<a class="menuItem"  onclick="javascript:mostrar_div('output')"  href = '<%= url_for :controller => 'chequeterceros', :action => 'corrigecheque', :id => 1 %>'> <%= image_tag "cheque.png" %> <span class="menuItemText" style="vertical-align: top"> Corregir cheques</a>
+<!-- <a class="menuItem"  onclick="javascript:mostrar_div('output')"  href = '<%= url_for :controller => 'cabcargachequeters', :action => 'index' %>'> <%= image_tag  "cheque.png" %> <span class="menuItemText" style="vertical-align: top"> Agregar cheques</a> -->
+<% end %>
+<% if session[:user].usur_nivelmenu.to_i >= 2 && session[:sucursal] != 1 %>
+<a class="menuItem"  onClick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'cabplaegresos', :action => 'consulta', :id => 1 %>'> <%= image_tag "consulta.png" %>  <span  style="vertical-align: top"> Consulta compras/gastos</a>
+<a class="menuItem"  onClick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'cabplaegresos', :action => 'index' %>'>  <%= image_tag "planillaeg.png" %> <span  style="vertical-align: top"> Panillas egresos</a>
+
+<a class="menuItem"  onClick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'proveedors', :action => 'index' %>'>  <%= image_tag "prov.png" %> <span style="vertical-align: top"> Proveedores</a>
+<% end %>
+<% if session[:user].usur_nivelmenu.to_i >= 3 && session[:sucursal] == 1 %>
+<a class="menuItem"  onClick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'cabplaegresos', :action => 'consulta', :id => 1 %>'> <%= image_tag "consulta.png" %>  <span  style="vertical-align: top"> Consulta compras/gastos</a>
+<a class="menuItem"  onClick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'cabplaegresos', :action => 'index' %>'> <%= image_tag "planillaeg.png" %>  <span  style="vertical-align: top"> Panillas egresos</a>
+<a class="menuItem"  onClick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'cabcompras', :action => 'comprobantes', :id => 1 %>'> <%= image_tag "comprobante.png" %>  <span  style="vertical-align: top"> Comprobantes de compras</a>
+<a class="menuItem"  onClick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'proveedors', :action => 'index' %>'>  <%= image_tag "prov.png" %> <span  style="vertical-align: top"> Proveedores</a>
+<% end %>
+<% if session[:sucursal] == 1 %>
+
+<a class="menuItem"  onClick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'reclamos', :action => 'index' %>'>   <%= image_tag "recl.png" %> <span  style="vertical-align: top"> Reclamos</a>
+<a class="menuItem" onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'chequeterceros', :action => 'index' %>'>  <%= image_tag "cheqcar.png" %> <span  style="vertical-align: top">Cheques en cartera</a>
+<% end %>
+</div>
+<% end %>
+<% if session[:user].usur_nivelmenu.to_i >= 3 %>
+<div id="gcontableMenu" class="menu" onmouseover="menuMouseover(event)">
+<a class="menuItem" href="" onclick="return false;" onmouseover="menuItemMouseover(event, 'gcontableMenu1');">  <%= image_tag "caucion1.png" %> <span class="menuItemText" style="vertical-align: top">Cauci&oacute;n</span><span class="menuItemArrow" style="vertical-align: top">▶</span></a>
+<a class="menuItem" href="" onclick="return false;" onmouseover="menuItemMouseover(event, 'gcontableMenu2');">  <%= image_tag "cuentas.png" %> <span class="menuItemText" style="vertical-align: top">Cuentas contables</span><span class="menuItemArrow" style="vertical-align: top">▶</span></a>
+<a class="menuItem" href="" onclick="return false;" onmouseover="menuItemMouseover(event, 'gcontableMenu3');">  <%= image_tag "costov.png" %> <span class="menuItemText" style="vertical-align: top">Tesorer&iacute;a</span><span class="menuItemArrow" style="vertical-align: top">▶</span></a>
+<a class="menuItem" href="" onclick="return false;" onmouseover="menuItemMouseover(event, 'gcontableMenu4');">  <%= image_tag "contabilidad.png" %> <span class="menuItemText" style="vertical-align: top">Contabilidad</span><span class="menuItemArrow" style="vertical-align: top">▶</span></a>
+<a class="menuItem" onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'rg1361afips', :action => 'busqueda', :id => 1 %>'> <%= image_tag "rg1361.png" %> <span class="menuItemText" style="vertical-align: top">Archivos RG 1361</a>
+
+<!-- <a class="menuItem" href="blank.html">Tools Menu Item 5</a> -->
+</div>
+<% end %>
+<% if session[:user].usur_nivelmenu.to_i >= 4 %>
+<div id="gadminMenu" class="menu" onmouseover="menuMouseover(event)">
+<a class="menuItem" onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'articulos', :action => 'index' %>'> <%= image_tag "arti.png" %> <span class="menuItemText" style="vertical-align: top">Art&iacute;culos</a>
+<a class="menuItem" onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'maestrolistas', :action => 'index' %>'> <%= image_tag "generarlista.png" %> <span  style="vertical-align: top"> Generar lista de precios </span></a> 
+<a class="menuItem" onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'rubros', :action => 'index' %>'> <%= image_tag "arti.png" %> <span  style="vertical-align: top"> Rubros </span></a> 
+</div>
+<% end %>
+<% if session[:user].usur_nivelmenu.to_i >= 5 %>
+<div id="informeMenu" class="menu" onmouseover="menuMouseover(event)">
+<a class="menuItem" onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'vendedors', :action => 'index' %>' ><%= image_tag "vendedores.png" %>  <span  style="vertical-align: top"> Vendedores </span></a>
+<% if  session[:sucursal] == 1 %>
+<a class="menuItem" onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'estadisticas', :action => 'costoventa' %>' ><%= image_tag "costov.png" %>  <span  style="vertical-align: top"> Costo de ventas </span></a>
+<a class="menuItem" onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'estadisticas', :action => 'comprasucuval' %>' >  <%= image_tag "costoc.png" %> <span  style="vertical-align: top">Compras Pirelli valuadas</a>
+<% end %>
+<!--<a class="menuItem" href="blank.html">Help Menu Item 2</a>
+<div class="menuItemSep"></div>
+<a class="menuItem" href="blank.html">Help Menu Item 3</a> -->
+</div>
+<% end %>
+<% if session[:user].usur_nivelmenu.to_i >= 5 && session[:sucursal] == 1%>
+<div id="iestadisticoMenu" class="menu" onmouseover="menuMouseover(event)">
+<a class="menuItem" href="" onclick="return false;" onmouseover="menuItemMouseover(event, 'iestadisticoMenu1');"
+><span class="menuItemText">  <%= image_tag "chart_bar.png" %> <span  style="vertical-align: top">Ventas de Pirrelli </span><span class="menuItemArrow" style="vertical-align: top"> ▶ </span></a>
+<a class="menuItem" onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'estadisticas', :action => 'comprasucu' %>' > <%= image_tag "chart_bar.png" %>  <span  style="vertical-align: top">Compras Pirelli</a>
+
+
+<a class="menuItem" onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'estadisticas', :action => 'ventasmonto' %>'> <%= image_tag "chart_line.png" %> <span  style="vertical-align: top">Ventas</a>
+<a class="menuItem" onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'estadisticas', :action => 'ventastipo' %>'> <%= image_tag "chart_pie.png" %> <span  style="vertical-align: top">Forma de pago ventas</a>
+<a class="menuItem" onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'estadisticas', :action => 'tarjeta' %>'> <%= image_tag "chart_pie.png" %>  <span  style="vertical-align: top"> Ventas por tarjetas</a>
+</div>
+<% end %>
+<% if session[:user].usur_nivelmenu.to_i >= 3 && session[:sucursal] != 1 %>
+<div id="iestadisticoMenu" class="menu" onmouseover="menuMouseover(event)">
+<a class="menuItem" href="" onclick="return false;" onmouseover="menuItemMouseover(event, 'iestadisticoMenu1');"
+><span class="menuItemText">  <%= image_tag "chart_bar.png" %> <span  style="vertical-align: top">Ventas de Pirrelli </span><span class="menuItemArrow" style="vertical-align: top"> ▶ </span></a>
+
+<a class="menuItem" onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'estadisticas', :action => 'comprasucu' %>' > <%= image_tag "chart_bar.png" %>  <span  style="vertical-align: top">Compras Pirelli</a>
+
+<a class="menuItem" onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'estadisticas', :action => 'ventasmonto' %>'> <%= image_tag "chart_line.png" %> <span  style="vertical-align: top">Ventas</a>
+<a class="menuItem" onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'estadisticas', :action => 'ventastipo' %>'> <%= image_tag "chart_pie.png" %> <span  style="vertical-align: top">Forma de pago ventas</a>
+<a class="menuItem" onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'estadisticas', :action => 'tarjeta' %>'> <%= image_tag "chart_pie.png" %>  <span  style="vertical-align: top"> Ventas por tarjetas</a>
+</div>
+<% end %>
+<% if session[:user].usur_nivelmenu.to_i >= 5 %>
+<div id="listadoMenu" class="menu" onmouseover="menuMouseover(event)">
+<a class="menuItem" onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'chequeterceros', :action => 'informecomprob', :id => '1' %>' ><%= image_tag "lista.png" %> <span  style="vertical-align: top"> Comprobantes de cobro </span></a>
+
+</div>
+<% end %>
+<% if session[:user].usur_nivelmenu.to_i >= 7 %>
+<div id="adminMenu" class="menu" onmouseover="menuMouseover(event)">
+<a class="menuItem"  onClick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'usuarios', :action => 'index' %>'><%= image_tag "usuario.png" %>  <span  style="vertical-align: top"> Usuarios</a>
+</div>
+<% end %>
+
+<!-- gcontableMenu sub menus. -->
+
+<div id="gcontableMenu1" class="menu" onmouseover="menuMouseover(event)">
+<a class="menuItem"  onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'depositocaucions', :action => 'index' %>'>Deposito cauci&oacute;n</a>
+<a class="menuItem" onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'listadocaucions', :action => 'estadocaucion', :id => '1' %>'>Estado cauci&oacute;n</a>
+<a class="menuItem" onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'devueltocaucions', :action => 'index' %>'>Reingreso/Ajuste cauci&oacute;n</a>
+<a class="menuItem"  onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'listadocaucions', :action => 'index' %>'>Cargar importe banco</a>
+</div>
+
+<!-- gventaMenu sub menus. submenu lista de precios -->
+
+<div id="gventaMenu1" class="menu" onmouseover="menuMouseover(event)">
+<a class="menuItem"  onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'listaprecios', :action => 'listaprecio', :id => 1 %>'>Pirelli/Firestone </a>
+<a class="menuItem" onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'listaprecios', :action => 'listaprecioalliance', :id => '1' %>'>Alliance </a>
+<a class="menuItem" onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'listaprecios', :action => 'listapreciobkt', :id => 1 %>'> BKT </a>
+</div>
+
+
+<div id="gcontableMenu2" class="menu" onmouseover="menuMouseover(event)">
+<% if session[:sucursal] == 1 &&  session[:user].usur_nivelmenu.to_i >= 6 %>
+<a class="menuItem"  onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'ejercicios', :action => 'index' %>'>Ejercicios</a>
+<a class="menuItem"  onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'plandecuentas', :action => 'index' %>'>Plan de cuentas</a>
+<a class="menuItem" onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'cuentabancarias', :action => 'index' %>'>Cuentas bancarias</a>
+<% end %>
+<% if session[:sucursal] == 1 &&  session[:user].usur_nivelmenu.to_i >= 7 %>
+<a class="menuItem"  onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'conceptoegresos', :action => 'index' %>'>Conceptos de egresos</a>
+<a class="menuItem"  onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'formapagos', :action => 'index' %>'>Formas de pago</a>
+<a class="menuItem"  onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'cuentacajas', :action => 'index' %>'>Cuentas de caja</a>
+<a class="menuItem"  onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'cabasientomodelos', :action => 'index' %>'>Asientos modelos</a>
+<% end %>
+</div>
+
+<div id="gcontableMenu3" class="menu" onmouseover="menuMouseover(event)">
+<% if session[:sucursal] == 1 &&  session[:user].usur_nivelmenu.to_i >= 6 %>
+<a class="menuItem"  onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'plandecuentas', :action => 'index' %>'>Bajar cajas a la contabilidad</a>
+<% end %>
+</div>
+
+<div id="gcontableMenu4" class="menu" onmouseover="menuMouseover(event)">
+<a class="menuItem"  onclick="javascript:mostrar_div('output')" href= '<%= url_for :controller => 'contabilidads', :action => 'diario', :id => '1' %>'>Diario</a>
+<a class="menuItem" onclick="javascript:mostrar_div('output')" href= '<%= url_for :controller => 'contabilidads', :action => 'mayor', :id => '1' %>'>Mayor</a>
+<a class="menuItem" onclick="javascript:mostrar_div('output')" href= '<%= url_for :controller => 'contabilidads', :action => 'resultado', :id=>'1' %>'>Estado de resultado</a>
+<a class="menuItem" onclick="javascript:mostrar_div('output')" href= '<%= url_for :controller => 'contabilidads', :action => 'balancesys', :id=>'1' %>'>Balance sumas y saldos</a>
+<a class="menuItem"  onclick="javascript:mostrar_div('output')" href= '<%= url_for :controller => 'contabilidads', :action => 'balanceg', :id => '1' %>'>Balance general</a>
+<a class="menuItem"> <hr> </a>
+<a class="menuItem"  onclick="javascript:mostrar_div('output')" href= '<%= url_for :controller => 'coeficientes', :action => 'index' %>'>Coeficientes de ajustes</a>
+</div>
+
+<!-- iestadisticoMenu sub menus. -->
+
+<div id="iestadisticoMenu1" class="menu" onmouseover="menuMouseover(event)">
+<a class="menuItem" onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'estadisticas', :action => 'index' %>'>Ventas</a>
+<% if session[:sucursal] == 1 %>
+<a class="menuItem" onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'estadisticas', :action => 'index', :tipo => 3 %>'>Ventas 03</a>
+<a class="menuItem" onclick="javascript:mostrar_div('output')" href = '<%= url_for :controller => 'estadisticas', :action => 'index', :tipo => 2 %>'> Ventas totales</a>
+<% end %>
+</div>
+<div id="iestadisticoMenu2" class="menu" onmouseover="menuMouseover(event)">
+<a class="menuItem"  onclick="javascript:mostrar_div('output')"  href = '<%= url_for :controller => 'clientes', :action => 'clientemonto', :id => 1 %>'> Clientes por monto</a>
+
+<a class="menuItem"  onclick="javascript:mostrar_div('output')"  href = '<%= url_for :controller => 'clientes', :action => 'clientearticulo', :id => 1 %>'> Compras de art&iacute;culo por cliente</a>
+</div>
+
+
+<!--<div id="toolsMenu4_3" class="menu">
+<a class="menuItem" href="blank.html">Tools Menu 4-3 Item 1</a>
+<a class="menuItem" href="blank.html">Tools Menu 4-3 Item 2</a>
+<a class="menuItem" href="blank.html">Tools Menu 4-3 Item 3</a>
+<a class="menuItem" href="blank.html">Tools Menu 4-3 Item 4</a>
+</div> -->
+<% end %>
+<!-- FIN MENU -->
+ <br />
+       	<%= yield %> 
+		</td>
+		  </tr>
+                     </table>
+                       <br />
+			<!--<div align="center">
+		            <a href="http://www.flemingymartolio.com.ar/" target="_blank">    Fleming y Martolio 
+				</a> &copy; 2010 
+			</div>  -->
+		</div>  <!-- div content-->
+	</div>
+</body>
+ 
+</html>

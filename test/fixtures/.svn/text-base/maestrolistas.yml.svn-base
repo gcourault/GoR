@@ -1,0 +1,19 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  mlis_nrolista: 
+  mlis_nrolistaorigen: 
+  mlis_creacion: 
+  mlis_vigencia: 
+  mlis_internapublica: 
+  mlis_usuario: 
+  mlis_ultmod: 2009-11-18
+
+two:
+  mlis_nrolista: 
+  mlis_nrolistaorigen: 
+  mlis_creacion: 
+  mlis_vigencia: 
+  mlis_internapublica: 
+  mlis_usuario: 
+  mlis_ultmod: 2009-11-18

@@ -1,0 +1,115 @@
+<h1> Porcentaje de venta con cada tarjeta de crédito</h1>
+
+<% if params[:fechadesde].blank? %>
+<% from_time =  Date.today - 1.months   %>
+<% else %>
+<% from_time = params[:fechadesde] %>
+<% end %>
+<% if params[:fechahasta].blank? %>
+<% to_time =  Date.today   %>
+<% else %>
+<% to_time = params[:fechahasta] %>
+<% end %>
+<Fieldset class="filtro">
+<legend ALIGN="left" class="formlegend">El rango entre las fechas no debe ser mayor a 12 meses</legend>
+<table align="left" class="tablafiltro">
+
+ <tr>
+<% form_tag :controller => 'estadisticas', :action => 'tarjeta' do %> 
+<td>  <%= hidden_field_tag :tipo, params[:tipo] %>
+ </td>
+   <td >
+      Fecha desde:
+    </td>
+    <td>
+      <%=  select_date from_time , {:prefix => "fechadesde"}, {:class => "textosbox"} %> 
+    </td>
+    <td>
+      Fecha hasta: 
+    </td>
+     <td>
+      <%= select_date to_time, {:prefix=>"fechahasta"}, {:class => "textosbox"} %>
+    </td>
+    <td colspan="2">
+
+     <%= submit_tag "Consultar", :class => "textosbox", :onclick=>"javascript:mostrar_div('output')" %>
+  
+    </td>
+<% end %>
+</tr>
+</table>
+</Fieldset>
+<br />
+<br />
+
+<% if @tarjetas.size > 0 %>
+<table>
+<tr>
+<td><h2> Porcentajes de las ventas de cada tarjeta de credito en todas las sucursales</h2></td>
+</tr>
+<tr>
+   <td> <%= image_tag "tarjeta.png" %>  </td> 
+<!--<td>
+<table>
+<tr>
+
+<td><b>tarjeta </b></td>
+<td><b>Importe </b></td>
+</tr> 
+ <% @tarjetas.each do |tarj| %>
+    <tr>
+      <td><%=h tarj.nombre %></td>
+      <td><%=h tarj.importe.to_f %></td>
+      </tr>
+<% end %>
+</tr>
+
+</table>
+ </td> -->
+</tr>
+</table>
+<br />
+<br />
+<% if session[:sucursal] == 1 %>
+<h2> Porcentajes de las ventas de cada tarjeta de credito en cada sucursal</h2>
+
+<table>
+<tr>
+<td><%= image_tag "tarjetasucu1.png" %>  </td>
+<td> <%= image_tag "tarjetasucu2.png" %> </td>
+
+</tr>
+<td><%= image_tag "tarjetasucu3.png" %>  </td>
+<td><%= image_tag "tarjetasucu4.png" %> </td>
+<tr>
+</tr>
+<tr>
+<td><%= image_tag "tarjetasucu5.png" %>  </td>
+<td> <%= image_tag "tarjetasucu6.png" %> </td>
+</tr>
+
+<tr>
+<td><%= image_tag "tarjetasucu7.png" %> </td>
+<td><%= image_tag "tarjetasucu8.png" %> </td>
+
+</tr>
+<td> <%= image_tag "tarjetasucu9.png" %> </td>
+<td> <%= image_tag "tarjetasucu10.png" %></td>
+<tr>
+
+</tr>
+<tr>
+
+<td><%= image_tag "tarjetasucu11.png" %> </td>
+<td> <%= image_tag "tarjetasucu12.png" %> </td>
+
+
+</tr>
+<tr>
+<td><%= image_tag "tarjetasucu13.png" %> </td>
+</tr>
+</table>
+ <% end %>
+
+<% end %>
+

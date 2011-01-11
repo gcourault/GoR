@@ -1,0 +1,12 @@
+<h1>Editing renasiento</h1>
+
+<% form_for(@renasiento) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @renasiento %> |
+<%= link_to 'Back', renasientos_path %>

@@ -1,0 +1,68 @@
+<h1>Editar cuenta</h1>
+<br/>
+<table>
+<tr>
+ <td class="boton" width="120" align="center">
+   <%= image_tag "volver.png" %> 
+   <span style="vertical-align: top">  
+  <%= link_to 'Volver', :controller => 'cuentabancarias', :action => 'index', :page => params[:page] %>
+   </span>
+ </td>
+</tr>
+</table>
+
+<% form_for(@cuentabancaria) do |f| %>
+  <%= f.error_messages %>
+
+<table>
+ <tr>
+  <td>
+<Fieldset class="form"  width="200" >
+<LEGEND ALIGN="left" class="formlegend">Modificar datos</LEGEND>
+  <table>
+
+  <tr>
+     <td>
+       Cuenta:     
+     </td>
+     <td>
+       <%= f.text_field :cban_descripcion, :class => "textosbox" %>
+   
+     </td>
+    </tr>
+    <tr>
+      <td>
+        Banco:
+      </td>
+      <td>
+         <%= @bancos = Banco.find(:all, :order =>"banc_nombre")
+     f.collection_select(:banco_id, @bancos, :id, :cod_nombre) %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Cuenta contable:
+      </td>
+      <td>
+         <%= @plandecuentas = Plandecuenta.find(:all, :order =>"pcue_cuenta")
+     f.collection_select(:plandecuenta_id, @plandecuentas, :id, :codigo_nombre) %>
+      </td>
+    </tr>
+   <%= hidden_field(:valor, :page, :value => params[:page]) %> 
+</table>
+</Fieldset>
+</td>
+</tr>
+</table>
+<table>
+  <tr height="70">
+     <td colspan="2" align="center">
+
+    <%= f.submit 'Modificar', :class => "textosbox" %>
+    </td>
+ </tr>
+</table>
+
+<% end %>
+
+

@@ -1,0 +1,3 @@
+<%= collection_select( nil, :cliente_id, @cliente, :id, :clie_razonsocial, {} ) %>
+
+

@@ -1,0 +1,60 @@
+<h1>Plan de cuentas</h1>
+
+<table id ="pcuenta_menu" align="left">
+ <tr>
+  <td>
+
+    <% for naturaleza in @naturalezas %>
+       <% params[:natu] = naturaleza %>
+       
+      <% @cuentas = Plandecuenta.find(:all, :conditions => ['pcue_naturaleza = ? and pcue_nivel = "1"', params[:natu].to_s ], :order => ['pcue_cuenta']) %>
+        <% if !@cuentas.nil? %>
+           <% @cuentas.each do |cuenta| %> 
+
+                 <!-- TODO: hacer un metodo iterando por niveles -->
+            <% if cuenta.pcue_nivel.to_s == "1" %>  <% cuentanro = "cuentanro"+cuenta.pcue_cuenta.to_s+"pc" %> <ul> <li><a class="expand" onclick="show_type('<%= cuentanro %>')" title=""><%= image_tag "minimize.png", :id=> "img"+cuentanro+"" %> <%= link_to_remote h(cuenta.codigo_nombre), :update => 'editar', :url => {:controller => 'plandecuentas', :action => 'editar', :id => cuenta }, :complete => '$("plandecuenta_pcue_cuenta").focus();' %> <%= link_to_remote(image_tag("nuevag.png", :mouseover => 'nueva.png', :class => "plandecuentanueva"), :update => 'editar', :url => { :controller => 'plandecuentas', :action =>'new', :cuentap => cuenta.pcue_cuenta, :nivel => cuenta.pcue_nivel, :naturaleza => cuenta.pcue_naturaleza}, :complete => '$("plandecuenta_pcue_cuenta").focus();' ) %>  </li> </ul>  <% end %>
+
+                  
+             <% @cuentas2 = Plandecuenta.find(:all, :conditions => ['pcue_padre = ?', cuenta.pcue_cuenta], :order => ['pcue_cuenta']) %>
+             <div id= "<%= cuentanro %>">
+             <% @cuentas2.each do |cuenta2| %> 
+             <% if cuenta2.pcue_nivel.to_s == "2" %>  <% cuentanro = "cuentanro"+cuenta2.pcue_cuenta.to_s+"pc" %> <ul> <li> <ul> <li><a class="expand" onclick="show_type('<%= cuentanro %>')" title=""><%= image_tag "minimize.png", :id=> "img"+cuentanro+"" %> <%= link_to_remote h(cuenta2.codigo_nombre), :update => 'editar', :url => {:controller => 'plandecuentas', :action => 'editar', :id => cuenta2 }, :complete => '$("plandecuenta_pcue_cuenta").focus();' %> <%= link_to_remote(image_tag("nuevag.png", :mouseover => 'nueva.png', :class => "plandecuentanueva"), :update => 'editar', :url => { :controller => 'plandecuentas', :action =>'new', :cuentap => cuenta2.pcue_cuenta, :nivel => cuenta2.pcue_nivel, :naturaleza => cuenta2.pcue_naturaleza}, :complete => '$("plandecuenta_pcue_cuenta").focus();') %> </li> </ul></li> </ul>  <% end %>
+            
+              <% @cuentas3 = Plandecuenta.find(:all, :conditions => ['pcue_padre = ?', cuenta2.pcue_cuenta], :order => ['pcue_cuenta']) %>
+              <div id= "<%= cuentanro %>">
+              <% @cuentas3.each do |cuenta3| %> 
+              <% if cuenta3.pcue_nivel.to_s == "3" %> <% cuentanro = "cuentanro"+cuenta3.pcue_cuenta.to_s+"pc" %> <ul> <li> <ul> <li> <ul> <li> <a class="expand" onclick="show_type('<%= cuentanro %>')" title=""><%= image_tag "minimize.png", :id=> "img"+cuentanro+"" %> <%= link_to_remote h(cuenta3.codigo_nombre), :update => 'editar', :url => {:controller => 'plandecuentas', :action => 'editar', :id => cuenta3 }, :complete => '$("plandecuenta_pcue_cuenta").focus();' %><%= link_to_remote(image_tag("nuevag.png", :mouseover => 'nueva.png', :class => "plandecuentanueva"), :update => 'editar', :url => { :controller => 'plandecuentas', :action =>'new', :cuentap => cuenta3.pcue_cuenta, :nivel => cuenta3.pcue_nivel, :naturaleza => cuenta3.pcue_naturaleza}, :complete => '$("plandecuenta_pcue_cuenta").focus();') %>  </li> </ul></li> </ul> </li> </ul>  <% end %>
+
+               <% @cuentas4 = Plandecuenta.find(:all, :conditions => ['pcue_padre = ?', cuenta3.pcue_cuenta], :order => ['pcue_cuenta']) %>
+                 <div id= "<%= cuentanro %>">
+               <% @cuentas4.each do |cuenta4| %> 
+               <% if cuenta4.pcue_nivel.to_s == "4" %> <% cuentanro = "cuentanro"+cuenta4.pcue_cuenta.to_s+"pc" %> <ul> <li> <ul> <li> <ul> <li> <ul> <li> <a class="expand" onclick="show_type('<%= cuentanro %>')" title=""><%= image_tag "minimize.png", :id=> "img"+cuentanro+"" %><%= link_to_remote h(cuenta4.codigo_nombre), :update => 'editar', :url => {:controller => 'plandecuentas', :action => 'editar', :id => cuenta4 }, :complete => '$("plandecuenta_pcue_cuenta").focus();' %> <%= link_to_remote(image_tag("nuevag.png", :mouseover => 'nueva.png', :class => "plandecuentanueva"), :update => 'editar', :url => { :controller => 'plandecuentas', :action =>'new', :cuentap => cuenta4.pcue_cuenta, :nivel => cuenta4.pcue_nivel, :naturaleza => cuenta4.pcue_naturaleza}, :complete => '$("plandecuenta_pcue_cuenta").focus();') %> </li> </ul></li> </ul> </li> </ul> </li> </ul>  <% end %>
+
+                <% @cuentas5 = Plandecuenta.find(:all, :conditions => ['pcue_padre = ?', cuenta4.pcue_cuenta], :order => ['pcue_cuenta']) %>
+                   <div id= "<%= cuentanro %>">
+               <% @cuentas5.each do |cuenta5| %> 
+              <% if cuenta5.pcue_nivel.to_s == "5" %> <ul> <li> <ul> <li> <ul> <li> <ul> <li> <ul> <li><%= link_to_remote h(cuenta5.codigo_nombre), :update => 'editar', :url => {:controller => 'plandecuentas', :action => 'editar', :id => cuenta5 }, :complete => '$("plandecuenta_pcue_cuenta").focus();' %> <!--<%= link_to_remote(image_tag("nuevag.png", :mouseover => 'nueva.png', :class => "plandecuentanueva"), :update => 'editar', :url => { :controller => 'plandecuentas', :action =>'new', :cuentap => cuenta5.pcue_cuenta, :nivel => cuenta5.pcue_nivel, :naturaleza => cuenta5.pcue_naturaleza}, :complete => '$("plandecuenta_pcue_cuenta").focus();') %>--> </li> </ul></li> </ul> </li> </ul> </li> </ul> </li> </ul> <% end %>
+                <% end %> <!-- end nivel 5 -->
+                  </div> <!-- div cuenta cuatro -->
+               <% end %>
+                </div>
+              <% end %> <!-- end cuenta3 -->
+              </div>
+             <% end %> <!--end cuenta2 -->
+            </div> <!-- div cuenta uno -->
+	 <% end %>
+
+  <% end %>
+  <% end %>
+ </td>
+<td valign="top" border ="1">
+<div id="editar" >
+
+</div>
+</td>
+</tr>
+</table>
+
+
+
+

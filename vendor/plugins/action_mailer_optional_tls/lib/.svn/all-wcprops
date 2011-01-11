@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/gescom-onrails/!svn/ver/256/vendor/plugins/action_mailer_optional_tls/lib
+END
+smtp_tls.rb
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/gescom-onrails/!svn/ver/256/vendor/plugins/action_mailer_optional_tls/lib/smtp_tls.rb
+END
+action_mailer_tls.rb
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/gescom-onrails/!svn/ver/256/vendor/plugins/action_mailer_optional_tls/lib/action_mailer_tls.rb
+END

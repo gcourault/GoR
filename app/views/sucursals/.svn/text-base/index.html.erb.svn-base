@@ -1,0 +1,52 @@
+<h1>Listado de reclamos por susursales</h1>
+<br />
+ <%= netzke :sucursals_and_reclamos, 
+    :widget_class_name    => "SucursalsAndReclamos",
+    :container_class_name => "Sucursal",
+    :element_class_name   => "Reclamo"   %> 
+
+<!-- <div id="tablaContainer"  class="tabla">
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr class="headerStyle">
+    <th>Codigo</th>
+    <th>Nombre</th>
+    <th>Abreviatura</th>
+    <th>Domicilio</th>
+    <th>Imp. municipal</th>
+    <th>Insc. municipal</th>
+    <th>Provinciapib</th>
+    <th>Inicio actividades</th>
+    <th>Por cuenta y orden</th>
+    <th>Controla servicio</th>
+    <th>Email</th>
+    <th>Usuario</th>
+    <th>Ultima modific</th>
+  </tr>
+
+<% @sucursals.each do |sucursal| %>
+  <tr>
+    <td class="rowStyle"><%=h sucursal.sucu_codigo %></td>
+    <td class="rowStyle"><%=h sucursal.sucu_nombre %></td>
+    <td class="rowStyle"><%=h sucursal.sucu_abreviatura %></td>
+    <td class="rowStyle"><%=h sucursal.sucu_domicilio %></td>
+    <td class="rowStyle"><%=h sucursal.sucu_impu_municipal %></td>
+    <td class="rowStyle"><%=h sucursal.sucu_insc_municipal %></td>
+    <td class="rowStyle"><%=h sucursal.sucu_provinciapib %></td>
+    <td class="rowStyle"><%=h sucursal.sucu_inicioactividades %></td>
+    <td class="rowStyle"><%=h sucursal.sucu_porcuentayorden %></td>
+    <td class="rowStyle"><%=h sucursal.sucu_controlaservicio %></td>
+    <td class="rowStyle"><%=h sucursal.sucu_email %></td>
+    <td class="rowStyle"><%=h sucursal.sucu_usuario %></td>
+    <td class="rowStyle"><%=h sucursal.sucu_ultmod %></td>
+    <td class="separador"></td>
+    <td class="button"><%= link_to 'Mostrar', sucursal %></td>
+    <td class="button"><%= link_to 'Editar', edit_sucursal_path(sucursal) %></td>
+  </tr>
+<% end %>
+</table>
+</div>
+
+<br />
+<div  class="botonnuevo" style="align:center;">
+<%= link_to 'Nueva sucursal', new_sucursal_path %>
+</div> -->

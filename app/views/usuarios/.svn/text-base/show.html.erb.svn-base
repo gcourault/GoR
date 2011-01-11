@@ -1,0 +1,82 @@
+<table>
+<tr>
+<td>
+<%= link_to 'Editar',:controller => 'usuarios', :action => 'edit' , :id => @usuario.id, :page => params[:page] %>
+</td>
+<td> | </td>
+<td>
+<%= link_to 'Volver', :controller => 'usuarios', :action => '', :page => params[:page]  %>
+</td>
+</tr>
+</table>
+<br />
+<table>
+  <tr>
+    <td>
+      <b>Usuario:</b>
+    </td>
+    <td>
+      <%=h @usuario.usur_usuario %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <b>Nombre:</b>
+    </td>
+    <td>
+      <%=h @usuario.usur_nombre %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <b>Nivel menues:</b>
+    </td>
+    <td>
+      <%=h @usuario.usur_nivelmenu %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <b>Nivel:</b>
+    </td>
+    <td>
+       <%=h @usuario.usur_nivel %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <b>e-mail:</b>
+    </td>
+    <td>
+      <%=h @usuario.usur_email %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <b>Sucursal:</b>
+    </td>
+    <td>
+      <%=h @usuario.sucursal.sucu_abreviatura if @usuario.sucursal_id %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <b>Cliente:</b>
+    </td>
+    <td>
+       <%=h @usuario.cliente.clie_razonsocial  if @usuario.cliente_id %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+       <b>Roles:</b>
+    </td>
+    <td>
+      <select id="roles" name="roles[]" multiple="multiple" size="7">
+         <%= options_from_collection_for_select(@roles, :id , :titulo , @selected ) %>
+      </select>
+    </td>
+  </tr>
+</table>
+
+
