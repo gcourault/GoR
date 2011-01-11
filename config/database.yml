@@ -15,22 +15,21 @@
 # And be sure to use new-style password hashing:
 #   http://dev.mysql.com/doc/refman/5.0/en/old-client.html
 development:
-  host: 192.168.0.100
+  host: localhost
   adapter: mysql
   encoding: utf8
   reconnect: false
-# database: gescom-onrails_development
   database: gcdev
   pool: 5
   username: root
-  password: tachiwaza
+  password: 
   socket: /var/run/mysqld/mysqld.sock
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
-  host: 192.168.0.100
+  host: localhost 
   adapter: mysql
   encoding: utf8
   reconnect: false
@@ -38,7 +37,7 @@ test:
   database: gcdev
   pool: 5
   username: root
-  password: tachiwaza
+  password:  
   socket: /var/run/mysqld/mysqld.sock
 
 production:
@@ -48,6 +47,6 @@ production:
   reconnect: false
   database: gc
   pool: 5
-  username: eweidmann
-  password: camila
+  username: root 
+  password: 
   socket: /var/run/mysqld/mysqld.sock
